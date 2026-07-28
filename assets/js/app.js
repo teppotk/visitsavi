@@ -568,34 +568,6 @@
     var listwrap = container.querySelector(".planner__listwrap");
     var summary = container.querySelector(".planner__summary");
     var iframe = container.querySelector(".planner__map");
-    var mapwrap = container.querySelector(".planner__mapwrap");
-
-    // Kartta: JS API jos avain toimii (numeroidut pinnit + reittiviiva), muuten avaimeton upotus
-    var G = { map: null, ready: false, markers: [], line: null };
-    function updateMap(ps) {
-      if (!G.ready || !G.map) { iframe.src = buildEmbedSrc(ps); return; }
-      G.markers.forEach(function (m) { m.setMap(null); }); G.markers = [];
-      if (G.line) { G.line.setMap(null); G.line = null; }
-      if (!ps.length) { G.map.setCenter({ lat: 61.20, lng: 27.67 }); G.map.setZoom(9); return; }
-      var bounds = new google.maps.LatLngBounds(), path = [];
-      ps.forEach(function (p, i) {
-        var pos = { lat: p.lat, lng: p.lng }; bounds.extend(pos); path.push(pos);
-        G.markers.push(new google.maps.Marker({
-          position: pos, map: G.map, title: p.nimi, zIndex: 10 + i,
-          label: { text: String(i + 1), color: "#ffffff", fontSize: "12px", fontWeight: "700" },
-          icon: markerIcon("#0b3d4f", 12)
-        }));
-      });
-      if (path.length > 1) G.line = new google.maps.Polyline({ path: path, geodesic: true, strokeColor: "#d9642a", strokeOpacity: 0.9, strokeWeight: 3, map: G.map });
-      if (ps.length === 1) { G.map.setCenter(path[0]); G.map.setZoom(12); } else { G.map.fitBounds(bounds, 50); }
-    }
-    loadGoogleMaps().then(function () {
-      iframe.style.display = "none";
-      var d = document.createElement("div"); d.className = "planner__gmapdiv"; mapwrap.appendChild(d);
-      G.map = new google.maps.Map(d, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
-      G.ready = true;
-      updateMap(pts());
-    }).catch(function () { /* ei avainta → pidä avaimeton upotus */ });
 
     function pts() {
       return state.selected.map(function (id) {
@@ -623,7 +595,7 @@
             '<button class="btn btn--ghost" type="button" data-clear>Tyhjennä</button></div>'
           : '<p class="planner__hint">Rastita kohteita listasta — ne ilmestyvät kartalle ja tähän reitiksi.</p>');
 
-      updateMap(ps);
+      iframe.src = buildEmbedSrc(ps);
     }
 
     container.addEventListener("change", function (e) {
