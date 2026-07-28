@@ -379,7 +379,75 @@
     observeReveal(container);
   }
 
-  /* ---------------- Kartta (schematic) ---------------- */
+  /* ---------------- Google Maps JS API (interaktiivinen) ---------------- */
+  var GMAPS = { promise: null };
+  function loadGoogleMaps() {
+    if (GMAPS.promise) return GMAPS.promise;
+    GMAPS.promise = new Promise(function (resolve, reject) {
+      if (window.google && window.google.maps) { resolve(); return; }
+      var key = window.SAVITAIPALE_MAPS_KEY;
+      if (!key) { reject(new Error("no-key")); return; }
+      window.__gmapsReady = function () { resolve(); };
+      var s = document.createElement("script");
+      s.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(key) +
+        "&callback=__gmapsReady&language=fi&region=FI&loading=async";
+      s.async = true;
+      s.onerror = function () { reject(new Error("load-error")); };
+      document.head.appendChild(s);
+    });
+    return GMAPS.promise;
+  }
+  function markerIcon(color, scale) {
+    return { path: google.maps.SymbolPath.CIRCLE, scale: scale || 7, fillColor: color, fillOpacity: 1, strokeColor: "#ffffff", strokeWeight: 2 };
+  }
+
+  // Yleiskartta: kaikki koordinaatilliset kohteet pinneinä + oma sijainti
+  function renderGmap(container) {
+    var pts = D.kohteet.filter(function (k) { return k.koord; });
+    container.innerHTML =
+      '<div class="gmapfull"><div class="gmapfull__map"></div>' +
+      '<button class="gmapfull__loc" type="button">📍 Näytä sijaintini</button></div>' +
+      '<p class="mapnote">◎ Klikkaa pistettä nähdäksesi kohteen tiedot · oranssit pisteet ovat Saimaa Geoparkin geokohteita</p>';
+    var mapEl = container.querySelector(".gmapfull__map");
+    var locBtn = container.querySelector(".gmapfull__loc");
+
+    loadGoogleMaps().then(function () {
+      var bounds = new google.maps.LatLngBounds();
+      var map = new google.maps.Map(mapEl, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
+      var iw = new google.maps.InfoWindow();
+      pts.forEach(function (k) {
+        var pos = { lat: k.koord.lat, lng: k.koord.lng };
+        bounds.extend(pos);
+        var m = new google.maps.Marker({ position: pos, map: map, title: k.nimi, icon: markerIcon(k.geopark ? "#d9642a" : "#0b3d4f", 7) });
+        m.addListener("click", function () {
+          iw.setContent('<div class="iw"><strong>' + esc(k.nimi) + "</strong><br>" +
+            '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span><br>" +
+            '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
+            '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>');
+          iw.open(map, m);
+        });
+      });
+      map.fitBounds(bounds, 60);
+      var userMarker = null;
+      locBtn.addEventListener("click", function () {
+        if (!navigator.geolocation) { locBtn.textContent = "Paikannus ei käytössä"; return; }
+        locBtn.disabled = true; locBtn.textContent = "Haetaan…";
+        navigator.geolocation.getCurrentPosition(function (p) {
+          locBtn.disabled = false; locBtn.textContent = "📍 Näytä sijaintini";
+          var u = { lat: p.coords.latitude, lng: p.coords.longitude };
+          if (userMarker) userMarker.setMap(null);
+          userMarker = new google.maps.Marker({ position: u, map: map, title: "Sijaintisi", zIndex: 999, icon: markerIcon("#1a73e8", 8) });
+          map.panTo(u);
+        }, function () { locBtn.disabled = false; locBtn.textContent = "📍 Näytä sijaintini"; },
+          { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 });
+      });
+    }).catch(function () {
+      container.innerHTML = "";
+      renderMap(container); // fallback: tyylitelty SVG-kartta
+    });
+  }
+
+  /* ---------------- Kartta (schematic, fallback) ---------------- */
   function renderMap(container) {
     var W = 1000, H = 620;
     // Yleiskartalla vain Geoparkin geokohteet (hyvin hajallaan) — pidetään kartta selkeänä.
@@ -500,6 +568,34 @@
     var listwrap = container.querySelector(".planner__listwrap");
     var summary = container.querySelector(".planner__summary");
     var iframe = container.querySelector(".planner__map");
+    var mapwrap = container.querySelector(".planner__mapwrap");
+
+    // Kartta: JS API jos avain toimii (numeroidut pinnit + reittiviiva), muuten avaimeton upotus
+    var G = { map: null, ready: false, markers: [], line: null };
+    function updateMap(ps) {
+      if (!G.ready || !G.map) { iframe.src = buildEmbedSrc(ps); return; }
+      G.markers.forEach(function (m) { m.setMap(null); }); G.markers = [];
+      if (G.line) { G.line.setMap(null); G.line = null; }
+      if (!ps.length) { G.map.setCenter({ lat: 61.20, lng: 27.67 }); G.map.setZoom(9); return; }
+      var bounds = new google.maps.LatLngBounds(), path = [];
+      ps.forEach(function (p, i) {
+        var pos = { lat: p.lat, lng: p.lng }; bounds.extend(pos); path.push(pos);
+        G.markers.push(new google.maps.Marker({
+          position: pos, map: G.map, title: p.nimi, zIndex: 10 + i,
+          label: { text: String(i + 1), color: "#ffffff", fontSize: "12px", fontWeight: "700" },
+          icon: markerIcon("#0b3d4f", 12)
+        }));
+      });
+      if (path.length > 1) G.line = new google.maps.Polyline({ path: path, geodesic: true, strokeColor: "#d9642a", strokeOpacity: 0.9, strokeWeight: 3, map: G.map });
+      if (ps.length === 1) { G.map.setCenter(path[0]); G.map.setZoom(12); } else { G.map.fitBounds(bounds, 50); }
+    }
+    loadGoogleMaps().then(function () {
+      iframe.style.display = "none";
+      var d = document.createElement("div"); d.className = "planner__gmapdiv"; mapwrap.appendChild(d);
+      G.map = new google.maps.Map(d, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
+      G.ready = true;
+      updateMap(pts());
+    }).catch(function () { /* ei avainta → pidä avaimeton upotus */ });
 
     function pts() {
       return state.selected.map(function (id) {
@@ -527,7 +623,7 @@
             '<button class="btn btn--ghost" type="button" data-clear>Tyhjennä</button></div>'
           : '<p class="planner__hint">Rastita kohteita listasta — ne ilmestyvät kartalle ja tähän reitiksi.</p>');
 
-      iframe.src = buildEmbedSrc(ps);
+      updateMap(ps);
     }
 
     container.addEventListener("change", function (e) {
@@ -658,6 +754,7 @@
         case "events":   renderEvents(c);   break;
         case "detail":   renderDetail(c);   break;
         case "map":      renderMap(c);      break;
+        case "gmap":     renderGmap(c);     break;
         case "nearby":   renderNearby(c);   break;
         case "planner":  renderPlanner(c);  break;
         case "valmisreitit": renderValmisreitit(c); break;
