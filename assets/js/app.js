@@ -568,6 +568,49 @@
     var listwrap = container.querySelector(".planner__listwrap");
     var summary = container.querySelector(".planner__summary");
     var iframe = container.querySelector(".planner__map");
+    var mapwrap = container.querySelector(".planner__mapwrap");
+
+    // Kartta: JS API + Directions (reitti teitä pitkin). Ilman avainta pudotaan avaimettomaan upotukseen.
+    var G = { map: null, ready: false, ds: null, dr: null, markers: [] };
+    function clearMarkers() { G.markers.forEach(function (m) { m.setMap(null); }); G.markers = []; }
+    function markerAt(p, i) {
+      G.markers.push(new google.maps.Marker({
+        position: { lat: p.lat, lng: p.lng }, map: G.map, title: p.nimi, zIndex: 10 + i,
+        label: { text: String(i + 1), color: "#ffffff", fontSize: "12px", fontWeight: "700" },
+        icon: markerIcon("#0b3d4f", 12)
+      }));
+    }
+    function updateMap(ps) {
+      if (!G.ready || !G.map) { iframe.src = buildEmbedSrc(ps); return; }
+      clearMarkers();
+      if (G.dr) G.dr.set("directions", null);
+      if (!ps.length) { G.map.setCenter({ lat: 61.20, lng: 27.67 }); G.map.setZoom(9); return; }
+      if (ps.length === 1) { markerAt(ps[0], 0); G.map.setCenter({ lat: ps[0].lat, lng: ps[0].lng }); G.map.setZoom(12); return; }
+      G.ds.route({
+        origin: { lat: ps[0].lat, lng: ps[0].lng },
+        destination: { lat: ps[ps.length - 1].lat, lng: ps[ps.length - 1].lng },
+        waypoints: ps.slice(1, -1).map(function (p) { return { location: { lat: p.lat, lng: p.lng }, stopover: true }; }),
+        optimizeWaypoints: false,
+        travelMode: google.maps.TravelMode.DRIVING
+      }, function (res, status) {
+        if (status === "OK") { G.dr.setDirections(res); }
+        else {
+          // esim. saaret eivät ole autolla saavutettavissa → näytä pinnit ilman viivaa
+          var b = new google.maps.LatLngBounds();
+          ps.forEach(function (p, i) { markerAt(p, i); b.extend({ lat: p.lat, lng: p.lng }); });
+          G.map.fitBounds(b, 50);
+        }
+      });
+    }
+    loadGoogleMaps().then(function () {
+      iframe.style.display = "none";
+      var d = document.createElement("div"); d.className = "planner__gmapdiv"; mapwrap.appendChild(d);
+      G.map = new google.maps.Map(d, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
+      G.ds = new google.maps.DirectionsService();
+      G.dr = new google.maps.DirectionsRenderer({ map: G.map, suppressMarkers: false, polylineOptions: { strokeColor: "#d9642a", strokeOpacity: 0.9, strokeWeight: 5 } });
+      G.ready = true;
+      updateMap(pts());
+    }).catch(function () { /* ei avainta → avaimeton upotus jää käyttöön */ });
 
     function pts() {
       return state.selected.map(function (id) {
@@ -595,7 +638,7 @@
             '<button class="btn btn--ghost" type="button" data-clear>Tyhjennä</button></div>'
           : '<p class="planner__hint">Rastita kohteita listasta — ne ilmestyvät kartalle ja tähän reitiksi.</p>');
 
-      iframe.src = buildEmbedSrc(ps);
+      updateMap(ps);
     }
 
     container.addEventListener("change", function (e) {
