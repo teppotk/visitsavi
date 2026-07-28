@@ -941,6 +941,22 @@ window.SAVITAIPALE = (function () {
     }
   ];
 
+  // Tapahtumien lähdesivut (Lisätietoja-linkki). Lähde-URLit osoittavat alkuperäissivustoille.
+  var TAP_LAHTEET = {
+    "olkkolan-120v":        ["Olkkolan Hovi",                    "https://olkkolanhovi.fi/tapahtumakalenteri/"],
+    "sapassi":              ["Savitaipaleen kunta",              "https://www.savitaipale.fi/sapassi"],
+    "pettilan-markkinat":   ["Savitaipaleen kunta / Sapassi",    "https://www.savitaipale.fi/sapassi"],
+    "kesaajot":             ["Savitaipaleen kunta / Sapassi",    "https://www.savitaipale.fi/sapassi"],
+    "olkkolan-kesakonsertit":["Olkkolan Hovi",                   "https://olkkolanhovi.fi/tapahtumakalenteri/"],
+    "tennis-open":          ["Savitaipaleen Urheilijat",         "https://www.savitaipaleenurheilijat.fi"],
+    "ruispuurojuhla":       ["Etelä-Karjalan tapahtumakalenteri","https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"],
+    "rosvopaisti":          ["Etelä-Karjalan tapahtumakalenteri","https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"],
+    "luisteluretki":        ["Savitaipaleen Urheilijat",         "https://www.savitaipaleenurheilijat.fi"]
+  };
+  tapahtumat.forEach(function (e) {
+    if (TAP_LAHTEET[e.id]) { e.lahde = TAP_LAHTEET[e.id][0]; e.lahdeUrl = TAP_LAHTEET[e.id][1]; }
+  });
+
   // Merkkihenkilöt ja tarinat (tarinat-sivu)
   const tarinat = [
     {

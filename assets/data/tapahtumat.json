@@ -1,0 +1,80 @@
+[
+  {
+    "id": "feed-valokuvanayttely-gellaria",
+    "nimi": "Valokuvanäyttely: Otoksia matkan varrelta II",
+    "alku": "2026-07-28",
+    "loppu": "2026-08-09",
+    "paikka": "Gellaria, Peltoinlahdentie 11",
+    "jarjestaja": "Gellaria",
+    "kategoria": "Näyttely",
+    "seloste": "Paavo Jurvasen luontokuvia pohjolasta kesägalleriassa.",
+    "toistuva": false,
+    "lahde": "Etelä-Karjalan tapahtumakalenteri",
+    "lahdeUrl": "https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"
+  },
+  {
+    "id": "feed-astuvan-perilliset",
+    "nimi": "Astuvan perilliset Kallioniemessä",
+    "alku": "2026-08-01",
+    "loppu": "2026-08-01",
+    "paikka": "Kallioniemi",
+    "jarjestaja": "Someen seudun kyläseura ry",
+    "kategoria": "Kulttuuritapahtuma",
+    "seloste": "Koko perheen kulttuuritapahtuma kalliorantamaisemassa.",
+    "toistuva": false,
+    "lahde": "Etelä-Karjalan tapahtumakalenteri",
+    "lahdeUrl": "https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"
+  },
+  {
+    "id": "feed-maatilan-elamaa",
+    "nimi": "Valokuvanäyttely: Maatilan elämää 60-luvulla",
+    "alku": "2026-08-03",
+    "loppu": "2026-09-27",
+    "paikka": "Savitaipaleen kirjasto, Keskustie 2",
+    "jarjestaja": "Savitaipaleen kirjasto",
+    "kategoria": "Näyttely",
+    "seloste": "Valokuvia maatilan arjesta Välijoella ja rapakon takana.",
+    "toistuva": false,
+    "lahde": "Etelä-Karjalan tapahtumakalenteri",
+    "lahdeUrl": "https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"
+  },
+  {
+    "id": "feed-taikashow",
+    "nimi": "Janne Mustonen – Mystinen Taikashow",
+    "alku": "2026-10-07",
+    "loppu": "2026-10-07",
+    "paikka": "Koulukeskuksen auditorio, Koulutie 7",
+    "jarjestaja": "Tuotanto MultiTalentit",
+    "kategoria": "Show",
+    "seloste": "Illusionisti Janne Mustosen mystinen taikashow koko perheelle.",
+    "toistuva": false,
+    "lahde": "Etelä-Karjalan tapahtumakalenteri",
+    "lahdeUrl": "https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"
+  },
+  {
+    "id": "feed-joululaulut",
+    "nimi": "Kauneimmat joululaulut ja lähetysmyyjäiset",
+    "alku": "2026-11-29",
+    "loppu": "2026-11-29",
+    "paikka": "Pettilä",
+    "jarjestaja": "Veskansan ry",
+    "kategoria": "Joulutapahtuma",
+    "seloste": "Perinteiset kauneimmat joululaulut ja lähetysmyyjäiset kyläkeskuksessa.",
+    "toistuva": true,
+    "lahde": "Etelä-Karjalan tapahtumakalenteri",
+    "lahdeUrl": "https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"
+  },
+  {
+    "id": "feed-itsenaisyysjuhla",
+    "nimi": "Itsenäisyyspäivän juhla ja joulujuhla",
+    "alku": "2026-12-04",
+    "loppu": "2026-12-04",
+    "paikka": "Pettilä",
+    "jarjestaja": "Veskansan ry",
+    "kategoria": "Perinnejuhla",
+    "seloste": "Itsenäisyyspäivän ja joulun perinnejuhla kyläkeskuksessa.",
+    "toistuva": true,
+    "lahde": "Etelä-Karjalan tapahtumakalenteri",
+    "lahdeUrl": "https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"
+  }
+]

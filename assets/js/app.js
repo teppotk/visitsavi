@@ -294,32 +294,80 @@
   }
 
   /* ---------------- Tapahtumat ---------------- */
+  function evParse(s) { return new Date(s + "T00:00:00"); }
+  function evRange(e) {
+    var d = evParse(e.alku);
+    if (e.loppu && e.loppu !== e.alku) {
+      var d2 = evParse(e.loppu);
+      return d.getDate() + ".–" + d2.getDate() + "." + (d2.getMonth() + 1) + ". " + d2.getFullYear();
+    }
+    return d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+  }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function eventItemHTML(e, past) {
+    var d = evParse(e.alku);
+    var meta = evRange(e) + " · " + esc(e.paikka) + (e.lahde ? " · Lähde: " + esc(e.lahde) : "");
+    var src = e.lahdeUrl ? '<a class="event__src" href="' + e.lahdeUrl + '" target="_blank" rel="noopener">Lisätietoja ↗</a>' : "";
+    return '<article class="event reveal' + (past ? " event--past" : "") + '">' +
+      '<div class="event__date"><span class="d">' + d.getDate() + '</span><span class="m">' + KK[d.getMonth()] + "</span></div>" +
+      '<div class="event__main"><h3>' + esc(e.nimi) + "</h3><p>" + esc(e.seloste) + "</p>" +
+      '<p class="event__meta2">' + esc(meta) + "</p>" + src + "</div>" +
+      '<div class="event__meta"><span class="cat">' + esc(e.kategoria) + "</span>" +
+      (e.toistuva ? "<br>vuosittainen" : "") + (past ? "<br>päättynyt" : "") + "</div>" +
+      "</article>";
+  }
+  // Prototyyppi: keksitty tapahtuma aina kuluvalle päivälle
+  function todayEvent() {
+    var d = new Date();
+    var iso = d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+    return { id: "tanaan-proto", nimi: "Kesäillan toritanssit ja iltatori", alku: iso, loppu: iso,
+      paikka: "Savitaipaleen tori", jarjestaja: "Visit Savitaipale", kategoria: "Musiikki",
+      seloste: "Elävää musiikkia, tanssia ja lähiruokatoreja pitäjän sydämessä — tunnelmaa koko perheelle.",
+      toistuva: false, lahde: "Visit Savitaipale", lahdeUrl: "https://www.savitaipale.fi/sapassi" };
+  }
+
   function renderEvents(container) {
     var limit = parseInt(container.getAttribute("data-limit") || "0", 10);
-    var evs = D.tapahtumat.slice().sort(function (a, b) { return a.alku < b.alku ? -1 : 1; });
-    if (limit) evs = evs.slice(0, limit);
-    var list = el('<div class="events"></div>');
-    evs.forEach(function (e) {
-      var d = new Date(e.alku + "T00:00:00");
-      var range = "";
-      if (e.loppu && e.loppu !== e.alku) {
-        var d2 = new Date(e.loppu + "T00:00:00");
-        range = d.getDate() + ".–" + d2.getDate() + "." + (d2.getMonth() + 1) + ". " + d2.getFullYear();
-      } else {
-        range = d.getDate() + "." + (d.getMonth() + 1) + "." + d.getFullYear();
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    function isPast(e) { return evParse(e.loppu || e.alku) < today; }
+    function isToday(e) { return evParse(e.alku) <= today && today <= evParse(e.loppu || e.alku); }
+    function byDate(a, b) { return a.alku < b.alku ? -1 : (a.alku > b.alku ? 1 : 0); }
+
+    function draw(list) {
+      var html = "";
+      if (!limit) {
+        var todays = list.filter(isToday);
+        html += '<div class="today-box"><p class="today-box__label"><span class="today-box__dot"></span>Tänään tapahtuu</p>';
+        html += todays.length ? todays.map(function (e) {
+          var src = e.lahdeUrl ? ' · <a href="' + e.lahdeUrl + '" target="_blank" rel="noopener">Lisätietoja ↗</a>' : "";
+          return '<div class="today-box__item"><h3>' + esc(e.nimi) + "</h3><p>" + esc(e.seloste) + "</p>" +
+            '<p class="today-box__meta">' + esc(e.paikka) + src + "</p></div>";
+        }).join("") : '<p class="today-box__empty">Ei merkittyjä tapahtumia juuri tänään — selaa alta tulevia.</p>';
+        html += "</div>";
       }
-      list.appendChild(el(
-        '<article class="event reveal">' +
-        '<div class="event__date"><span class="d">' + d.getDate() + '</span><span class="m">' + KK[d.getMonth()] + "</span></div>" +
-        '<div class="event__main"><h3>' + esc(e.nimi) + "</h3><p>" + esc(e.seloste) + "</p>" +
-        '<p style="margin-top:.4rem;font-family:var(--mono);font-size:.76rem">' + esc(range) + " · " + esc(e.paikka) + "</p></div>" +
-        '<div class="event__meta"><span class="cat">' + esc(e.kategoria) + "</span><br>" +
-        (e.toistuva ? "vuosittainen" : "") + "</div>" +
-        "</article>"
-      ));
-    });
-    container.appendChild(list);
-    observeReveal(container);
+      var shown = list.slice().sort(byDate);
+      if (limit) shown = shown.filter(function (e) { return !isPast(e); }).slice(0, limit);
+      html += '<div class="events">' + shown.map(function (e) { return eventItemHTML(e, isPast(e)); }).join("") + "</div>";
+      container.innerHTML = html;
+      observeReveal(container);
+    }
+
+    var base = D.tapahtumat.slice();
+    if (!limit) base.unshift(todayEvent());
+    draw(base);
+
+    // Dynaaminen haku lähdesyötteestä → yhdistä ja renderöi lista uudestaan
+    if (!limit) {
+      fetch("assets/data/tapahtumat.json", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : null; })
+        .then(function (feed) {
+          if (!feed || !feed.length) return;
+          var seen = {}; base.forEach(function (e) { seen[e.id] = 1; });
+          feed.forEach(function (e) { if (!seen[e.id]) base.push(e); });
+          draw(base);
+        })
+        .catch(function () { /* offline / ei syötettä → sisäänrakennetut jäävät näkyviin */ });
+    }
   }
 
   /* ---------------- Yksittäinen kohde ---------------- */
