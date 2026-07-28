@@ -963,6 +963,50 @@ window.SAVITAIPALE = (function () {
     }
   ];
 
+  // Valmiit suositellut reitit (matkasuunnittelija). Kaikilla kohteilla on koordinaatit.
+  const reittisuositukset = [
+    {
+      id: "geopark-kierros",
+      nimi: "Geopark-kierros",
+      kesto: "koko päivä",
+      teema: "harju",
+      kuvaus: "Jääkauden ja sotahistorian kierros kahden veden kannaksella: linnoitus, kosket, jyrkänteet ja hiekkaranta.",
+      kohteet: ["karnakosken-linnoitus", "partakoski", "luotolahdenvuori", "lepankannon-harju"]
+    },
+    {
+      id: "kulttuurikavely",
+      nimi: "Kirkonkylän kulttuurikävely",
+      kesto: "2–3 h",
+      teema: "kirkko",
+      kuvaus: "Kävelymatkan päässä toisistaan: graniittikirkko, kellotapuli, kotiseutumuseo, käsityöasema ja Europaeus-museo.",
+      kohteet: ["savitaipaleen-kirkko", "kirkonrakentajien-museo", "hakamaen-museoalue", "savitaipaleen-kasityoasema", "europaeus-museo"]
+    },
+    {
+      id: "jarvet-nakoalat",
+      nimi: "Järvet & näköalat",
+      kesto: "koko päivä",
+      teema: "jarvi",
+      kuvaus: "Kirkasvetisen Kuolimon parhaat: harjusaari, jyrkänteet, hiekkaranta ja suojeltu saari.",
+      kohteet: ["suomensalon-harju", "luotolahdenvuori", "lepankannon-harju", "lehtisensaari"]
+    },
+    {
+      id: "maku-majoitus",
+      nimi: "Maku & majoitus",
+      kesto: "ilta / yö",
+      teema: "kyla",
+      kuvaus: "Lähiruokaa ja yöpyminen: kyläravintola, historiallinen kartano, kesäkahvila ja Partakosken miljöö.",
+      kohteet: ["ravintola-sahrami", "olkkolan-hovi", "reiposen-tila", "partakoski"]
+    },
+    {
+      id: "talvipaiva",
+      nimi: "Talvipäivä Kuolimolla",
+      kesto: "½ päivää",
+      teema: "talvi",
+      kuvaus: "Retkiluistelua kirkasvetisellä jäällä ja kartanon saunat lämmittämään.",
+      kohteet: ["kuolimon-luistelurata", "olkkolan-hovi"]
+    }
+  ];
+
   const faktat = {
     asukkaat: "~3 100",
     kesalisays: "väkiluku lähes kolminkertaistuu kesällä",
@@ -989,6 +1033,7 @@ window.SAVITAIPALE = (function () {
     kohteet: kohteet,
     tapahtumat: tapahtumat,
     tarinat: tarinat,
+    reittisuositukset: reittisuositukset,
     faktat: faktat,
     kuvat: KUVAT,
     byId: function (id) {

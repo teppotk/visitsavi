@@ -439,6 +439,142 @@
     container.appendChild(el('<p class="mapnote">◎ Suuntaa-antava sijaintikartta · oranssit pisteet ovat Saimaa Geoparkin geokohteita · klikkaa kohdetta</p>'));
   }
 
+  /* ---------------- Matkasuunnittelija ---------------- */
+  var PLANNER = { apply: null }; // renderValmisreitit kutsuu tätä
+
+  var INTERESTS = [
+    { key: "kulttuuri",    label: "Nähtävyydet & kulttuuri" },
+    { key: "luonto",       label: "Luonto & Geopark" },
+    { key: "aktiviteetit", label: "Aktiviteetit" },
+    { key: "majoitus",     label: "Majoitus" },
+    { key: "ruoka",        label: "Ruokapaikat" }
+  ];
+  function interestOf(k) {
+    if (k.osio === "nae-ja-koe") return "kulttuuri";
+    if (k.osio === "luonto") return "luonto";
+    if (k.osio === "tekemista") return "aktiviteetit";
+    if (k.osio === "majoitus") return /(Ravintola|Kahvila)/.test(k.tyyppi) ? "ruoka" : "majoitus";
+    return "kulttuuri";
+  }
+  function buildEmbedSrc(ps) {
+    var base = "https://maps.google.com/maps?output=embed&hl=fi";
+    if (!ps.length) return base + "&q=Savitaipale,Suomi&z=9";
+    if (ps.length === 1) return base + "&q=" + ps[0].lat + "," + ps[0].lng + "&z=12";
+    var saddr = ps[0].lat + "," + ps[0].lng;
+    var daddr = ps.slice(1).map(function (p) { return p.lat + "," + p.lng; }).join("+to:");
+    return base + "&saddr=" + saddr + "&daddr=" + daddr; // raw: +to: ja pilkut ovat Google-syntaksia
+  }
+  function buildDirLink(ps) {
+    if (ps.length < 2) return "https://www.google.com/maps/search/?api=1&query=" + (ps.length ? ps[0].lat + "," + ps[0].lng : "Savitaipale");
+    var origin = ps[0].lat + "," + ps[0].lng;
+    var dest = ps[ps.length - 1];
+    var mids = ps.slice(1, -1).map(function (p) { return p.lat + "," + p.lng; }).join("|");
+    var u = "https://www.google.com/maps/dir/?api=1&origin=" + origin + "&destination=" + dest.lat + "," + dest.lng;
+    if (mids) u += "&waypoints=" + encodeURIComponent(mids);
+    return u;
+  }
+
+  function renderPlanner(container) {
+    var mappable = D.kohteet.filter(function (k) { return k.koord; });
+    var present = {};
+    mappable.forEach(function (k) { present[interestOf(k)] = true; });
+    var interestBoxes = INTERESTS.filter(function (i) { return present[i.key]; });
+    var state = { interests: {}, selected: [] };
+    interestBoxes.forEach(function (i) { state.interests[i.key] = true; });
+
+    container.innerHTML =
+      '<div class="planner">' +
+        '<div class="planner__controls">' +
+          '<fieldset class="planner__interests"><legend>1. Mikä kiinnostaa?</legend>' +
+          interestBoxes.map(function (i) {
+            return '<label class="chipbox"><input type="checkbox" value="' + i.key + '" checked><span>' + esc(i.label) + "</span></label>";
+          }).join("") + "</fieldset>" +
+          '<div class="planner__listwrap"></div>' +
+          '<div class="planner__summary"></div>' +
+        "</div>" +
+        '<div class="planner__mapcol"><div class="planner__mapwrap">' +
+          '<iframe class="planner__map" title="Reittikartta" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>' +
+        "</div></div>" +
+      "</div>";
+
+    var listwrap = container.querySelector(".planner__listwrap");
+    var summary = container.querySelector(".planner__summary");
+    var iframe = container.querySelector(".planner__map");
+
+    function pts() {
+      return state.selected.map(function (id) {
+        var k = D.byId(id);
+        return { id: id, nimi: k.nimi, tyyppi: k.tyyppi, lat: k.koord.lat, lng: k.koord.lng };
+      });
+    }
+    function refresh() {
+      var items = mappable.filter(function (k) { return state.interests[interestOf(k)]; });
+      listwrap.innerHTML = '<p class="planner__listtitle">2. Valitse kohteet (' + items.length + ")</p>" +
+        (items.length ? items.map(function (k) {
+          var on = state.selected.indexOf(k.id) >= 0;
+          return '<label class="planner__item' + (on ? " is-on" : "") + '"><input type="checkbox" value="' + k.id + '"' + (on ? " checked" : "") + ">" +
+            '<span class="pi-name">' + esc(k.nimi) + '</span><span class="pi-type">' + esc(k.tyyppi) + "</span></label>";
+        }).join("") : '<p class="empty">Ei kohteita valituilla kiinnostuksilla.</p>');
+
+      var ps = pts();
+      summary.innerHTML = "<h3>3. Reittisi — " + ps.length + " kohdetta</h3>" +
+        (ps.length
+          ? '<ol class="planner__plan">' + ps.map(function (p) {
+              return "<li><span>" + esc(p.nimi) + '</span><button class="pi-remove" data-id="' + p.id + '" aria-label="Poista kohde">×</button></li>';
+            }).join("") + "</ol>" +
+            '<div class="planner__actions">' +
+            '<a class="btn btn--primary" target="_blank" rel="noopener" href="' + buildDirLink(ps) + '">Avaa reitti Google Mapsissa ↗</a>' +
+            '<button class="btn btn--ghost" type="button" data-clear>Tyhjennä</button></div>'
+          : '<p class="planner__hint">Rastita kohteita listasta — ne ilmestyvät kartalle ja tähän reitiksi.</p>');
+
+      iframe.src = buildEmbedSrc(ps);
+    }
+
+    container.addEventListener("change", function (e) {
+      var t = e.target;
+      if (t.matches(".planner__interests input")) { state.interests[t.value] = t.checked; refresh(); }
+      else if (t.matches(".planner__listwrap input")) {
+        var id = t.value;
+        if (t.checked) { if (state.selected.indexOf(id) < 0) state.selected.push(id); }
+        else { state.selected = state.selected.filter(function (x) { return x !== id; }); }
+        refresh();
+      }
+    });
+    container.addEventListener("click", function (e) {
+      var rm = e.target.closest(".pi-remove");
+      if (rm) { var id = rm.getAttribute("data-id"); state.selected = state.selected.filter(function (x) { return x !== id; }); refresh(); return; }
+      if (e.target.matches("[data-clear]")) { state.selected = []; refresh(); }
+    });
+
+    PLANNER.apply = function (ids) {
+      state.selected = ids.filter(function (id) { var k = D.byId(id); return k && k.koord; });
+      state.selected.forEach(function (id) { state.interests[interestOf(D.byId(id))] = true; });
+      Array.prototype.forEach.call(container.querySelectorAll(".planner__interests input"), function (cb) { cb.checked = !!state.interests[cb.value]; });
+      refresh();
+      container.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
+
+    refresh();
+  }
+
+  function renderValmisreitit(container) {
+    container.innerHTML = '<div class="routes">' + D.reittisuositukset.map(function (r) {
+      var names = r.kohteet.map(function (id) { var k = D.byId(id); return k ? k.nimi : id; });
+      return '<article class="route reveal">' +
+        '<div class="route__media">' + S.svg(r.teema, r.id) + '<span class="route__kesto">' + esc(r.kesto) + "</span></div>" +
+        '<div class="route__body"><h3>' + esc(r.nimi) + "</h3><p>" + esc(r.kuvaus) + "</p>" +
+        '<p class="route__stops">' + names.map(esc).join(" → ") + "</p>" +
+        '<button class="btn btn--ghost" type="button" data-route="' + r.id + '">Käytä tätä reittiä →</button></div></article>';
+    }).join("") + "</div>";
+    container.addEventListener("click", function (e) {
+      var b = e.target.closest("[data-route]");
+      if (!b) return;
+      var r = D.reittisuositukset.filter(function (x) { return x.id === b.getAttribute("data-route"); })[0];
+      if (r && PLANNER.apply) PLANNER.apply(r.kohteet);
+    });
+    observeReveal(container);
+  }
+
   /* ---------------- Tarinat ---------------- */
   function renderStories(container) {
     var html = D.tarinat.map(function (t) {
@@ -517,6 +653,8 @@
         case "detail":   renderDetail(c);   break;
         case "map":      renderMap(c);      break;
         case "nearby":   renderNearby(c);   break;
+        case "planner":  renderPlanner(c);  break;
+        case "valmisreitit": renderValmisreitit(c); break;
         case "kuvakreditit": renderKuvakreditit(c); break;
         case "stories":  renderStories(c);  break;
       }
