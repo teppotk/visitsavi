@@ -317,6 +317,9 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .iw-type { font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muste-2); }
 .iw a { font-weight: 600; color: var(--kuolimo-tumma); }
 .planner__gmapdiv { position: absolute; inset: 0; width: 100%; height: 100%; }
+.planner__loc { position: absolute; top: .7rem; right: .7rem; z-index: 5; font: 600 .82rem/1 var(--sans); color: var(--syvavesi); background: rgba(255,255,255,.95); border: 1px solid var(--viiva); border-radius: 999px; padding: .5rem .85rem; cursor: pointer; box-shadow: var(--shadow); }
+.planner__loc:hover { color: var(--nuotio); }
+.planner__loc:disabled { opacity: .7; cursor: default; }
 
 /* =========================================================================
    Valokuvat (photo or SVG fallback) + CC-attribuutio

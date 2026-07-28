@@ -609,6 +609,23 @@
       G.ds = new google.maps.DirectionsService();
       G.dr = new google.maps.DirectionsRenderer({ map: G.map, suppressMarkers: false, polylineOptions: { strokeColor: "#d9642a", strokeOpacity: 0.9, strokeWeight: 5 } });
       G.ready = true;
+      // Oma sijainti -painike
+      var locBtn = document.createElement("button");
+      locBtn.type = "button"; locBtn.className = "planner__loc"; locBtn.textContent = "📍 Näytä sijaintini";
+      mapwrap.appendChild(locBtn);
+      var userMarker = null;
+      locBtn.addEventListener("click", function () {
+        if (!navigator.geolocation) { locBtn.textContent = "Paikannus ei käytössä"; return; }
+        locBtn.disabled = true; locBtn.textContent = "Haetaan…";
+        navigator.geolocation.getCurrentPosition(function (p) {
+          locBtn.disabled = false; locBtn.textContent = "📍 Näytä sijaintini";
+          var u = { lat: p.coords.latitude, lng: p.coords.longitude };
+          if (userMarker) userMarker.setMap(null);
+          userMarker = new google.maps.Marker({ position: u, map: G.map, title: "Sijaintisi", zIndex: 999, icon: markerIcon("#1a73e8", 8) });
+          G.map.panTo(u);
+        }, function () { locBtn.disabled = false; locBtn.textContent = "📍 Näytä sijaintini"; },
+          { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 });
+      });
       updateMap(pts());
     }).catch(function () { /* ei avainta → avaimeton upotus jää käyttöön */ });
 
