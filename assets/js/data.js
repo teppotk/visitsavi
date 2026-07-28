@@ -792,7 +792,10 @@ window.SAVITAIPALE = (function () {
     "kuolimo-saaret.jpg":    { tekija: "J Hokkanen",        lisenssi: "CC BY-SA 4.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0", lahde: "https://commons.wikimedia.org/wiki/File:Rohjosaaret_01.jpg" },
     "kuolimo-ranta.jpg":     { tekija: "J Hokkanen",        lisenssi: "CC BY-SA 4.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0", lahde: "https://commons.wikimedia.org/wiki/File:Jyrk%C3%A4nmaanhiekka_01.jpg" },
     "retkiluistelu.jpg":     { tekija: "Paxson Woelber",    lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/59306007@N08/53009253392" },
-    "hiihto.jpg":            { tekija: "rjshade",           lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/89466603@N00/12182340294" }
+    "hiihto.jpg":            { tekija: "rjshade",           lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/89466603@N00/12182340294" },
+    "palju.jpg":             { tekija: "BPPrice",           lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/73082817@N03/16600078521" },
+    "padel.jpg":             { tekija: "Merja Wesander",    lisenssi: "CC BY 4.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/4.0/", lahde: "https://commons.wikimedia.org/w/index.php?curid=112712785" },
+    "fatbike.jpg":           { tekija: "Citizen 4474",      lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/8590349@N05/9015640367" }
   };
   var KUVA_MAP = {
     "savitaipaleen-kirkko":     ["kirkko.jpg",             "Savitaipaleen graniittikirkko"],
@@ -806,7 +809,10 @@ window.SAVITAIPALE = (function () {
     "kalastus":                 ["kuolimo-saaret.jpg",     "Kuolimon saaristoa"],
     "lepankannon-harju":        ["kuolimo-ranta.jpg",      "Kuolimon hiekkarantaa"],
     "retkiluistelu":            ["retkiluistelu.jpg",      "Retkiluistelua kirkasvetisen järven jäällä"],
-    "hiihtoladut":              ["hiihto.jpg",             "Hiihtoa talvisessa järvimaisemassa"]
+    "hiihtoladut":              ["hiihto.jpg",             "Hiihtoa talvisessa järvimaisemassa"],
+    "saimaan-palju":            ["palju.jpg",              "Ulkopalju talvisessa maisemassa"],
+    "padel":                    ["padel.jpg",              "Padel-peliä ulkokentällä"],
+    "fatbike-safari":           ["fatbike.jpg",            "Fatbike-pyöriä harjumaisemassa"]
   };
   kohteet.forEach(function (k) {
     if (KUVA_MAP[k.id]) { k.kuva = KUVA_MAP[k.id][0]; k.kuvaAlt = KUVA_MAP[k.id][1]; }
