@@ -1,0 +1,62 @@
+{
+  "kirkko.jpg": {
+    "tekija": "Tommi Nummelin",
+    "lisenssi": "CC BY-SA 3.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Savitaipaleen_kirkko.JPG"
+  },
+  "tapuli.jpg": {
+    "tekija": "Periegetes",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Savitaipale_bell_tower_123.jpg"
+  },
+  "karnakoski.jpg": {
+    "tekija": "Tuomas Vitikainen",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:K%C3%A4rn%C3%A4kosken_linnoitus_2017_01.jpg"
+  },
+  "luotolahdenvuori.jpg": {
+    "tekija": "J Hokkanen",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Luotolahdenvuori_n%C3%A4kym%C3%A4.jpg"
+  },
+  "suomensalo.jpg": {
+    "tekija": "J Hokkanen",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Suomensalon_Lintuniemi_01.jpg"
+  },
+  "partakoski.jpg": {
+    "tekija": "Jaakko H.",
+    "lisenssi": "CC BY-SA 3.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Partakoski_harbour_-_panoramio.jpg"
+  },
+  "partakoski-kahvila.jpg": {
+    "tekija": "Jaakko H.",
+    "lisenssi": "CC BY-SA 3.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Hilltop_cafeteria_at_Partakoski_-_panoramio.jpg"
+  },
+  "kuolimo-salmi.jpg": {
+    "tekija": "J Hokkanen",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Luotolahdensalmi_01.jpg"
+  },
+  "kuolimo-saaret.jpg": {
+    "tekija": "J Hokkanen",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Rohjosaaret_01.jpg"
+  },
+  "kuolimo-ranta.jpg": {
+    "tekija": "J Hokkanen",
+    "lisenssi": "CC BY-SA 4.0",
+    "lisenssiUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "lahde": "https://commons.wikimedia.org/wiki/File:Jyrk%C3%A4nmaanhiekka_01.jpg"
+  }
+}
