@@ -69,7 +69,7 @@
       '</div>' +
       '<div class="footer-disclaimer"><strong>Prototyyppi.</strong> Tämä on esittelyversio Savitaipaleen matkailusivustosta. ' +
       'Sisältö perustuu julkisiin lähteisiin; hinnat, aukioloajat ja päivämäärät on tarkistettava ennen julkaisua. ' +
-      'Valokuvat: Wikimedia Commons (CC BY-SA), tekijät mainittu kuvien yhteydessä ja <a href="suunnittele.html#main">Suunnittele-sivulla</a>. Osa kuvituksesta on tyyliteltyä grafiikkaa.</div>' +
+      'Valokuvat: Wikimedia Commons ja Flickr (CC BY / CC BY-SA), tekijät mainittu kuvien yhteydessä ja <a href="suunnittele.html#main">Suunnittele-sivulla</a>. Osa kuvituksesta on tyyliteltyä grafiikkaa.</div>' +
       '<div class="footer-bottom"><span>© ' + '2026 Visit Savitaipale</span><span>61.20° N · 27.69° E</span></div>' +
       "</div></footer>"
     );
@@ -601,11 +601,17 @@
   }
 
   /* ---------------- Kuvien lähteet (CC-attribuutio) ---------------- */
+  function kuvaLahdePalvelu(url) {
+    if (/flickr\.com/.test(url)) return "Flickr";
+    if (/wikimedia\.org|wikipedia\.org/.test(url)) return "Wikimedia Commons";
+    try { return url.split("/")[2].replace(/^www\./, ""); } catch (e) { return "verkko"; }
+  }
   function renderKuvakreditit(container) {
     var list = Object.keys(D.kuvat || {}).map(function (f) {
       var c = D.kuvat[f];
       return '<li><a href="' + c.lahde + '" target="_blank" rel="noopener">' + esc(f) + "</a> — " +
-        esc(c.tekija) + ', <a href="' + c.lisenssiUrl + '" target="_blank" rel="noopener">' + esc(c.lisenssi) + "</a>, Wikimedia Commons</li>";
+        esc(c.tekija) + ', <a href="' + c.lisenssiUrl + '" target="_blank" rel="noopener">' + esc(c.lisenssi) + "</a>, " +
+        esc(kuvaLahdePalvelu(c.lahde)) + "</li>";
     }).join("");
     container.innerHTML = '<ul class="kreditit">' + list + "</ul>";
   }

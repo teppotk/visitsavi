@@ -790,7 +790,9 @@ window.SAVITAIPALE = (function () {
     "partakoski-kahvila.jpg":{ tekija: "Jaakko H.",         lisenssi: "CC BY-SA 3.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/3.0", lahde: "https://commons.wikimedia.org/wiki/File:Hilltop_cafeteria_at_Partakoski_-_panoramio.jpg" },
     "kuolimo-salmi.jpg":     { tekija: "J Hokkanen",        lisenssi: "CC BY-SA 4.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0", lahde: "https://commons.wikimedia.org/wiki/File:Luotolahdensalmi_01.jpg" },
     "kuolimo-saaret.jpg":    { tekija: "J Hokkanen",        lisenssi: "CC BY-SA 4.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0", lahde: "https://commons.wikimedia.org/wiki/File:Rohjosaaret_01.jpg" },
-    "kuolimo-ranta.jpg":     { tekija: "J Hokkanen",        lisenssi: "CC BY-SA 4.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0", lahde: "https://commons.wikimedia.org/wiki/File:Jyrk%C3%A4nmaanhiekka_01.jpg" }
+    "kuolimo-ranta.jpg":     { tekija: "J Hokkanen",        lisenssi: "CC BY-SA 4.0", lisenssiUrl: "https://creativecommons.org/licenses/by-sa/4.0", lahde: "https://commons.wikimedia.org/wiki/File:Jyrk%C3%A4nmaanhiekka_01.jpg" },
+    "retkiluistelu.jpg":     { tekija: "Paxson Woelber",    lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/59306007@N08/53009253392" },
+    "hiihto.jpg":            { tekija: "rjshade",           lisenssi: "CC BY 2.0",    lisenssiUrl: "https://creativecommons.org/licenses/by/2.0/", lahde: "https://www.flickr.com/photos/89466603@N00/12182340294" }
   };
   var KUVA_MAP = {
     "savitaipaleen-kirkko":     ["kirkko.jpg",             "Savitaipaleen graniittikirkko"],
@@ -802,7 +804,9 @@ window.SAVITAIPALE = (function () {
     "partakosken-kesapalvelut": ["partakoski-kahvila.jpg", "Kesäkahvila Partakosken harjulla"],
     "melonta-sup":              ["kuolimo-salmi.jpg",      "Kuolimon kirkasvetinen salmi"],
     "kalastus":                 ["kuolimo-saaret.jpg",     "Kuolimon saaristoa"],
-    "lepankannon-harju":        ["kuolimo-ranta.jpg",      "Kuolimon hiekkarantaa"]
+    "lepankannon-harju":        ["kuolimo-ranta.jpg",      "Kuolimon hiekkarantaa"],
+    "retkiluistelu":            ["retkiluistelu.jpg",      "Retkiluistelua kirkasvetisen järven jäällä"],
+    "hiihtoladut":              ["hiihto.jpg",             "Hiihtoa talvisessa järvimaisemassa"]
   };
   kohteet.forEach(function (k) {
     if (KUVA_MAP[k.id]) { k.kuva = KUVA_MAP[k.id][0]; k.kuvaAlt = KUVA_MAP[k.id][1]; }
