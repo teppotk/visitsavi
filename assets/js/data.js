@@ -671,16 +671,21 @@ window.SAVITAIPALE = (function () {
       teema: "kyla",
       kyla: "kirkonkylä",
       seloste:
-        "Lähiruokaa 'kartanotwistillä' — lounasbuffet, à la carte ja järviterassi.",
+        "Kartanon ravintola: konstailematonta kotiruokaa 'kartano-twistillä', lähiruokaa ja järvinäköala.",
       kuvaus: [
-        "Kartanon ravintola tarjoaa arkisin lounasbuffetin ja à la carte -annoksia, joissa painottuu paikallinen lähiruoka. Ruokailutiloina ovat panoraamaterassi, lasikuisti, pianosali ja teehuone.",
-        "Kesäisin avautuu järvinäköalainen terassi."
+        "Olkkolan Hovin ravintola tarjoilee kotiruokaa kartano-twistillä ja arvostaa lähiruokaa sekä paikallisia pienyrittäjiä. Kesäsesonkina se toimii sekä buffetlounas- että à la carte -ravintolana.",
+        "Ruokailu- ja juhlatiloina toimivat näköalaterassi, lasikuisti, pianosali, teehuone ja luentosali. Kesäisin avautuu viehättävä, järvinäköalainen kesäterassi säiden mukaan.",
+        "Ravintolassa järjestetään myös juhlia ja tilaisuuksia ristiäisistä häihin ja kokouksiin."
       ],
       kategoriat: ["Ravintolat", "Lähiruoka"],
-      vuodenajat: ["ympärivuotinen"],
+      vuodenajat: ["kesä"],
       tiedot: [
-        { label: "Lounas", arvo: "ark.–la klo 11–14, n. 15,90 €" },
-        { label: "Sijainti", arvo: "Olkkolantie 2" }
+        { label: "Keittiö", arvo: "Kotiruoka & lähiruoka; buffetlounas ja à la carte" },
+        { label: "Kausi", arvo: "Kesäsesonki; muina aikoina tilaisuudet sopimuksesta" },
+        { label: "Tilat", arvo: "Näköalaterassi, lasikuisti, pianosali, teehuone, kesäterassi" },
+        { label: "Osoite", arvo: "Olkkolantie 2, 54800 Savitaipale" },
+        { label: "Puhelin", arvo: "050 5555 862" },
+        { label: "Verkkosivu", arvo: "olkkolanhovi.fi" }
       ]
     },
     {
@@ -748,7 +753,9 @@ window.SAVITAIPALE = (function () {
    */
   var KOORD = {
     "olkkolan-hovi": [61.20167, 27.67069],
+    "olkkolan-ravintola": [61.20167, 27.67069],
     "europaeus-museo": [61.20167, 27.67069],
+    "partakosken-kesapalvelut": [61.27114, 27.70237],
     "ravintola-sahrami": [61.19726, 27.68247],
     "savitaipaleen-kirkko": [61.19946, 27.68629],
     "kirkonrakentajien-museo": [61.20041, 27.68487],
