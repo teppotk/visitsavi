@@ -366,15 +366,29 @@
       "</div></section>"
     );
 
-    var mapSec = el(
-      '<section class="section"><div class="wrap">' +
-      '<div class="section-head"><p class="eyebrow">Sijainti</p><h2>Kartalla</h2></div>' +
-      gmapBlock(k) + "</div></section>"
-    );
+    var mapSec;
+    if (k.koord) {
+      mapSec = el(
+        '<section class="section"><div class="wrap">' +
+        '<div class="section-head"><p class="eyebrow">Sijainti</p><h2>Kartalla</h2></div>' +
+        '<div class="detailmap"></div>' +
+        '<div class="map-actions">' +
+        '<a class="btn btn--primary" target="_blank" rel="noopener" href="' + gmapDir(mapQuery(k)) + '">Reittiohjeet ↗</a>' +
+        '<a class="btn btn--ghost" target="_blank" rel="noopener" href="' + gmapSearch(mapQuery(k)) + '">Avaa Google Mapsissa ↗</a>' +
+        "</div></div></section>"
+      );
+    } else {
+      mapSec = el(
+        '<section class="section"><div class="wrap">' +
+        '<div class="section-head"><p class="eyebrow">Sijainti</p><h2>Kartalla</h2></div>' +
+        gmapBlock(k) + "</div></section>"
+      );
+    }
 
     container.appendChild(hero);
     container.appendChild(body);
     container.appendChild(mapSec);
+    if (k.koord) renderGmap(mapSec.querySelector(".detailmap"), k);
     if (relHTML) container.appendChild(el(relHTML));
     observeReveal(container);
   }
@@ -401,8 +415,15 @@
     return { path: google.maps.SymbolPath.CIRCLE, scale: scale || 7, fillColor: color, fillOpacity: 1, strokeColor: "#ffffff", strokeWeight: 2 };
   }
 
-  // Yleiskartta: kaikki koordinaatilliset kohteet pinneinä + oma sijainti
-  function renderGmap(container) {
+  function iwHTML(k) {
+    return '<div class="iw"><strong>' + esc(k.nimi) + "</strong><br>" +
+      '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span><br>" +
+      '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
+      '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>';
+  }
+  // Interaktiivinen kartta: kaikki kohteet pinneinä + oma sijainti.
+  // focusK (valinnainen): korosta ja keskitä tähän kohteeseen (kohdesivut).
+  function renderGmap(container, focusK) {
     var pts = D.kohteet.filter(function (k) { return k.koord; });
     container.innerHTML =
       '<div class="gmapfull"><div class="gmapfull__map"></div>' +
@@ -415,19 +436,24 @@
       var bounds = new google.maps.LatLngBounds();
       var map = new google.maps.Map(mapEl, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
       var iw = new google.maps.InfoWindow();
+      var focusMarker = null;
       pts.forEach(function (k) {
         var pos = { lat: k.koord.lat, lng: k.koord.lng };
         bounds.extend(pos);
-        var m = new google.maps.Marker({ position: pos, map: map, title: k.nimi, icon: markerIcon(k.geopark ? "#d9642a" : "#0b3d4f", 7) });
-        m.addListener("click", function () {
-          iw.setContent('<div class="iw"><strong>' + esc(k.nimi) + "</strong><br>" +
-            '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span><br>" +
-            '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
-            '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>');
-          iw.open(map, m);
-        });
+        var isFocus = focusK && k.id === focusK.id;
+        var m = new google.maps.Marker({ position: pos, map: map, title: k.nimi,
+          zIndex: isFocus ? 999 : 1,
+          icon: markerIcon(k.geopark ? "#d9642a" : "#0b3d4f", isFocus ? 12 : 7) });
+        m.addListener("click", function () { iw.setContent(iwHTML(k)); iw.open(map, m); });
+        if (isFocus) focusMarker = m;
       });
-      map.fitBounds(bounds, 60);
+      if (focusK && focusK.koord && focusMarker) {
+        map.setCenter({ lat: focusK.koord.lat, lng: focusK.koord.lng });
+        map.setZoom(12);
+        iw.setContent(iwHTML(focusK)); iw.open(map, focusMarker);
+      } else {
+        map.fitBounds(bounds, 60);
+      }
       var userMarker = null;
       locBtn.addEventListener("click", function () {
         if (!navigator.geolocation) { locBtn.textContent = "Paikannus ei käytössä"; return; }
@@ -436,14 +462,15 @@
           locBtn.disabled = false; locBtn.textContent = "📍 Näytä sijaintini";
           var u = { lat: p.coords.latitude, lng: p.coords.longitude };
           if (userMarker) userMarker.setMap(null);
-          userMarker = new google.maps.Marker({ position: u, map: map, title: "Sijaintisi", zIndex: 999, icon: markerIcon("#1a73e8", 8) });
+          userMarker = new google.maps.Marker({ position: u, map: map, title: "Sijaintisi", zIndex: 1000, icon: markerIcon("#1a73e8", 8) });
           map.panTo(u);
         }, function () { locBtn.disabled = false; locBtn.textContent = "📍 Näytä sijaintini"; },
           { enableHighAccuracy: false, timeout: 15000, maximumAge: 600000 });
       });
     }).catch(function () {
-      container.innerHTML = "";
-      renderMap(container); // fallback: tyylitelty SVG-kartta
+      // Fallback ilman avainta: kohdesivulla yksittäinen upotus, muuten SVG-yleiskartta
+      if (focusK) container.innerHTML = '<div class="gmap"><iframe title="Kartta: ' + esc(focusK.nimi) + '" src="' + gmapEmbedSrc(mapQuery(focusK)) + '" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>';
+      else { container.innerHTML = ""; renderMap(container); }
     });
   }
 
