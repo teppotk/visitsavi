@@ -949,7 +949,7 @@ window.SAVITAIPALE = (function () {
     "kesaajot":             ["Savitaipaleen kunta / Sapassi",    "https://www.savitaipale.fi/sapassi"],
     "olkkolan-kesakonsertit":["Olkkolan Hovi",                   "https://olkkolanhovi.fi/tapahtumakalenteri/"],
     "tennis-open":          ["Savitaipaleen Urheilijat",         "https://www.savitaipaleenurheilijat.fi"],
-    "ruispuurojuhla":       ["Etelä-Karjalan tapahtumakalenteri","https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"],
+    "ruispuurojuhla":       ["Etelä-Karjalan tapahtumakalenteri","https://tapahtumat.ekarjala.fi/fi-FI/page/69b6993f9502cf00070e1c71/PETTIL%C3%84N%20RUISPUUROJUHLA"],
     "rosvopaisti":          ["Etelä-Karjalan tapahtumakalenteri","https://tapahtumat.ekarjala.fi/fi-FI/topic/Savitaipale/5db067d83799da2f29ee4d1b"],
     "luisteluretki":        ["Savitaipaleen Urheilijat",         "https://www.savitaipaleenurheilijat.fi"]
   };
