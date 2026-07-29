@@ -433,6 +433,22 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .route__body .btn { margin-top: auto; align-self: flex-start; }
 
 /* =========================================================================
+   Suunnittele matkasi -CTA
+   ========================================================================= */
+.plan-cta { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap;
+  background: var(--syvavesi); color: #fff; border-radius: var(--radius); text-decoration: none;
+  padding: clamp(1.5rem, 4vw, 2.6rem); box-shadow: var(--shadow-lg);
+  background-image: linear-gradient(120deg, var(--syvavesi), #12505f); }
+.plan-cta:hover { color: #fff; }
+.plan-cta__text { max-width: 46ch; }
+.plan-cta__text .eyebrow { color: var(--jaa); }
+.plan-cta__text .eyebrow::before { background: var(--jaa); }
+.plan-cta__text h2 { color: #fff; font-size: clamp(1.6rem, 3.4vw, 2.3rem); margin: 0 0 .5rem; }
+.plan-cta__text p { color: var(--jaa-vaalea); margin: 0; }
+.plan-cta__btn { flex: none; pointer-events: none; }
+.plan-cta:hover .plan-cta__btn { background: var(--nuotio-tumma); transform: translateY(-2px); }
+
+/* =========================================================================
    Story / prose blocks (tarinat)
    ========================================================================= */
 .story { display: grid; grid-template-columns: 300px 1fr; gap: clamp(1.2rem, 4vw, 2.6rem); align-items: center; padding-block: clamp(1.4rem, 3vw, 2.4rem); }

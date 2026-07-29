@@ -768,7 +768,15 @@ window.SAVITAIPALE = (function () {
     "partakoski": [61.27114, 27.70237],
     "orrainpolku": [61.30136, 27.63629],
     "kuolimon-luistelurata": [61.21365, 27.63169],
-    "lehtisensaari": [61.24712, 27.63732]
+    "lehtisensaari": [61.24712, 27.63732],
+    "retkiluistelu": [61.21365, 27.63169],
+    "melonta-sup": [61.20167, 27.67069],
+    "escape-room": [61.20167, 27.67069],
+    "padel": [61.20167, 27.67069],
+    "ammuntasimulaattori": [61.20167, 27.67069],
+    "saimaan-palju": [61.20167, 27.67069],
+    "fatbike-safari": [61.20167, 27.67069],
+    "hiihtoladut": [61.19381, 27.67361]
   };
   kohteet.forEach(function (k) {
     if (!k.koord && KOORD[k.id]) k.koord = { lat: KOORD[k.id][0], lng: KOORD[k.id][1] };

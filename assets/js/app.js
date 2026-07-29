@@ -472,11 +472,15 @@
   // Interaktiivinen kartta: kaikki kohteet pinneinä + oma sijainti.
   // focusK (valinnainen): korosta ja keskitä tähän kohteeseen (kohdesivut).
   function renderGmap(container, focusK) {
-    var pts = D.kohteet.filter(function (k) { return k.koord; });
+    var osio = container.getAttribute("data-osio");
+    var pts = D.kohteet.filter(function (k) { return k.koord && (!osio || k.osio === osio); });
+    // varmista että fokusoitu kohde on mukana, vaikka osio-suodatus rajaisi (kohdesivut)
+    if (focusK && focusK.koord && pts.indexOf(focusK) < 0) pts = pts.concat([focusK]);
+    var note = osio ? "◎ Tämän sivun kohteet kartalla · klikkaa pistettä" : "◎ Klikkaa pistettä nähdäksesi kohteen tiedot · oranssit pisteet ovat Saimaa Geoparkin geokohteita";
     container.innerHTML =
       '<div class="gmapfull"><div class="gmapfull__map"></div>' +
       '<button class="gmapfull__loc" type="button">📍 Näytä sijaintini</button></div>' +
-      '<p class="mapnote">◎ Klikkaa pistettä nähdäksesi kohteen tiedot · oranssit pisteet ovat Saimaa Geoparkin geokohteita</p>';
+      '<p class="mapnote">' + note + "</p>";
     var mapEl = container.querySelector(".gmapfull__map");
     var locBtn = container.querySelector(".gmapfull__loc");
 
@@ -485,8 +489,14 @@
       var map = new google.maps.Map(mapEl, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
       var iw = new google.maps.InfoWindow();
       var focusMarker = null;
+      var used = {};
       pts.forEach(function (k) {
-        var pos = { lat: k.koord.lat, lng: k.koord.lng };
+        var lat = k.koord.lat, lng = k.koord.lng;
+        // Levitä samassa pisteessä olevat pinnit spiraaliin, jotta ne ovat erikseen klikattavissa
+        var key = lat.toFixed(4) + "," + lng.toFixed(4);
+        var n = used[key] || 0; used[key] = n + 1;
+        if (n > 0) { var a = n * 2.399, r = 0.00045 * Math.ceil(n / 6); lat += Math.cos(a) * r; lng += Math.sin(a) * r; }
+        var pos = { lat: lat, lng: lng };
         bounds.extend(pos);
         var isFocus = focusK && k.id === focusK.id;
         var m = new google.maps.Marker({ position: pos, map: map, title: k.nimi,
@@ -803,6 +813,19 @@
     });
   }
 
+  /* ---------------- Suunnittele matkasi -CTA ---------------- */
+  function renderPlanCta(container) {
+    container.innerHTML =
+      '<a class="plan-cta" href="suunnittele.html">' +
+      '<div class="plan-cta__text">' +
+      '<p class="eyebrow">Suunnittele matkasi</p>' +
+      "<h2>Kokoa oma reittisi</h2>" +
+      "<p>Valitse sinua kiinnostavat kohteet, katso ne kartalla ja saat valmiin reitin Google Mapsiin — mukana myös valmiit reittisuositukset.</p>" +
+      "</div>" +
+      '<span class="btn btn--primary plan-cta__btn">Suunnittele matkasi →</span>' +
+      "</a>";
+  }
+
   /* ---------------- Kuvien lähteet (CC-attribuutio) ---------------- */
   function kuvaLahdePalvelu(url) {
     if (/flickr\.com/.test(url)) return "Flickr";
@@ -866,6 +889,7 @@
         case "planner":  renderPlanner(c);  break;
         case "valmisreitit": renderValmisreitit(c); break;
         case "kuvakreditit": renderKuvakreditit(c); break;
+        case "plan-cta": renderPlanCta(c); break;
         case "stories":  renderStories(c);  break;
       }
     });
