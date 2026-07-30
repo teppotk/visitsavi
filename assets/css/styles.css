@@ -123,6 +123,10 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 }
 .nav a:hover { color: var(--muste); background: var(--paperi-2); }
 .nav a[aria-current="page"] { color: var(--syvavesi); background: var(--jaa); }
+.nav a.nav__cta { color: #fff; background: var(--nuotio); font-weight: 600; }
+.nav a.nav__cta:hover { color: #fff; background: var(--nuotio-tumma); }
+.nav a.nav__cta[aria-current="page"] { color: #fff; background: var(--nuotio-tumma); }
+.iw a.iw-plan { display: inline-block; margin-top: .35rem; color: var(--nuotio); font-weight: 700; }
 .nav-toggle { display: none; }
 
 @media (max-width: 940px) {

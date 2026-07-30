@@ -38,7 +38,8 @@
   function buildHeader(active) {
     var links = NAV.map(function (n) {
       var cur = n.id === active ? ' aria-current="page"' : "";
-      return '<a href="' + n.href + '"' + cur + '>' + esc(n.teksti) + "</a>";
+      var cls = n.id === "suunnittele" ? ' class="nav__cta"' : "";
+      return '<a href="' + n.href + '"' + cls + cur + '>' + esc(n.teksti) + "</a>";
     }).join("");
     return el(
       '<header class="site-header"><div class="wrap site-header__inner">' +
@@ -410,7 +411,8 @@
       '<section class="detail"><div class="wrap detail__grid">' +
       '<div class="detail__body prose">' + paras + '<div class="taglist">' + tags + "</div></div>" +
       '<aside class="factbox"><h3>Tiedot</h3><ul class="factlist">' + facts + "</ul>" + coord +
-      '<a class="btn btn--ghost" style="margin-top:1.2rem;width:100%;justify-content:center" href="' + osioHref + '">← ' + esc(osioNimi) + "</a></aside>" +
+      (k.koord ? '<a class="btn btn--primary" style="margin-top:1.2rem;width:100%;justify-content:center" href="suunnittele.html?lisaa=' + encodeURIComponent(k.id) + '">+ Lisää suunnitelmaani</a>' : "") +
+      '<a class="btn btn--ghost" style="margin-top:.6rem;width:100%;justify-content:center" href="' + osioHref + '">← ' + esc(osioNimi) + "</a></aside>" +
       "</div></section>"
     );
 
@@ -464,10 +466,11 @@
   }
 
   function iwHTML(k) {
+    var plan = k.koord ? '<br><a class="iw-plan" href="suunnittele.html?lisaa=' + encodeURIComponent(k.id) + '">+ Lisää suunnitelmaani</a>' : "";
     return '<div class="iw"><strong>' + esc(k.nimi) + "</strong><br>" +
       '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span><br>" +
       '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
-      '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>';
+      '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a>' + plan + "</div>";
   }
   // Interaktiivinen kartta: kaikki kohteet pinneinä + oma sijainti.
   // focusK (valinnainen): korosta ja keskitä tähän kohteeseen (kohdesivut).
@@ -632,7 +635,14 @@
     var present = {};
     mappable.forEach(function (k) { present[interestOf(k)] = true; });
     var interestBoxes = INTERESTS.filter(function (i) { return present[i.key]; });
-    var state = { interests: {}, selected: [] };
+    function loadPlan() {
+      try {
+        var a = JSON.parse(localStorage.getItem("savitaipale_plan") || "[]");
+        return Array.isArray(a) ? a.filter(function (id) { var k = D.byId(id); return k && k.koord; }) : [];
+      } catch (e) { return []; }
+    }
+    var state = { interests: {}, selected: loadPlan() };
+    function savePlan() { try { localStorage.setItem("savitaipale_plan", JSON.stringify(state.selected)); } catch (e) {} }
     interestBoxes.forEach(function (i) { state.interests[i.key] = true; });
 
     container.innerHTML =
@@ -741,6 +751,7 @@
           : '<p class="planner__hint">Rastita kohteita listasta — ne ilmestyvät kartalle ja tähän reitiksi.</p>');
 
       updateMap(ps);
+      savePlan();
     }
 
     container.addEventListener("change", function (e) {
@@ -768,6 +779,23 @@
     };
 
     refresh();
+
+    // "Lisää suunnitelmaani" -linkki toiselta sivulta: ?lisaa=<id> (voi olla monta pilkulla)
+    var addParam = new URLSearchParams(location.search).get("lisaa");
+    if (addParam) {
+      var added = false;
+      addParam.split(",").forEach(function (id) {
+        var k = D.byId(id);
+        if (k && k.koord) {
+          if (state.selected.indexOf(id) < 0) { state.selected.push(id); added = true; }
+          state.interests[interestOf(k)] = true;
+        }
+      });
+      Array.prototype.forEach.call(container.querySelectorAll(".planner__interests input"), function (cb) { cb.checked = !!state.interests[cb.value]; });
+      try { history.replaceState(null, "", location.pathname); } catch (e) {}
+      refresh();
+      if (added) container.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
   }
 
   function renderValmisreitit(container) {
