@@ -123,11 +123,11 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 }
 .nav a:hover { color: var(--muste); background: var(--paperi-2); }
 .nav a[aria-current="page"] { color: var(--syvavesi); background: var(--jaa); }
-.nav a.nav__cta { color: #fff; background: var(--nuotio); font-weight: 600; }
+.nav a.nav__cta { position: relative; color: #fff; background: var(--nuotio); font-weight: 600; }
 .nav a.nav__cta:hover { color: #fff; background: var(--nuotio-tumma); }
 .nav a.nav__cta[aria-current="page"] { color: #fff; background: var(--nuotio-tumma); }
 .iw a.iw-plan { display: inline-block; margin-top: .35rem; color: var(--nuotio); font-weight: 700; }
-.nav__count { display: inline-flex; align-items: center; justify-content: center; min-width: 1.35rem; height: 1.35rem; padding: 0 .35rem; margin-left: .1rem; border-radius: 999px; background: #fff; color: var(--nuotio-tumma); font-family: var(--mono); font-size: .72rem; font-weight: 700; line-height: 1; }
+.nav__count { position: absolute; top: -7px; right: -7px; display: inline-flex; align-items: center; justify-content: center; min-width: 1.25rem; height: 1.25rem; padding: 0 .3rem; border-radius: 999px; background: var(--syvavesi); color: #fff; border: 2px solid var(--paperi); font-family: var(--mono); font-size: .66rem; font-weight: 700; line-height: 1; box-shadow: var(--shadow); }
 
 /* Ilmoitus (toast) */
 .toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); z-index: 2000;
