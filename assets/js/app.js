@@ -34,12 +34,32 @@
     '<circle cx="29" cy="12" r="3.4" fill="#d9642a"/>' +
     '</svg>';
 
+  /* ---------------- Suunnitelman laskuri + ilmoitus ---------------- */
+  function planCount() {
+    try { var a = JSON.parse(localStorage.getItem("savitaipale_plan") || "[]"); return Array.isArray(a) ? a.length : 0; }
+    catch (e) { return 0; }
+  }
+  function updatePlanBadge() {
+    var n = planCount();
+    Array.prototype.forEach.call(document.querySelectorAll("[data-plan-count]"), function (el) {
+      el.textContent = n; el.style.display = n > 0 ? "" : "none";
+    });
+  }
+  function showToast(msg) {
+    var t = document.createElement("div");
+    t.className = "toast"; t.textContent = msg;
+    document.body.appendChild(t);
+    requestAnimationFrame(function () { t.classList.add("is-in"); });
+    setTimeout(function () { t.classList.remove("is-in"); setTimeout(function () { if (t.parentNode) t.remove(); }, 400); }, 2600);
+  }
+
   /* ---------------- Header ---------------- */
   function buildHeader(active) {
     var links = NAV.map(function (n) {
       var cur = n.id === active ? ' aria-current="page"' : "";
       var cls = n.id === "suunnittele" ? ' class="nav__cta"' : "";
-      return '<a href="' + n.href + '"' + cls + cur + '>' + esc(n.teksti) + "</a>";
+      var badge = n.id === "suunnittele" ? ' <span class="nav__count" data-plan-count aria-label="kohdetta suunnitelmassa"></span>' : "";
+      return '<a href="' + n.href + '"' + cls + cur + '>' + esc(n.teksti) + badge + "</a>";
     }).join("");
     return el(
       '<header class="site-header"><div class="wrap site-header__inner">' +
@@ -642,7 +662,7 @@
       } catch (e) { return []; }
     }
     var state = { interests: {}, selected: loadPlan() };
-    function savePlan() { try { localStorage.setItem("savitaipale_plan", JSON.stringify(state.selected)); } catch (e) {} }
+    function savePlan() { try { localStorage.setItem("savitaipale_plan", JSON.stringify(state.selected)); } catch (e) {} updatePlanBadge(); }
     interestBoxes.forEach(function (i) { state.interests[i.key] = true; });
 
     container.innerHTML =
@@ -794,7 +814,8 @@
       Array.prototype.forEach.call(container.querySelectorAll(".planner__interests input"), function (cb) { cb.checked = !!state.interests[cb.value]; });
       try { history.replaceState(null, "", location.pathname); } catch (e) {}
       refresh();
-      if (added) container.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (added) { container.scrollIntoView({ behavior: "smooth", block: "start" }); showToast("Lisätty suunnitelmaan ✓"); }
+      else showToast("Kohde on jo suunnitelmassasi");
     }
   }
 
@@ -894,6 +915,7 @@
     if (hh) hh.replaceWith(buildHeader(page));
     var ff = document.querySelector("[data-site-footer]");
     if (ff) ff.replaceWith(buildFooter());
+    updatePlanBadge();
 
     // mobile nav
     var toggle = document.querySelector(".nav-toggle");

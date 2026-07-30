@@ -127,6 +127,14 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .nav a.nav__cta:hover { color: #fff; background: var(--nuotio-tumma); }
 .nav a.nav__cta[aria-current="page"] { color: #fff; background: var(--nuotio-tumma); }
 .iw a.iw-plan { display: inline-block; margin-top: .35rem; color: var(--nuotio); font-weight: 700; }
+.nav__count { display: inline-flex; align-items: center; justify-content: center; min-width: 1.35rem; height: 1.35rem; padding: 0 .35rem; margin-left: .1rem; border-radius: 999px; background: #fff; color: var(--nuotio-tumma); font-family: var(--mono); font-size: .72rem; font-weight: 700; line-height: 1; }
+
+/* Ilmoitus (toast) */
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%) translateY(20px); z-index: 2000;
+  background: var(--syvavesi); color: #fff; padding: .8rem 1.4rem; border-radius: 999px; box-shadow: var(--shadow-lg);
+  font-weight: 600; font-size: .95rem; opacity: 0; transition: opacity .3s ease, transform .3s ease; max-width: 90vw; }
+.toast.is-in { opacity: 1; transform: translateX(-50%) translateY(0); }
+@media (prefers-reduced-motion: reduce) { .toast { transition: opacity .2s; transform: translateX(-50%); } }
 .nav-toggle { display: none; }
 
 @media (max-width: 940px) {
