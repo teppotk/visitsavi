@@ -36,13 +36,14 @@
       </div>
     </section>
     <section class="section">
-      <div class="wrap" data-render="listing" data-osio="luonto"></div>
-    </section>
-    <section class="section section--paper2">
       <div class="wrap">
-        <div class="section-head reveal"><p class="eyebrow">Kartalla</p><h2>Kohteet kartalla</h2>
-          <p>Tämän sivun luonto- ja retkeilykohteet kartalla. Klikkaa pistettä.</p></div>
-        <div class="reveal" data-render="gmap" data-osio="luonto"></div>
+        <div class="listing-layout">
+          <div class="listing-layout__list" data-render="listing" data-osio="luonto"></div>
+          <aside class="listing-layout__map">
+            <p class="eyebrow">Kohteet kartalla</p>
+            <div data-render="gmap" data-osio="luonto"></div>
+          </aside>
+        </div>
       </div>
     </section>
     <section class="section"><div class="wrap"><div class="reveal" data-render="plan-cta"></div></div></section>
