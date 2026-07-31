@@ -4,39 +4,43 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Mikä tämä projekti on
 
-Savitaipaleen (Etelä-Karjalan kunta) **matkailusivusto**. Sivuston kieli on **suomi** — kaikki käyttäjälle näkyvä sisältö ja lähtökohtaisesti myös suunnitteludokumentit kirjoitetaan suomeksi.
+Savitaipaleen (Etelä-Karjalan kunta) **matkailusivusto** — toimiva prototyyppi. Sivuston kieli on **suomi**: kaikki käyttäjälle näkyvä teksti ja lähtökohtaisesti myös dokumentit kirjoitetaan suomeksi.
 
-Verkkosivustoa **ei ole vielä suunniteltu eikä toteutettu**. Nykyinen vaihe on sisällön ja tietorakenteen suunnittelu; repositoriossa ei ole vielä koodia, build-työkaluja eikä testejä.
+Sivusto on **rakennettu ja julkaistu**:
+- **Live:** https://teppotk.github.io/visitsavi/ (GitHub Pages, haara `main`, juuri). Push `main`:iin päivittää sivuston automaattisesti ~1 min kuluessa.
+- **Repo:** https://github.com/teppotk/visitsavi (`gh` on autentikoitu, tili teppotk).
+
+## Teknologia ja ajaminen
+
+Staattinen **HTML + CSS + vanilla JS ilman build-työkaluja tai frameworkia**. Aukeaa tuplaklikkaamalla `index.html` (toimii `file://` offline), paitsi karttaa ja paikannusta (vaativat internetin/https:n).
+
+- Paikallinen palvelin (kartta- ja GPS-testaus): `python3 -m http.server 8000` → `http://localhost:8000`.
+- Sisältö on `assets/js/data.js`:ssä (`window.SAVITAIPALE`, ladataan `<script>`-tagilla — ei fetch).
+- **Aja `node --check assets/js/app.js` (ja data.js) jokaisen JS-muokkauksen jälkeen.** Merkkijononrakentajissa on helppo lipsauttaa `'...'` vs `"..."`.
 
 ## Hakemistorakenne
 
-- **`/material`** — alkuperäinen lähdemateriaali. Sisältää `source-material-links.md`:n: 8 ulkoista lähdesivustoa (savitaipale.fi, saimaageopark.fi, gosaimaa.com, tapahtumat.ekarjala.fi, olkkolanhovi.fi, saimaanpalju.fi, savitaipaleenurheilijat.fi, lahella.fi). Vain linkit, ei sisältöä.
-- **`/sisalto`** — lähdemateriaalista jäsennelty tietorakenne (suomeksi). **Tämä on projektin nykyinen ydin.** Aloita aina täältä.
+- **`/material`** — alkuperäinen lähdemateriaali (`source-material-links.md`: 8 lähdesivustoa, vain linkit).
+- **`/sisalto`** — lähdemateriaalista jäsennelty sisältö- ja tietorakenne (suomeksi): `00-tietorakenne`, `01-metadata-skeemat`, `10`–`15` (sisältöinventaario), `90-lahteet-ja-tietoaukot`. Suunnittelun/faktojen lähde. Kun lisäät sisältöä, päivitä oikea `/sisalto`-tiedosto.
+- **Sivut (juuressa):** index, nae-ja-koe, luonto-ja-retkeily, tekemista, majoitus, tapahtumat, tarinat, suunnittele, kohde (detail `?id=`).
+- **`assets/`:**
+  - `js/config.js` — Google Maps API -avain (`window.SAVITAIPALE_MAPS_KEY`, julkinen selainavain).
+  - `js/data.js` — sisältö: `kohteet[]` (kentät osio/tyyppi/koord/kuva ym.), `tapahtumat[]`, `tarinat[]`, `reittisuositukset[]`, `KOORD`, `KUVAT`+`KUVA_MAP`, `TAP_LAHTEET`. Apit `byId`, `byOsio`.
+  - `js/scenes.js` — generoi teemakohtaista SVG-maisemakuvitusta (kun kohteella ei ole valokuvaa).
+  - `js/app.js` — navigaatio/footer + kaikki renderöijät (`data-render="..."`: listing, gmap, planner, events, detail, nearby, valmisreitit, plan-cta, kuvakreditit, stories).
+  - `css/styles.css` — designjärjestelmä "Kahden veden maa".
+  - `img/` — CC-valokuvat + `credits.json` + favicon. `data/tapahtumat.json` — tapahtumasyöte.
 
-## /sisalto — lue tämä ensin
+## Keskeiset päätökset ja reunaehdot (älä riko ilman syytä)
 
-`/sisalto/README.md` on koko hakemiston sisällysluettelo. Tiedostot kolmessa kerroksessa:
+- **Profiili:** luonto / järvi (Saimaa + Kuolimo) / mökkeily / kulttuurihistoria. EI kaupunki-/kylpylämatkailu.
+- **Kartat:** Google Maps JS API + Directions API. Avain on julkinen selainavain — suojaus perustuu Cloud Consolen HTTP-referrer-rajaukseen (`teppotk.github.io/*`), jonka käyttäjä ylläpitää. Kartat putoavat SVG-/upotus-varaan jos avain puuttuu. Ohjeet READMEssa.
+- **Valokuvat:** vain CC-lisensoituja (Wikimedia Commons / Flickr Openversen kautta). **Älä koskaan kopioi lähdesivustojen valokuvia** (tekijänoikeus). Attribuutiot näkyvissä (`.photocredit` + Suunnittele-sivun lista). Uusi kuva: `assets/img/` + `KUVAT` + `KUVA_MAP`.
+- **Tapahtumat:** lähdekalenterin API on CORS-estetty + 404 → selain ei voi hakea suoraan. Sivu hakee `assets/data/tapahtumat.json`-syötteen ajonaikaisesti; tuotannossa ajastettu taustapalvelu täyttäisi sen.
+- **Faktat:** älä keksi hintoja/aukioloja/päivämääriä/yhteystietoja. `90-lahteet-ja-tietoaukot.md` listaa varmistettavat kohdat; lisää uudet aukot sinne.
+- **Git:** committaa noreply-sähköpostilla (ei todellista osoitetta); pushaa vasta kun käyttäjä pyytää tai konteksti sallii.
 
-- **Suunnittelu:** `00-tietorakenne.md` (informaatioarkkitehtuuri, navigaatio, sisältötyypit), `01-metadata-skeemat.md` (metatietokentät + taksonomia)
-- **Sisältöinventaario:** `10`–`15` (perustiedot, nähtävyydet & Geopark, luonto/ulkoilu, majoitus/palvelut, tapahtumat, historia)
-- **Laatu:** `90-lahteet-ja-tietoaukot.md` (lähteet + ennen julkaisua varmistettavat faktat)
+## Todentaminen (tärkeät sudenkuopat)
 
-Kun suunnittelet sisältöä tai rakennetta, nojaa näihin. Kun lisäät tietoa, päivitä oikea `/sisalto`-tiedosto äläkä tee rinnakkaista kopiota.
-
-## Keskeiset suunnittelupäätökset (älä riko näitä ilman syytä)
-
-- **Profiili:** Savitaipale = luonto / järvi (Saimaa + Kuolimo) / mökkeily / kulttuurihistoria. EI kaupunki- eikä kylpylämatkailu.
-- **Sisältötyypit:** erottele aikasidonnainen `tapahtuma` ja pysyvä `palveluntarjoaja`/toimipaikka (vrt. tapahtumakalenterin `event` vs. `organizer`). Mallinna palveluntarjoaja–palvelu-suhde (esim. Olkkolan Hovi kokoaa majoituksen, ravintolan, saunat, aktiviteetit ja tapahtumat).
-- **Koordinaatit** talletetaan kaikkiin paikkasidonnaisiin kohteisiin alusta asti (kartta on ydinominaisuus).
-- **Hinnat ja aukioloajat** ovat valinnaisia kenttiä — lähteet eivät ylläpidä niitä rakenteisena datana, ja moni palvelu on vain kesäkaudella. Merkitse kausiluontoisuus näkyvästi.
-
-## Datalähde-integraatiot
-
-- **Tapahtumat:** koneluettava JSON Savitaipaleen kokoelmalle:
-  `https://tapahtumat.ekarjala.fi/api/collection/5db067d83799da2f29ee4d1b/content?lang=fi&country=FI&out=JSON` (Eventz.today; sisältää koordinaatit). Tapahtumatietomalli on kuvattu `14-tapahtumat.md`:ssä.
-- **Reitit/kartat:** Retkikartta, Outdooractive, ekarjala-retkeily.fi, kunnan Karttatiimi (savitaipale.karttatiimi.fi).
-- **Geokohteet:** Saimaa Geopark (kohdekuvaukset, koordinaatit, opaste-PDF:t).
-
-## Faktojen käsittely
-
-Älä keksi faktoja (hinnat, päivämäärät, aukioloajat, yhteystiedot). `90-lahteet-ja-tietoaukot.md` listaa tunnetut tietoaukot ja ennen julkaisua varmistettavat kohdat — kunnioita näitä ja lisää uudet aukot samaan tiedostoon, kun niitä ilmenee.
+- **Selain välimuistittaa `app.js`:n aggressiivisesti.** Deployn jälkeen tee kova päivitys (Cmd+Shift+R) tai `fetch(url,{cache:'reload'})` ennen tarkistusta.
+- **Kuvakaappaus ei näytä Googlen WebGL-vektorikarttaa** (näkyy tyhjänä) — varmista kartta DOM:sta (canvas/laattamäärä), ja Maps piirtää laatat vasta kun kartta vieritetään näkyviin. Käytä varmistukseen tuoretta välilehteä (WebGL-kontekstit loppuvat monen kartan jälkeen).
