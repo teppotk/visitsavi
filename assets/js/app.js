@@ -485,6 +485,18 @@
     return { path: google.maps.SymbolPath.CIRCLE, scale: scale || 7, fillColor: color, fillOpacity: 1, strokeColor: "#ffffff", strokeWeight: 2 };
   }
 
+  // Pysähdyksen kirjain kartalla ja listassa: A, B, … Z, AA, AB …
+  function stopLetter(i) {
+    var s = "";
+    do { s = String.fromCharCode(65 + (i % 26)) + s; i = Math.floor(i / 26) - 1; } while (i >= 0);
+    return s;
+  }
+  function osoiteOf(k) {
+    var o = (k.tiedot || []).filter(function (t) { return /osoite/i.test(t.label); })[0];
+    if (o) return o.arvo;
+    return (k.kyla ? k.kyla + ", " : "") + "Savitaipale";
+  }
+
   function iwHTML(k) {
     var plan = k.koord ? '<br><a class="iw-plan" href="suunnittele.html?lisaa=' + encodeURIComponent(k.id) + '">+ Lisää suunnitelmaani</a>' : "";
     return '<div class="iw"><strong>' + esc(k.nimi) + "</strong><br>" +
@@ -686,21 +698,55 @@
     var mapwrap = container.querySelector(".planner__mapwrap");
 
     // Kartta: JS API + Directions (reitti teitä pitkin). Ilman avainta pudotaan avaimettomaan upotukseen.
-    var G = { map: null, ready: false, ds: null, dr: null, markers: [] };
+    var G = { map: null, ready: false, ds: null, dr: null, markers: [], iw: null };
     function clearMarkers() { G.markers.forEach(function (m) { m.setMap(null); }); G.markers = []; }
+    // Aina näkyvä nimikyltti pinnin oikealla puolella (SVG-kuvake, koska Marker-label ei tue taustaa).
+    function nameIcon(nimi) {
+      var t = nimi.length > 28 ? nimi.slice(0, 27) + "…" : nimi;
+      var w = Math.round(t.length * 6.7) + 16, h = 22;
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
+        '<rect x="0.5" y="0.5" width="' + (w - 1) + '" height="' + (h - 1) + '" rx="6" fill="#ffffff" fill-opacity="0.93" stroke="#d9642a"/>' +
+        '<text x="8" y="15" font-family="Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#16323b">' +
+        esc(t) + "</text></svg>";
+      return {
+        url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),
+        size: new google.maps.Size(w, h), scaledSize: new google.maps.Size(w, h),
+        anchor: new google.maps.Point(-15, h / 2)
+      };
+    }
     function markerAt(p, i) {
+      var m = new google.maps.Marker({
+        position: { lat: p.lat, lng: p.lng }, map: G.map, title: stopLetter(i) + " · " + p.nimi, zIndex: 200 + i,
+        label: { text: stopLetter(i), color: "#ffffff", fontSize: "12px", fontWeight: "700" },
+        icon: markerIcon("#d9642a", 13)
+      });
+      m.addListener("click", function () {
+        var k = D.byId(p.id);
+        if (!k || !G.iw) return;
+        G.iw.setContent('<div class="iw iw--stop"><p class="iw-stop"><span class="stopletter">' + stopLetter(i) + "</span> " +
+          "<strong>" + esc(k.nimi) + "</strong></p>" +
+          '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span>" +
+          '<p class="iw-addr">' + esc(osoiteOf(k)) + "</p>" +
+          '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
+          '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>');
+        G.iw.open(G.map, m);
+      });
+      G.markers.push(m);
       G.markers.push(new google.maps.Marker({
-        position: { lat: p.lat, lng: p.lng }, map: G.map, title: p.nimi, zIndex: 10 + i,
-        label: { text: String(i + 1), color: "#ffffff", fontSize: "12px", fontWeight: "700" },
-        icon: markerIcon("#0b3d4f", 12)
+        position: { lat: p.lat, lng: p.lng }, map: G.map, clickable: false, zIndex: 100 + i,
+        icon: nameIcon(p.nimi)
       }));
     }
     function updateMap(ps) {
       if (!G.ready || !G.map) { iframe.src = buildEmbedSrc(ps); return; }
       clearMarkers();
+      if (G.iw) G.iw.close();
       if (G.dr) G.dr.set("directions", null);
       if (!ps.length) { G.map.setCenter({ lat: 61.20, lng: 27.67 }); G.map.setZoom(9); return; }
-      if (ps.length === 1) { markerAt(ps[0], 0); G.map.setCenter({ lat: ps[0].lat, lng: ps[0].lng }); G.map.setZoom(12); return; }
+      // Omat pinnit (kirjain + nimikyltti) — Directionsin oletusmerkit on vaimennettu.
+      var b = new google.maps.LatLngBounds();
+      ps.forEach(function (p, i) { markerAt(p, i); b.extend({ lat: p.lat, lng: p.lng }); });
+      if (ps.length === 1) { G.map.setCenter({ lat: ps[0].lat, lng: ps[0].lng }); G.map.setZoom(12); return; }
       G.ds.route({
         origin: { lat: ps[0].lat, lng: ps[0].lng },
         destination: { lat: ps[ps.length - 1].lat, lng: ps[ps.length - 1].lng },
@@ -708,13 +754,9 @@
         optimizeWaypoints: false,
         travelMode: google.maps.TravelMode.DRIVING
       }, function (res, status) {
+        // esim. saaret eivät ole autolla saavutettavissa → jätetään pelkät pinnit ilman viivaa
         if (status === "OK") { G.dr.setDirections(res); }
-        else {
-          // esim. saaret eivät ole autolla saavutettavissa → näytä pinnit ilman viivaa
-          var b = new google.maps.LatLngBounds();
-          ps.forEach(function (p, i) { markerAt(p, i); b.extend({ lat: p.lat, lng: p.lng }); });
-          G.map.fitBounds(b, 50);
-        }
+        else { G.map.fitBounds(b, 50); }
       });
     }
     loadGoogleMaps().then(function () {
@@ -722,7 +764,8 @@
       var d = document.createElement("div"); d.className = "planner__gmapdiv"; mapwrap.appendChild(d);
       G.map = new google.maps.Map(d, { mapTypeControl: false, streetViewControl: false, fullscreenControl: true, gestureHandling: "cooperative" });
       G.ds = new google.maps.DirectionsService();
-      G.dr = new google.maps.DirectionsRenderer({ map: G.map, suppressMarkers: false, polylineOptions: { strokeColor: "#d9642a", strokeOpacity: 0.9, strokeWeight: 5 } });
+      G.dr = new google.maps.DirectionsRenderer({ map: G.map, suppressMarkers: true, polylineOptions: { strokeColor: "#d9642a", strokeOpacity: 0.9, strokeWeight: 5 } });
+      G.iw = new google.maps.InfoWindow();
       G.ready = true;
       // Oma sijainti -painike
       var locBtn = document.createElement("button");
@@ -754,16 +797,18 @@
       var items = mappable.filter(function (k) { return state.interests[interestOf(k)]; });
       listwrap.innerHTML = '<p class="planner__listtitle">2. Valitse kohteet (' + items.length + ")</p>" +
         (items.length ? items.map(function (k) {
-          var on = state.selected.indexOf(k.id) >= 0;
+          var idx = state.selected.indexOf(k.id);
+          var on = idx >= 0;
           return '<label class="planner__item' + (on ? " is-on" : "") + '"><input type="checkbox" value="' + k.id + '"' + (on ? " checked" : "") + ">" +
+            (on ? '<span class="stopletter" aria-label="Kohta ' + stopLetter(idx) + ' kartalla">' + stopLetter(idx) + "</span>" : '<span class="stopletter stopletter--off" aria-hidden="true"></span>') +
             '<span class="pi-name">' + esc(k.nimi) + '</span><span class="pi-type">' + esc(k.tyyppi) + "</span></label>";
         }).join("") : '<p class="empty">Ei kohteita valituilla kiinnostuksilla.</p>');
 
       var ps = pts();
       summary.innerHTML = "<h3>3. Reittisi — " + ps.length + " kohdetta</h3>" +
         (ps.length
-          ? '<ol class="planner__plan">' + ps.map(function (p) {
-              return "<li><span>" + esc(p.nimi) + '</span><button class="pi-remove" data-id="' + p.id + '" aria-label="Poista kohde">×</button></li>';
+          ? '<ol class="planner__plan">' + ps.map(function (p, i) {
+              return '<li data-letter="' + stopLetter(i) + '"><span>' + esc(p.nimi) + '</span><button class="pi-remove" data-id="' + p.id + '" aria-label="Poista kohde">×</button></li>';
             }).join("") + "</ol>" +
             '<div class="planner__actions">' +
             '<a class="btn btn--primary" target="_blank" rel="noopener" href="' + buildDirLink(ps) + '">Avaa reitti Google Mapsissa ↗</a>' +
