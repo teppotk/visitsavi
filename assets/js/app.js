@@ -701,7 +701,7 @@
     var G = { map: null, ready: false, ds: null, dr: null, markers: [], iw: null };
     function clearMarkers() { G.markers.forEach(function (m) { m.setMap(null); }); G.markers = []; }
     // Aina näkyvä nimikyltti pinnin oikealla puolella (SVG-kuvake, koska Marker-label ei tue taustaa).
-    function nameIcon(nimi) {
+    function nameIcon(nimi, shift) {
       var t = nimi.length > 28 ? nimi.slice(0, 27) + "…" : nimi;
       var w = Math.round(t.length * 6.7) + 16, h = 22;
       var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="' + w + '" height="' + h + '">' +
@@ -711,10 +711,18 @@
       return {
         url: "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg),
         size: new google.maps.Size(w, h), scaledSize: new google.maps.Size(w, h),
-        anchor: new google.maps.Point(-15, h / 2)
+        anchor: new google.maps.Point(-15, h / 2 + (shift || 0))
       };
     }
-    function markerAt(p, i) {
+    // Lähekkäisten kohteiden kyltit porrastetaan pystysuunnassa, etteivät ne mene päällekkäin.
+    function labelShift(ps, i) {
+      var n = 0;
+      for (var j = 0; j < i; j++) {
+        if (Math.abs(ps[j].lat - ps[i].lat) < 0.02 && Math.abs(ps[j].lng - ps[i].lng) < 0.04) n++;
+      }
+      return n === 0 ? 0 : Math.ceil(n / 2) * 24 * (n % 2 ? 1 : -1);
+    }
+    function markerAt(p, i, shift) {
       var m = new google.maps.Marker({
         position: { lat: p.lat, lng: p.lng }, map: G.map, title: stopLetter(i) + " · " + p.nimi, zIndex: 200 + i,
         label: { text: stopLetter(i), color: "#ffffff", fontSize: "12px", fontWeight: "700" },
@@ -734,7 +742,7 @@
       G.markers.push(m);
       G.markers.push(new google.maps.Marker({
         position: { lat: p.lat, lng: p.lng }, map: G.map, clickable: false, zIndex: 100 + i,
-        icon: nameIcon(p.nimi)
+        icon: nameIcon(p.nimi, shift)
       }));
     }
     function updateMap(ps) {
@@ -745,7 +753,7 @@
       if (!ps.length) { G.map.setCenter({ lat: 61.20, lng: 27.67 }); G.map.setZoom(9); return; }
       // Omat pinnit (kirjain + nimikyltti) — Directionsin oletusmerkit on vaimennettu.
       var b = new google.maps.LatLngBounds();
-      ps.forEach(function (p, i) { markerAt(p, i); b.extend({ lat: p.lat, lng: p.lng }); });
+      ps.forEach(function (p, i) { markerAt(p, i, labelShift(ps, i)); b.extend({ lat: p.lat, lng: p.lng }); });
       if (ps.length === 1) { G.map.setCenter({ lat: ps[0].lat, lng: ps[0].lng }); G.map.setZoom(12); return; }
       G.ds.route({
         origin: { lat: ps[0].lat, lng: ps[0].lng },
