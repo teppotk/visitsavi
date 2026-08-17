@@ -349,6 +349,10 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .iw a { font-weight: 600; color: var(--kuolimo-tumma); }
 .iw--stop { max-width: 15rem; }
 /* Otsikko on InfoWindow'n header-rivillä (sulkuruksin kanssa samalla rivillä) */
+/* Googlen oma header-rivi: poista otsikon yläpehmuste ja keskitä, jotta otsikko
+   ja sulkuruksi ovat samalla korkeudella (Googlen sisäiset luokat voivat muuttua) */
+.gm-style .gm-style-iw-chr { align-items: center; }
+.gm-style .gm-style-iw-ch { padding: 0 !important; }
 .iw-head { display: inline-flex; align-items: center; gap: .45rem; }
 .iw-head strong { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--muste); }
 .iw-addr { margin: .3rem 0 .45rem; font-size: .85rem; color: var(--muste-2); }
