@@ -348,7 +348,9 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .iw-type { font-family: var(--mono); font-size: .68rem; letter-spacing: .05em; text-transform: uppercase; color: var(--muste-2); }
 .iw a { font-weight: 600; color: var(--kuolimo-tumma); }
 .iw--stop { max-width: 15rem; }
-.iw-stop { display: flex; align-items: center; gap: .45rem; margin: 0 0 .1rem; }
+/* Otsikko on InfoWindow'n header-rivillä (sulkuruksin kanssa samalla rivillä) */
+.iw-head { display: inline-flex; align-items: center; gap: .45rem; }
+.iw-head strong { font-family: var(--serif); font-size: 1.05rem; font-weight: 600; color: var(--muste); }
 .iw-addr { margin: .3rem 0 .45rem; font-size: .85rem; color: var(--muste-2); }
 /* Pysähdyksen kirjaintunnus (A, B, C…) — sama merkki listalla ja kartan pinnissä */
 .stopletter { font-family: var(--mono); font-size: .72rem; font-weight: 700; width: 1.6rem; height: 1.6rem; flex: none; display: grid; place-items: center; background: var(--nuotio); color: #fff; border-radius: 50%; }

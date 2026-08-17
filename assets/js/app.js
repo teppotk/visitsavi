@@ -731,12 +731,18 @@
       m.addListener("click", function () {
         var k = D.byId(p.id);
         if (!k || !G.iw) return;
-        G.iw.setContent('<div class="iw iw--stop"><p class="iw-stop"><span class="stopletter">' + stopLetter(i) + "</span> " +
-          "<strong>" + esc(k.nimi) + "</strong></p>" +
-          '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span>" +
-          '<p class="iw-addr">' + esc(osoiteOf(k)) + "</p>" +
-          '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
-          '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>');
+        // Otsikko headerContentiin → se on samalla rivillä sulkuruksin kanssa.
+        var hdr = document.createElement("span");
+        hdr.className = "iw-head";
+        hdr.innerHTML = '<span class="stopletter">' + stopLetter(i) + "</span><strong>" + esc(k.nimi) + "</strong>";
+        G.iw.setOptions({
+          headerContent: hdr,
+          content: '<div class="iw iw--stop">' +
+            '<span class="iw-type">' + esc(k.tyyppi) + (k.geopark ? " · Geopark" : "") + "</span>" +
+            '<p class="iw-addr">' + esc(osoiteOf(k)) + "</p>" +
+            '<a href="kohde.html?id=' + encodeURIComponent(k.id) + '">Tutki kohdetta →</a> · ' +
+            '<a href="' + gmapDir(mapQuery(k)) + '" target="_blank" rel="noopener">Reitti ↗</a></div>'
+        });
         G.iw.open(G.map, m);
       });
       G.markers.push(m);
