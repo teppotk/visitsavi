@@ -43,4 +43,6 @@ Staattinen **HTML + CSS + vanilla JS ilman build-työkaluja tai frameworkia**. A
 ## Todentaminen (tärkeät sudenkuopat)
 
 - **Selain välimuistittaa `app.js`:n aggressiivisesti.** Deployn jälkeen tee kova päivitys (Cmd+Shift+R) tai `fetch(url,{cache:'reload'})` ennen tarkistusta.
+- **Maps-avain on rajattu domainiin `teppotk.github.io`** → localhostilla JS API kaatuu virheeseen `RefererNotAllowedMapError` ja karttaruutuun tulee "Hups! Jotain meni pieleen". Karttamuutokset voi siis todentaa vain julkaistulta sivustolta (pushaa ensin) tai kun localhost lisätään avaimen sallittuihin referrereihin.
+- **Automaatioselaimessa `.reveal`-osiot jäävät näkymättömiksi** (IntersectionObserver ei laukea) → koko sivu näyttää tyhjältä kuvakaappauksessa. Pakota näkyviin: `document.querySelectorAll('.reveal').forEach(e=>{e.classList.add('is-visible');e.style.opacity=1;e.style.transform='none'})`. Suunnittelijan kartta tarvitsee tämän jälkeen vielä ~20–40 s ja oikean hiirivierityksen ennen kuin laatat ja merkit ilmestyvät.
 - **Kuvakaappaus ei näytä Googlen WebGL-vektorikarttaa** (näkyy tyhjänä) — varmista kartta DOM:sta (canvas/laattamäärä), ja Maps piirtää laatat vasta kun kartta vieritetään näkyviin. Käytä varmistukseen tuoretta välilehteä (WebGL-kontekstit loppuvat monen kartan jälkeen).
