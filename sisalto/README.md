@@ -23,6 +23,7 @@ Tiedostot jakautuvat kahteen kerrokseen:
 | [`13-majoitus-ja-palvelut.md`](13-majoitus-ja-palvelut.md) | Majoitus, ravintolat, ohjelmapalvelut |
 | [`14-tapahtumat.md`](14-tapahtumat.md) | Tapahtumat + tapahtumakalenterin datamalli/API |
 | [`15-historia-ja-kulttuuri.md`](15-historia-ja-kulttuuri.md) | Historia, merkkihenkilöt, muistomerkit, perinteet |
+| [`16-yritykset-ja-tuotteet.md`](16-yritykset-ja-tuotteet.md) | Yritykset ja tuotteet: kategoriat, tietorakenne, haku, lähteet |
 
 ### C) Lähteet ja laatu
 | Tiedosto | Sisältö |

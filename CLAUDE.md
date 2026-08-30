@@ -21,13 +21,13 @@ Staattinen **HTML + CSS + vanilla JS ilman build-työkaluja tai frameworkia**. A
 ## Hakemistorakenne
 
 - **`/material`** — alkuperäinen lähdemateriaali (`source-material-links.md`: 8 lähdesivustoa, vain linkit).
-- **`/sisalto`** — lähdemateriaalista jäsennelty sisältö- ja tietorakenne (suomeksi): `00-tietorakenne`, `01-metadata-skeemat`, `10`–`15` (sisältöinventaario), `90-lahteet-ja-tietoaukot`. Suunnittelun/faktojen lähde. Kun lisäät sisältöä, päivitä oikea `/sisalto`-tiedosto.
-- **Sivut (juuressa):** index, nae-ja-koe, luonto-ja-retkeily, tekemista, majoitus, tapahtumat, tarinat, suunnittele, kohde (detail `?id=`).
+- **`/sisalto`** — lähdemateriaalista jäsennelty sisältö- ja tietorakenne (suomeksi): `00-tietorakenne`, `01-metadata-skeemat`, `10`–`16` (sisältöinventaario), `90-lahteet-ja-tietoaukot`. Suunnittelun/faktojen lähde. Kun lisäät sisältöä, päivitä oikea `/sisalto`-tiedosto.
+- **Sivut (juuressa):** index, nae-ja-koe, luonto-ja-retkeily, tekemista, majoitus, tuotteet-ja-yritykset, tapahtumat, tarinat, suunnittele, kohde (detail `?id=`).
 - **`assets/`:**
   - `js/config.js` — Google Maps API -avain (`window.SAVITAIPALE_MAPS_KEY`, julkinen selainavain).
-  - `js/data.js` — sisältö: `kohteet[]` (kentät osio/tyyppi/koord/kuva ym.), `tapahtumat[]`, `tarinat[]`, `reittisuositukset[]`, `KOORD`, `KUVAT`+`KUVA_MAP`, `TAP_LAHTEET`. Apit `byId`, `byOsio`.
+  - `js/data.js` — sisältö: `kohteet[]` (kentät osio/tyyppi/koord/kuva ym.), `tapahtumat[]`, `tarinat[]`, `reittisuositukset[]`, `yritykset[]`+`yritysKategoriat[]` (yritys voi periä nimen/selosteen kohteelta `kohde`-viittauksella), `KOORD`, `KUVAT`+`KUVA_MAP`, `TAP_LAHTEET`. Apit `byId`, `byOsio`.
   - `js/scenes.js` — generoi teemakohtaista SVG-maisemakuvitusta (kun kohteella ei ole valokuvaa).
-  - `js/app.js` — navigaatio/footer + kaikki renderöijät (`data-render="..."`: listing, gmap, planner, events, detail, nearby, valmisreitit, plan-cta, kuvakreditit, stories).
+  - `js/app.js` — navigaatio/footer + kaikki renderöijät (`data-render="..."`: listing, gmap, planner, events, detail, nearby, valmisreitit, plan-cta, kuvakreditit, stories, yritykset).
   - `css/styles.css` — designjärjestelmä "Kahden veden maa".
   - `img/` — CC-valokuvat + `credits.json` + favicon. `data/tapahtumat.json` — tapahtumasyöte.
 

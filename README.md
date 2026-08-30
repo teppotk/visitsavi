@@ -22,6 +22,7 @@ nae-ja-koe.html             Nähtävyydet & kulttuuri
 luonto-ja-retkeily.html     Reitit & Geoparkin geokohteet
 tekemista.html              Aktiviteetit
 majoitus.html               Majoitus & ruoka
+tuotteet-ja-yritykset.html  Yritykset ja tuotteet kategorioittain + haku
 tapahtumat.html             Tapahtumakalenteri
 tarinat.html                Historia & tarinat
 suunnittele.html            Saavutettavuus, vuodenajat, kartta, UKK
@@ -29,7 +30,7 @@ kohde.html                  Yksittäisen kohteen sivu (kohde.html?id=...)
 assets/
   css/styles.css            Design-järjestelmä ("Kahden veden maa")
   js/config.js              Google Maps API -avain (window.SAVITAIPALE_MAPS_KEY)
-  js/data.js                Sisältö (kohteet, tapahtumat, tarinat, kuvakreditit)
+  js/data.js                Sisältö (kohteet, tapahtumat, tarinat, yritykset, kuvakreditit)
   js/scenes.js              Generoi SVG-maisemat teemoittain (ei kuvatiedostoja)
   js/app.js                 Navigaatio, kortit, suodatus, kartat, animaatiot
   img/                      Valokuvat (CC) + credits.json + favicon

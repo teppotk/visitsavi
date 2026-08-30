@@ -122,6 +122,13 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
   transition: color .15s, background .15s;
 }
 .nav a:hover { color: var(--muste); background: var(--paperi-2); }
+/* Yhdeksän navikohtaa + CTA mahtuu yhdelle riville vain kaventamalla. Header on
+   .wrapin takia yhtä ahdas kaikilla leveyksillä (max-width 1200), joten tiivistys
+   ei ole media query -kohtainen. Alle 1200 px siirrytään valikkopainikkeeseen. */
+.site-header__inner { gap: .9rem; padding-inline: 1.5rem; }
+.site-header .nav a { font-size: .87rem; padding: .5rem .5rem; }
+.brand__name { font-size: 1.08rem; }
+.brand__name small { letter-spacing: .13em; font-size: .55rem; }
 .nav a[aria-current="page"] { color: var(--syvavesi); background: var(--jaa); }
 .nav a.nav__cta { position: relative; color: #fff; background: var(--nuotio); font-weight: 600; }
 .nav a.nav__cta:hover { color: #fff; background: var(--nuotio-tumma); }
@@ -137,7 +144,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 @media (prefers-reduced-motion: reduce) { .toast { transition: opacity .2s; transform: translateX(-50%); } }
 .nav-toggle { display: none; }
 
-@media (max-width: 940px) {
+@media (max-width: 1199px) {
   .nav-toggle {
     display: inline-flex; align-items: center; justify-content: center;
     width: 44px; height: 44px; border: 1px solid var(--viiva);
@@ -155,7 +162,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
     box-shadow: var(--shadow); display: none;
   }
   .nav.is-open { display: flex; }
-  .nav a { padding: .8rem .7rem; }
+  .site-header .nav a { padding: .8rem .7rem; font-size: .95rem; }
 }
 
 /* =========================================================================
@@ -525,6 +532,68 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .footer-brand p { color: var(--jaa); font-size: .95rem; max-width: 32ch; }
 .footer-bottom { margin-top: 2.5rem; padding-top: 1.4rem; border-top: 1px solid rgba(255,255,255,.15); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; color: var(--jaa); }
 .footer-disclaimer { background: rgba(217,100,42,.14); border: 1px solid rgba(217,100,42,.4); color: var(--jaa-vaalea); border-radius: var(--radius-s); padding: .8rem 1rem; font-size: .82rem; margin-top: 1.6rem; }
+
+/* =========================================================================
+   Tuotteet & yritykset: haku, kategoriaryhmät ja yrityskortit
+   ========================================================================= */
+.ysearch { margin-bottom: 1.4rem; }
+.ysearch__label {
+  display: block; font-family: var(--mono); font-size: .7rem; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muste-2); margin-bottom: .5rem;
+}
+.ysearch__row {
+  display: flex; align-items: center; gap: .6rem;
+  background: var(--pinta); border: 1px solid var(--viiva); border-radius: 999px;
+  padding: .25rem .35rem .25rem 1rem; box-shadow: var(--shadow);
+  transition: border-color .2s, box-shadow .2s;
+}
+.ysearch__row:focus-within { border-color: var(--kuolimo); box-shadow: 0 0 0 3px rgba(46,143,163,.18), var(--shadow); }
+.ysearch__icon { font-size: 1.15rem; color: var(--kuolimo-tumma); line-height: 1; }
+.ysearch__input {
+  flex: 1; min-width: 0; border: 0; background: none; outline: none;
+  font: inherit; color: var(--muste); padding: .75rem 0;
+}
+.ysearch__input::placeholder { color: var(--muste-2); opacity: .75; }
+.ysearch__clear {
+  flex: none; border: 0; cursor: pointer; font: 600 .8rem/1 var(--sans);
+  color: var(--muste-2); background: var(--paperi-2); border-radius: 999px; padding: .55rem .9rem;
+}
+.ysearch__clear:hover { color: var(--nuotio); }
+
+.ycount { font-family: var(--mono); font-size: .72rem; letter-spacing: .06em; color: var(--muste-2); margin: 0 0 1.6rem; }
+
+.ygroups { display: flex; flex-direction: column; gap: clamp(2rem, 4vw, 3rem); }
+.ygroup__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: .4rem .9rem; margin-bottom: 1.1rem; padding-bottom: .7rem; border-bottom: 1px solid var(--viiva); }
+.ygroup__head h2 { font-size: clamp(1.3rem, 2.4vw, 1.7rem); margin: 0; }
+.ygroup__head p { margin: 0; color: var(--muste-2); font-size: .92rem; flex: 1; min-width: 12rem; }
+.ygroup__count { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: var(--kuolimo-tumma); }
+
+.ycards { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--gap); }
+@media (max-width: 960px) { .ycards { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .ycards { grid-template-columns: 1fr; } }
+
+.ycard {
+  display: flex; flex-direction: column; background: var(--pinta);
+  border: 1px solid var(--viiva); border-radius: var(--radius);
+  padding: 1.2rem 1.25rem 1.1rem; box-shadow: var(--shadow);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.ycard:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--kuolimo); }
+.ycard__head { display: flex; align-items: baseline; justify-content: space-between; gap: .6rem; }
+.ycard__kyla { font-family: var(--mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muste-2); }
+.ycard__title { font-size: 1.16rem; margin: .35rem 0 .45rem; }
+.ycard__desc { color: var(--muste-2); font-size: .93rem; margin: 0 0 .8rem; }
+.taglist--tight { margin: 0 0 .9rem; gap: .35rem; }
+.ycard__foot { margin-top: auto; display: flex; flex-wrap: wrap; gap: .4rem 1rem; padding-top: .7rem; border-top: 1px solid var(--viiva); }
+.ycard__link { font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; text-decoration: none; color: var(--kuolimo-tumma); }
+.ycard__link:hover { color: var(--nuotio); }
+.ycard__link--ext { color: var(--muste-2); }
+
+@media (max-width: 620px) {
+  .ygroup__head { flex-direction: column; align-items: flex-start; gap: .3rem; }
+  .ygroup__head p { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) { .ycard:hover { transform: none; } }
 
 /* =========================================================================
    Reveal animation

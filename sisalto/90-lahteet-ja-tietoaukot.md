@@ -15,6 +15,15 @@
 
 **Täydentävät lähteet** (agenttien käyttämät varmennukset): fi.wikipedia.org, luontoon.fi, outdooractive.fi, ekarjala-retkeily.fi, venuu.fi, finder.fi, esaimaa.fi, taipaleenseurakunta.fi.
 
+**Yritystiedon lähteet** (Tuotteet & yritykset -osio, ks. [`16-yritykset-ja-tuotteet.md`](16-yritykset-ja-tuotteet.md)):
+
+| Lähde | Käyttö |
+|---|---|
+| [savitaipale.fi/fi/yritystarinoita](https://www.savitaipale.fi/fi/yritystarinoita) | Kunnan omat yritysesittelyt — pääasiallinen lähde lisätyille yrityksille |
+| s-kaupat.fi, k-ruoka.fi, hankkija.fi, savitaipaleenapteekki.fi | Ketjujen ja toimijoiden omat sivut: olemassaolo ja toimiala |
+| savitaipaleenseutu.wordpress.com | Paikallisblogi: Reiposen tilan tilamyymälän tuotteet (varmistettava) |
+| Savitaipaleen Yrittäjät ry (n. 100 jäsenyritystä) | Kattava jäsenlista **ei ole julkisesti koneluettavassa muodossa** — pyydettävä yhdistykseltä |
+
 ## Datan laatu
 
 - **Luotettavimmat:** perustiedot, geokohteet (koordinaatit), historia, kohteiden kuvaukset, sivustorakenteen malli.
@@ -34,6 +43,11 @@
 9. **Uimarantojen ja latuverkoston täydellinen lista** — osa kunnan sivuista palautti 404
 10. **UNESCO Geopark -statuksen vuosi** (2021, varmennus suoraan Geoparkilta)
 11. **Kuvapankki ja tekijänoikeudet** — lähdesivujen kuvia ei voi käyttää sellaisenaan; tarvitaan omat/lisensoidut kuvat kohteille
+12. **Yrityslistauksen kattavuus** — Tuotteet & yritykset -osiossa on 30 toimijaa; Savitaipaleen Yrittäjissä on n. 100 jäsentä. Lista täydennettävä yhdistyksen ja yrittäjien kanssa
+13. **Lisättyjen yritysten osoitteet, aukioloajat ja yhteystiedot** — jätetty tietoisesti pois, koska niitä ei varmistettu lähteistä. Kerättävä suoraan yrityksiltä
+14. **Reiposen tilan tilamyymälän tuotevalikoima** — perustuu paikallisblogin tietoon (lihat, makkarat); varmistettava tilalta
+15. **Työtytöt-yrityksen toimiala** — mainittu kunnan yritystarinoissa, mutta toimiala ei käy ilmi; ei lisätty listaukseen
+16. **Yritystietojen ylläpitovastuu** — kuka kunnassa vastaa listauksen ajantasaisuudesta ja yrittäjien ilmoitusten käsittelystä
 
 ## Tekniset mahdollisuudet (huomioitu rakenteessa)
 

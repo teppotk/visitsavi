@@ -1048,6 +1048,214 @@ window.SAVITAIPALE = (function () {
     }
   ];
 
+  /* ---------------- Yritykset & tuotteet ----------------
+   * Kategoriat matkailijan ja mökkiläisen näkökulmasta.
+   * `kohde` viittaa kohteet[]-tauluun: nimi, seloste ja kylä peritään sieltä,
+   * jotta samaa tietoa ei ylläpidetä kahdessa paikassa.
+   * `tuotteet` on hakusanasto — sen perusteella sivun haku löytää yrityksen.
+   * `lahde` kertoo mistä tieto on peräisin; varmistamattomat on listattu
+   * tiedostossa sisalto/90-lahteet-ja-tietoaukot.md.
+   */
+  const yritysKategoriat = [
+    { avain: "majoitus",     nimi: "Majoitus",                     kuvaus: "Kartano, mökit, ryhmämajoitus ja caravan-alue." },
+    { avain: "ruoka",        nimi: "Ravintolat & kahvilat",        kuvaus: "Lounasta, à la cartea ja kesäkahviloita." },
+    { avain: "lahiruoka",    nimi: "Lähiruoka & tilatuotteet",     kuvaus: "Tilamyymälät ja paikalliset tuottajat." },
+    { avain: "elamykset",    nimi: "Ohjelmapalvelut & elämykset",  kuvaus: "Vuokrausta, ohjattuja elämyksiä ja pelejä." },
+    { avain: "kasityo",      nimi: "Käsityö & lahjat",             kuvaus: "Paikallista kädentaitoa ja tuliaisia." },
+    { avain: "kaupat",       nimi: "Kaupat & päivittäispalvelut",  kuvaus: "Ruokakaupat, apteekki, tarvikkeet ja polttoaine." },
+    { avain: "hyvinvointi",  nimi: "Hyvinvointi & kauneus",        kuvaus: "Kuntosali, hoidot ja kampaamopalvelut." },
+    { avain: "rakentaminen", nimi: "Rakentaminen & kiinteistö",    kuvaus: "Mökin ja talon rakentaminen, remontit ja maanrakennus." },
+    { avain: "kuljetus",     nimi: "Kuljetus & liikenne",          kuvaus: "Tilausajot ja kuljetuspalvelut." },
+    { avain: "teollisuus",   nimi: "Teollisuus & puuala",          kuvaus: "Savitaipaleen puunjalostus ja valmistava teollisuus." }
+  ];
+
+  const yritykset = [
+    /* ---- Majoitus ---- */
+    {
+      id: "y-olkkolan-hovi", kategoria: "majoitus", kohde: "olkkolan-hovi",
+      tuotteet: ["Hotellihuoneet", "Sviitit", "Saunat", "Juhla- ja kokoustilat", "Ravintola", "Aktiviteetit"],
+      verkkosivu: "https://olkkolanhovi.fi", lahde: "olkkolanhovi.fi"
+    },
+    {
+      id: "y-saalastin-lomamokit", kategoria: "majoitus", kohde: "saalastin-lomamokit",
+      tuotteet: ["Hirsimökit", "Mökkivuokraus", "Oma ranta", "Mökkisauna", "Talviasuttava"],
+      verkkosivu: "https://saalasti.net", lahde: "saalasti.net"
+    },
+    {
+      id: "y-karhunrinteen-loma", kategoria: "majoitus", kohde: "karhunrinteen-loma",
+      tuotteet: ["Mökit", "Huoneistot", "Rantasauna", "Savusauna", "Juhlatila", "Kokoustila"],
+      lahde: "Kunnan matkailutiedot"
+    },
+    {
+      id: "y-caravan-alue", kategoria: "majoitus", kohde: "caravan-alue",
+      tuotteet: ["Caravan-paikat", "Leirintä", "Matkailuvaunu", "Asuntoauto"],
+      lahde: "olkkolanhovi.fi"
+    },
+    {
+      id: "y-wanha-havon-koulu", kategoria: "majoitus", kohde: "wanha-havon-koulu",
+      tuotteet: ["Ryhmämajoitus", "Edullinen majoitus", "Leirikoulu"],
+      lahde: "Kunnan matkailutiedot"
+    },
+
+    /* ---- Ravintolat & kahvilat ---- */
+    {
+      id: "y-olkkolan-ravintola", kategoria: "ruoka", kohde: "olkkolan-ravintola",
+      tuotteet: ["Lounasbuffet", "À la carte", "Kotiruoka", "Lähiruoka", "Tilausravintola", "Kesäterassi"],
+      verkkosivu: "https://olkkolanhovi.fi", lahde: "olkkolanhovi.fi"
+    },
+    {
+      id: "y-ravintola-sahrami", kategoria: "ruoka", kohde: "ravintola-sahrami",
+      tuotteet: ["Lounas noutopöydästä", "Pizza", "Seurusteluravintola", "Anniskelu"],
+      lahde: "Kunnan matkailutiedot"
+    },
+    {
+      id: "y-partakosken-kesapalvelut", kategoria: "ruoka", kohde: "partakosken-kesapalvelut",
+      tuotteet: ["Kesäravintola", "Kesäkauppa", "Venesatama", "Kahvi"],
+      lahde: "saimaageopark.fi"
+    },
+    {
+      id: "y-kahvio-suutari", nimi: "Jakeluasema ja Kahvio Suutari", kategoria: "ruoka", kyla: "Heituinlahti",
+      kuvaus: "Heituinlahden kylässä yli sata vuotta toiminut perheyritys: jakeluasema ja kahvio saman katon alla.",
+      tuotteet: ["Kahvio", "Polttoaine", "Jakeluasema", "Kyläkauppa"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Lähiruoka & tilatuotteet ---- */
+    {
+      id: "y-reiposen-tila", kategoria: "lahiruoka", kohde: "reiposen-tila",
+      tuotteet: ["Tilamyymälä", "Lihat", "Makkarat", "Grillituotteet", "Kesäkahvila", "Pehmis"],
+      lahde: "Kunnan matkailutiedot; savitaipaleenseutu.wordpress.com"
+    },
+    {
+      id: "y-lapaton-maitotila", nimi: "Lapaton maitotila", kategoria: "lahiruoka",
+      kuvaus: "Maitotila, joka tuottaa noin 3,5 miljoonaa litraa maitoa vuodessa lähialueen käyttöön.",
+      tuotteet: ["Maito", "Maitotila", "Maatalous"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Ohjelmapalvelut & elämykset ---- */
+    {
+      id: "y-saimaan-palju", kategoria: "elamykset", kohde: "saimaan-palju",
+      tuotteet: ["Paljuvuokraus", "Saunalautta", "Paljuristeily", "Ryhmäohjelmat", "Välinevuokraus", "Melonta", "SUP"],
+      verkkosivu: "https://www.saimaanpalju.fi", lahde: "saimaanpalju.fi"
+    },
+    {
+      id: "y-escape-room", kategoria: "elamykset", kohde: "escape-room",
+      tuotteet: ["Pakohuone", "Ryhmäpeli", "Tiimipäivä"],
+      lahde: "olkkolanhovi.fi"
+    },
+    {
+      id: "y-ammuntasimulaattori", kategoria: "elamykset", kohde: "ammuntasimulaattori",
+      tuotteet: ["Ammuntasimulaattori", "Metsästyssimulaattori", "Ryhmäohjelma"],
+      lahde: "olkkolanhovi.fi"
+    },
+    {
+      id: "y-padel", kategoria: "elamykset", kohde: "padel",
+      tuotteet: ["Padel", "Minigolf", "Perheaktiviteetti"],
+      lahde: "olkkolanhovi.fi"
+    },
+    {
+      id: "y-fatbike-safari", kategoria: "elamykset", kohde: "fatbike-safari",
+      tuotteet: ["Sähköfatbike", "Maastopyöräsafari", "Opastettu retki", "Pyörävuokraus"],
+      lahde: "olkkolanhovi.fi; saimaanpalju.fi"
+    },
+
+    /* ---- Käsityö & lahjat ---- */
+    {
+      id: "y-kasityoasema", kategoria: "kasityo", kohde: "savitaipaleen-kasityoasema",
+      tuotteet: ["Käsityö", "Kudonta", "Kurssit", "Näyttelyt"],
+      lahde: "savitaipale.fi"
+    },
+
+    /* ---- Kaupat & päivittäispalvelut ---- */
+    {
+      id: "y-s-market", nimi: "S-market Savitaipale", kategoria: "kaupat", kyla: "kirkonkylä",
+      kuvaus: "Kirkonkylän päivittäistavarakauppa.",
+      tuotteet: ["Ruokakauppa", "Päivittäistavarat", "Elintarvikkeet"],
+      lahde: "s-kaupat.fi"
+    },
+    {
+      id: "y-k-market", nimi: "K-Market Savitaipale", kategoria: "kaupat", kyla: "kirkonkylä",
+      kuvaus: "Yrittäjävetoinen päivittäistavarakauppa kuntakeskuksessa.",
+      tuotteet: ["Ruokakauppa", "Päivittäistavarat", "Elintarvikkeet"],
+      lahde: "k-ruoka.fi"
+    },
+    {
+      id: "y-apteekki", nimi: "Savitaipaleen apteekki", kategoria: "kaupat", kyla: "kirkonkylä",
+      kuvaus: "Apteekkipalvelut Savitaipaleella; sivuapteekki Lemillä.",
+      tuotteet: ["Apteekki", "Lääkkeet", "Terveystuotteet"],
+      verkkosivu: "https://www.savitaipaleenapteekki.fi", lahde: "savitaipaleenapteekki.fi"
+    },
+    {
+      id: "y-hankkija", nimi: "Hankkija Savitaipale", kategoria: "kaupat", kyla: "kirkonkylä",
+      kuvaus: "Maatalouden, pihan ja puutarhan tarvikkeita.",
+      tuotteet: ["Maataloustarvikkeet", "Pihatarvikkeet", "Puutarha", "Rautakauppa"],
+      lahde: "hankkija.fi"
+    },
+    {
+      id: "y-savis-soppi", nimi: "Savis Soppi", kategoria: "kaupat", kyla: "kirkonkylä",
+      kuvaus: "Torin seudun vaateliike — yksi kolmesta naisyrittäjän liikkeestä torin kulmalla.",
+      tuotteet: ["Vaatteet", "Vaatekauppa", "Erikoiskauppa"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Hyvinvointi & kauneus ---- */
+    {
+      id: "y-savikunto", nimi: "Savikunto", kategoria: "hyvinvointi",
+      kuvaus: "Fysioterapiaa, hoitoja ja kuntosalipalveluita; toimipisteitä useilla paikkakunnilla.",
+      tuotteet: ["Fysioterapia", "Kuntosali", "Hieronta", "Hoidot"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+    {
+      id: "y-chic-hair", nimi: "Chic Hair", kategoria: "hyvinvointi", kyla: "kirkonkylä",
+      kuvaus: "Parturi-kampaamo torin seudulla.",
+      tuotteet: ["Kampaamo", "Parturi", "Hiustenleikkaus"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+    {
+      id: "y-kaunis-zaida", nimi: "Kaunis Zaida", kategoria: "hyvinvointi", kyla: "kirkonkylä",
+      kuvaus: "Kosmetologipalveluita torin seudulla.",
+      tuotteet: ["Kosmetologi", "Kauneushoidot", "Ihonhoito"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Rakentaminen & kiinteistö ---- */
+    {
+      id: "y-kkl-jurvanen", nimi: "KKL Jurvanen Oy", kategoria: "rakentaminen",
+      kuvaus: "Monialainen yritys: rakentamista, maanrakennusta, kiviaineksia ja kuljetuksia.",
+      tuotteet: ["Rakentaminen", "Maanrakennus", "Kiviainekset", "Kuljetus", "Mökkiremontti"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+    {
+      id: "y-maalaus-tikka", nimi: "Maalaus Tikka", kategoria: "rakentaminen",
+      kuvaus: "Maalausliike, jolla on vakituinen henkilöstö.",
+      tuotteet: ["Maalaus", "Pintaremontti", "Julkisivu"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Kuljetus & liikenne ---- */
+    {
+      id: "y-etelapaa", nimi: "Liikenne O. Eteläpää", kategoria: "kuljetus",
+      kuvaus: "Yli 70 vuotta toiminut liikennöitsijä; taksitoiminnasta tilausajoihin.",
+      tuotteet: ["Tilausajot", "Linja-auto", "Ryhmäkuljetus", "Taksi"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Teollisuus & puuala ---- */
+    {
+      id: "y-tiaisen-saha", nimi: "Tiaisen Saha Oy", kategoria: "teollisuus",
+      kuvaus: "1950-luvun alussa perustettu perheyritys ja merkittävä työllistäjä; Etelä-Karjalan Yrittäjien Vuoden Yritys 2023.",
+      tuotteet: ["Saha", "Sahatavara", "Puutavara"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    },
+    {
+      id: "y-finnstamm", nimi: "Finnstamm", kategoria: "teollisuus",
+      kuvaus: "Jalostaa metsäteollisuuden sivuvirroista puusepäntuotteita; noin puolet tuotannosta menee Italiaan.",
+      tuotteet: ["Puusepäntuotteet", "Puunjalostus", "Vienti"],
+      lahde: "savitaipale.fi — Yritystarinoita"
+    }
+  ];
+
   const faktat = {
     asukkaat: "~3 100",
     kesalisays: "väkiluku lähes kolminkertaistuu kesällä",
@@ -1075,6 +1283,8 @@ window.SAVITAIPALE = (function () {
     tapahtumat: tapahtumat,
     tarinat: tarinat,
     reittisuositukset: reittisuositukset,
+    yritysKategoriat: yritysKategoriat,
+    yritykset: yritykset,
     faktat: faktat,
     kuvat: KUVAT,
     byId: function (id) {

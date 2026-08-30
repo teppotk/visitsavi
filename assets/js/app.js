@@ -14,6 +14,7 @@
     { id: "luonto",     href: "luonto-ja-retkeily.html", teksti: "Luonto & retkeily" },
     { id: "tekemista",  href: "tekemista.html",          teksti: "Tekemistä" },
     { id: "majoitus",   href: "majoitus.html",           teksti: "Majoitus & ruoka" },
+    { id: "yritykset",  href: "tuotteet-ja-yritykset.html", teksti: "Tuotteet & yritykset" },
     { id: "tapahtumat", href: "tapahtumat.html",         teksti: "Tapahtumat" },
     { id: "tarinat",    href: "tarinat.html",            teksti: "Tarinat" },
     { id: "suunnittele",href: "suunnittele.html",        teksti: "Suunnittele matkasi" }
@@ -78,7 +79,7 @@
         items.map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul></div>";
     }
     var nav1 = ['<a href="nae-ja-koe.html">Näe &amp; koe</a>','<a href="luonto-ja-retkeily.html">Luonto &amp; retkeily</a>','<a href="tekemista.html">Tekemistä</a>'];
-    var nav2 = ['<a href="majoitus.html">Majoitus &amp; ruoka</a>','<a href="tapahtumat.html">Tapahtumat</a>','<a href="tarinat.html">Tarinat</a>','<a href="suunnittele.html">Suunnittele matkasi</a>'];
+    var nav2 = ['<a href="majoitus.html">Majoitus &amp; ruoka</a>','<a href="tuotteet-ja-yritykset.html">Tuotteet &amp; yritykset</a>','<a href="tapahtumat.html">Tapahtumat</a>','<a href="tarinat.html">Tarinat</a>','<a href="suunnittele.html">Suunnittele matkasi</a>'];
     var yht = ['Savitaipaleen kunta','Peltoinlahdentie 3 a, 54800','kunta@savitaipale.fi','Matkailuneuvonta: gosaimaa.com'];
     return el(
       '<footer class="site-footer"><div class="wrap">' +
@@ -907,6 +908,149 @@
   }
 
   /* ---------------- Hero-taustan injektio (valokuva tai SVG) ---------------- */
+  /* ---------------- Yritykset & tuotteet ---------------- */
+  // Hakua varten: pienet kirjaimet ja ä/ö/å normalisoituna, jotta
+  // "kasityo" löytää myös "käsityön".
+  function fold(s) {
+    return String(s == null ? "" : s).toLowerCase()
+      .replace(/[äàáâã]/g, "a").replace(/[öòóôõø]/g, "o").replace(/å/g, "a")
+      .replace(/[üùúû]/g, "u").replace(/[éèêë]/g, "e");
+  }
+
+  function yritysTiedot(y) {
+    var k = y.kohde ? D.byId(y.kohde) : null;
+    return {
+      id: y.id,
+      nimi: y.nimi || (k ? k.nimi : y.id),
+      kuvaus: y.kuvaus || (k ? k.seloste : ""),
+      kyla: y.kyla || (k ? k.kyla : ""),
+      tyyppi: k ? k.tyyppi : "",
+      tuotteet: y.tuotteet || [],
+      kategoria: y.kategoria,
+      kohde: y.kohde || null,
+      verkkosivu: y.verkkosivu || null,
+      lahde: y.lahde || ""
+    };
+  }
+
+  function yritysKorttiHTML(y, katNimi) {
+    var tags = y.tuotteet.map(function (t) { return '<span class="tag">' + esc(t) + "</span>"; }).join("");
+    var linkit = "";
+    if (y.kohde) {
+      linkit += '<a class="ycard__link" href="kohde.html?id=' + encodeURIComponent(y.kohde) + '">Lue lisää <span aria-hidden="true">→</span></a>';
+    }
+    if (y.verkkosivu) {
+      var host = y.verkkosivu.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "");
+      linkit += '<a class="ycard__link ycard__link--ext" href="' + esc(y.verkkosivu) + '" target="_blank" rel="noopener">' +
+        esc(host) + ' <span aria-hidden="true">↗</span></a>';
+    }
+    return '<article class="ycard reveal">' +
+      '<div class="ycard__head">' +
+      '<span class="card__type">' + esc(katNimi) + "</span>" +
+      (y.kyla ? '<span class="ycard__kyla">' + esc(y.kyla) + "</span>" : "") +
+      "</div>" +
+      '<h3 class="ycard__title">' + esc(y.nimi) + "</h3>" +
+      (y.kuvaus ? '<p class="ycard__desc">' + esc(y.kuvaus) + "</p>" : "") +
+      (tags ? '<div class="taglist taglist--tight">' + tags + "</div>" : "") +
+      (linkit ? '<div class="ycard__foot">' + linkit + "</div>" : "") +
+      "</article>";
+  }
+
+  function renderYritykset(container) {
+    var kategoriat = D.yritysKategoriat || [];
+    var kaikki = (D.yritykset || []).map(yritysTiedot);
+    var katNimi = {};
+    kategoriat.forEach(function (c) { katNimi[c.avain] = c.nimi; });
+
+    // Hakuindeksi: nimi + kuvaus + tuotteet + kategoria + kylä
+    kaikki.forEach(function (y) {
+      y._haku = fold([y.nimi, y.kuvaus, y.tuotteet.join(" "), katNimi[y.kategoria] || "", y.kyla, y.tyyppi].join(" "));
+    });
+
+    var state = { q: "", kat: null };
+
+    var haku = el(
+      '<div class="ysearch">' +
+      '<label class="ysearch__label" for="yritys-haku">Hae yrityksiä ja tuotteita</label>' +
+      '<div class="ysearch__row">' +
+      '<span class="ysearch__icon" aria-hidden="true">⌕</span>' +
+      '<input class="ysearch__input" id="yritys-haku" type="search" autocomplete="off" ' +
+      'placeholder="Esim. mökki, makkara, palju…">' +
+      '<button class="ysearch__clear" type="button" hidden>Tyhjennä</button>' +
+      "</div></div>"
+    );
+    var input = haku.querySelector(".ysearch__input");
+    var clearBtn = haku.querySelector(".ysearch__clear");
+
+    var filterBar = el('<div class="filters" role="group" aria-label="Rajaa kategorian mukaan"></div>');
+    filterBar.appendChild(el('<span class="filters__label">Kategoria</span>'));
+    function makeChip(label, value) {
+      var c = el('<button class="chip" type="button" aria-pressed="' + (state.kat === value) + '">' + esc(label) + "</button>");
+      c.addEventListener("click", function () {
+        state.kat = (state.kat === value) ? null : value;
+        Array.prototype.forEach.call(filterBar.querySelectorAll(".chip"), function (ch) {
+          ch.setAttribute("aria-pressed", ch === c && state.kat ? "true" : "false");
+        });
+        if (!state.kat) all.setAttribute("aria-pressed", "true");
+        draw();
+      });
+      return c;
+    }
+    var all = makeChip("Kaikki", null);
+    all.setAttribute("aria-pressed", "true");
+    filterBar.appendChild(all);
+    kategoriat.forEach(function (c) { filterBar.appendChild(makeChip(c.nimi, c.avain)); });
+
+    var counter = el('<p class="ycount" role="status" aria-live="polite"></p>');
+    var results = el('<div class="ygroups"></div>');
+
+    container.appendChild(haku);
+    container.appendChild(filterBar);
+    container.appendChild(counter);
+    container.appendChild(results);
+
+    function osuu(y) {
+      if (state.kat && y.kategoria !== state.kat) return false;
+      if (!state.q) return true;
+      var termit = state.q.split(/\s+/).filter(Boolean);
+      return termit.every(function (t) { return y._haku.indexOf(t) !== -1; });
+    }
+
+    function draw() {
+      var shown = kaikki.filter(osuu);
+      var html = "";
+      kategoriat.forEach(function (c) {
+        var ryhma = shown.filter(function (y) { return y.kategoria === c.avain; });
+        if (!ryhma.length) return;
+        html += '<section class="ygroup" id="kat-' + esc(c.avain) + '">' +
+          '<div class="ygroup__head"><h2>' + esc(c.nimi) + '</h2>' +
+          '<p>' + esc(c.kuvaus) + '</p>' +
+          '<span class="ygroup__count">' + ryhma.length + " kpl</span></div>" +
+          '<div class="ycards">' + ryhma.map(function (y) { return yritysKorttiHTML(y, c.nimi); }).join("") + "</div>" +
+          "</section>";
+      });
+      if (!shown.length) {
+        html = '<p class="empty">Ei osumia haulla &rdquo;' + esc(input.value) + '&rdquo;. Kokeile toista hakusanaa tai poista rajaus.</p>';
+      }
+      results.innerHTML = html;
+      counter.textContent = shown.length === kaikki.length
+        ? kaikki.length + " yritystä ja toimijaa"
+        : shown.length + " / " + kaikki.length + " yritystä";
+      clearBtn.hidden = !input.value;
+      observeReveal(results);
+    }
+
+    input.addEventListener("input", function () { state.q = fold(input.value).trim(); draw(); });
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && input.value) { input.value = ""; state.q = ""; draw(); }
+    });
+    clearBtn.addEventListener("click", function () {
+      input.value = ""; state.q = ""; draw(); input.focus();
+    });
+
+    draw();
+  }
+
   function injectScenes() {
     Array.prototype.forEach.call(document.querySelectorAll("[data-scene]"), function (node) {
       var photo = node.getAttribute("data-photo");
@@ -1000,6 +1144,7 @@
         case "kuvakreditit": renderKuvakreditit(c); break;
         case "plan-cta": renderPlanCta(c); break;
         case "stories":  renderStories(c);  break;
+        case "yritykset": renderYritykset(c); break;
       }
     });
 

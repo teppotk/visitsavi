@@ -22,6 +22,7 @@ Etusivu
 ├─ Luonto & retkeily    (reitit, vesistöt, uimarannat, luontokohteet, Geopark)
 ├─ Tekemistä            (aktiviteetit, ohjelmapalvelut, liikuntapaikat, talvi)
 ├─ Majoitus             (hotelli, mökit, caravan, edullinen majoitus)
+├─ Tuotteet & yritykset (paikalliset yritykset ja niiden tuotteet, haku)
 ├─ Syö & juo            (ravintolat, kahvilat, lähiruoka)
 ├─ Tapahtumat           (tapahtumakalenteri + kohokohdat)
 ├─ Tarinat / Historia   (historia, merkkihenkilöt, perinteet, kylät)
@@ -42,6 +43,7 @@ Lisäksi läpi sivuston kulkevat:
 | **Tekemistä** | `aktiviteetti`, `palveluntarjoaja` | Retkiluistelu, kalastus, melonta, escape room, padel, minigolf, paljut, liikuntapaikat |
 | **Majoitus** | `majoitus` | Olkkolan Hovi, mökit, caravan-alue, Wanha Havon koulu |
 | **Syö & juo** | `ravintola` | Olkkolan Hovin ravintola, kesäkahvilat, Partakosken kesäpalvelut |
+| **Tuotteet & yritykset** | `palveluntarjoaja`, `tuote` | Paikalliset yritykset tuotteineen: lähiruoka, käsityö, kaupat, ohjelmapalvelut, rakentaminen. Kooste kategorioittain + haku. Ks. [`16-yritykset-ja-tuotteet.md`](16-yritykset-ja-tuotteet.md) |
 | **Tapahtumat** | `tapahtuma` | Sapassi-viikko, Pettilän markkinat, kartanokonsertit, tennisturnaus |
 | **Tarinat / Historia** | `artikkeli`, `kohde` | Kirkonrakentajat, D. E. Europaeus, Jonni Myyrä, Kustaa III:n sota, muistomerkit |
 | **Suunnittele matkasi** | `sivu` (staattinen) | Saavutettavuus, kartat, vuodenajat, matkailuneuvonta, kylät |
