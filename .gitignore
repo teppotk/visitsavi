@@ -12,3 +12,6 @@ tmp/
 
 # Node (jos otetaan käyttöön myöhemmin)
 node_modules/
+
+# Hankinta-aineisto (tarjouspyynnön liitteet) — ei julkaista toistaiseksi
+hankinta/
