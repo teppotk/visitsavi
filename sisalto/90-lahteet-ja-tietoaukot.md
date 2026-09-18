@@ -56,6 +56,6 @@
 
 ## Tekniset mahdollisuudet (huomioitu rakenteessa)
 
-- **Tapahtumat automaattisesti:** `GET https://tapahtumat.ekarjala.fi/api/collection/5db067d83799da2f29ee4d1b/content?lang=fi&country=FI&out=JSON` (Savitaipaleen kokoelma, sisältää koordinaatit)
+- **Tapahtumat automaattisesti:** `GET https://tapahtumat.ekarjala.fi/api/collection/5db067d83799da2f29ee4d1b/content?lang=fi&country=FI&out=JSON` (Savitaipaleen kokoelma, sisältää koordinaatit). **Toimii palvelinpuolelta** — selaimesta CORS estää. Haku on toteutettu: `tools/hae-tapahtumat.py` kirjoittaa `assets/data/tapahtumat.json`-syötteen. Kokoelmassa on sekä `event`- että `organizer`-sivuja, ja mukana on myös etätapahtumia ja muiden kuntien tilaisuuksia — skripti vaatii Savitaipaleella olevan osoitteen. Syöte päivitettiin viimeksi 18.9.2026 (17 tulevaa tapahtumaa)
 - **Reittidata:** Retkikartta, Outdooractive, ekarjala-retkeily.fi, kunnan Karttatiimi (savitaipale.karttatiimi.fi)
 - **Geokohteet + opasteet:** Saimaa Geopark (kohdesivut, koordinaatit, opaste-PDF:t)

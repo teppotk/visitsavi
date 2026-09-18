@@ -348,6 +348,7 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .today-box a { color: #fff; text-decoration: underline; }
 .today-box a:hover { color: var(--jaa); }
 .today-box__empty { color: var(--jaa); margin: 0; }
+.today-box__running { margin: 1rem 0 0; padding-top: .9rem; border-top: 1px solid rgba(255,255,255,.18); font-size: .9rem; color: var(--jaa); }
 @media (prefers-reduced-motion: reduce) { .today-box__dot { animation: none; } }
 
 /* =========================================================================

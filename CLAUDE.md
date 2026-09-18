@@ -36,7 +36,7 @@ Staattinen **HTML + CSS + vanilla JS ilman build-työkaluja tai frameworkia**. A
 - **Profiili:** luonto / järvi (Saimaa + Kuolimo) / mökkeily / kulttuurihistoria. EI kaupunki-/kylpylämatkailu.
 - **Kartat:** Google Maps JS API + Directions API. Avain on julkinen selainavain — suojaus perustuu Cloud Consolen HTTP-referrer-rajaukseen (`teppotk.github.io/*`), jonka käyttäjä ylläpitää. Kartat putoavat SVG-/upotus-varaan jos avain puuttuu. Ohjeet READMEssa.
 - **Valokuvat:** vain CC-lisensoituja (Wikimedia Commons / Flickr Openversen kautta). **Älä koskaan kopioi lähdesivustojen valokuvia** (tekijänoikeus). Attribuutiot näkyvissä (`.photocredit` + Suunnittele-sivun lista). Uusi kuva: `assets/img/` + `KUVAT` + `KUVA_MAP`.
-- **Tapahtumat:** lähdekalenterin API on CORS-estetty + 404 → selain ei voi hakea suoraan. Sivu hakee `assets/data/tapahtumat.json`-syötteen ajonaikaisesti; tuotannossa ajastettu taustapalvelu täyttäisi sen.
+- **Tapahtumat:** lähdekalenterin API on CORS-estetty → selain ei voi hakea suoraan, mutta **palvelinpuolelta se vastaa**. Sivu hakee `assets/data/tapahtumat.json`-syötteen ajonaikaisesti ja yhdistää sen `data.js`:n omiin tapahtumiin. Syöte päivitetään ajamalla `python3 tools/hae-tapahtumat.py` (suodattaa Savitaipaleen tulevat tapahtumat, siivoaa tekstit, muodostaa lähdelinkit); tuotannossa tämän ajaisi ajastettu taustapalvelu. Älä lisää sivulle keksittyjä esimerkkitapahtumia.
 - **Faktat:** älä keksi hintoja/aukioloja/päivämääriä/yhteystietoja. `90-lahteet-ja-tietoaukot.md` listaa varmistettavat kohdat; lisää uudet aukot sinne.
 - **Git:** committaa noreply-sähköpostilla (ei todellista osoitetta); pushaa vasta kun käyttäjä pyytää tai konteksti sallii.
 
