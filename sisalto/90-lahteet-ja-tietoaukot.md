@@ -48,6 +48,11 @@
 14. **Reiposen tilan tilamyymälän tuotevalikoima** — perustuu paikallisblogin tietoon (lihat, makkarat); varmistettava tilalta
 15. **Työtytöt-yrityksen toimiala** — mainittu kunnan yritystarinoissa, mutta toimiala ei käy ilmi; ei lisätty listaukseen
 16. **Yritystietojen ylläpitovastuu** — kuka kunnassa vastaa listauksen ajantasaisuudesta ja yrittäjien ilmoitusten käsittelystä
+17. **Liikuntapaikkojen osoitteet, koordinaatit, aukioloajat ja hinnat** — Aktiviteetit-osion liikuntapaikat (jäähalli, uimahalli, tennishalli, kuntosali, frisbeegolfrata, koulukeskuksen liikunta-alue, skeittipuisto/Backyard Park, ravirata, motocross-rata, ratsastus) on kuvattu vain sillä tarkkuudella, joka lähteistä löytyi. Koordinaatteja ei ole → kohteet eivät näy kartalla. Kerättävä kunnan liikuntatoimelta
+18. **Uimahallin kausi** — lähteessä "noin 1.9.–14.6."; varmistettava kunnalta vuosittain
+19. **Tenniskenttien varauskäytäntö ja tennisseuran yhteystiedot** — ei varmistettu
+20. **Ratsastustallien nimet ja palvelut** — "hevospitäjä" mainittu lähteissä, yksittäisiä talleja ei varmistettu
+21. **Alko Savitaipale ja OP Salpa** — lisätty toimeksiannosta ilman lähdevarmistusta. Varmistettava myymälän/konttorin olemassaolo, osoite, aukioloajat ja palveluvalikoima (esim. onko konttori vai vain automaatti- ja verkkopalvelut)
 
 ## Tekniset mahdollisuudet (huomioitu rakenteessa)
 

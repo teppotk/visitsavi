@@ -33,7 +33,8 @@ Kategoriat on järjestetty matkailijan tarpeen mukaan: ensin mitä matkalla tarv
 | `lahiruoka` | Lähiruoka & tilatuotteet | Tilamyymälät ja tuottajat |
 | `elamykset` | Ohjelmapalvelut & elämykset | Vuokraus, ohjatut elämykset, pelit |
 | `kasityo` | Käsityö & lahjat | Kädentaito ja tuliaiset |
-| `kaupat` | Kaupat & päivittäispalvelut | Ruokakaupat, apteekki, tarvikkeet, polttoaine |
+| `kaupat` | Kaupat & päivittäispalvelut | Ruokakaupat, tarvikkeet, erikoiskauppa, polttoaine |
+| `asiointi` | Asiointi & arjen palvelut | Pankki, apteekki, Alko |
 | `hyvinvointi` | Hyvinvointi & kauneus | Kuntosali, hoidot, kampaamo |
 | `rakentaminen` | Rakentaminen & kiinteistö | Rakentaminen, remontit, maanrakennus |
 | `kuljetus` | Kuljetus & liikenne | Tilausajot ja kuljetukset |
@@ -47,9 +48,9 @@ Kategoriat on järjestetty matkailijan tarpeen mukaan: ensin mitä matkalla tarv
 - **Ryhmittely kategorioittain**; tyhjät ryhmät piilotetaan.
 - Kortti linkittää kohdesivulle (jos kohde on olemassa) ja yrityksen omalle sivulle (jos tiedossa).
 
-## Sisältö (tilanne 30.8.2026)
+## Sisältö (tilanne 18.9.2026)
 
-30 yritystä ja toimijaa. Näistä 15 on jo sivuston kohteita (`kohde`-viittaus), 15 on lisätty pelkkänä yritystietona.
+32 yritystä ja toimijaa. Näistä 15 on jo sivuston kohteita (`kohde`-viittaus), 17 on lisätty pelkkänä yritystietona.
 
 ### Sivuston omista kohteista periytyvät
 
@@ -66,9 +67,11 @@ Käsityö: Savitaipaleen Käsityöasema.
 | Lapaton maitotila | Lähiruoka | savitaipale.fi — Yritystarinoita |
 | S-market Savitaipale | Kaupat | s-kaupat.fi |
 | K-Market Savitaipale | Kaupat | k-ruoka.fi |
-| Savitaipaleen apteekki | Kaupat | savitaipaleenapteekki.fi |
+| Savitaipaleen apteekki | Asiointi | savitaipaleenapteekki.fi |
 | Hankkija Savitaipale | Kaupat | hankkija.fi |
 | Savis Soppi | Kaupat | savitaipale.fi — Yritystarinoita |
+| OP Salpa | Asiointi | lisätty toimeksiannosta — palvelut ja aukiolot varmistettava |
+| Alko Savitaipale | Asiointi | lisätty toimeksiannosta — aukiolot varmistettava |
 | Savikunto | Hyvinvointi | savitaipale.fi — Yritystarinoita |
 | Chic Hair | Hyvinvointi | savitaipale.fi — Yritystarinoita |
 | Kaunis Zaida | Hyvinvointi | savitaipale.fi — Yritystarinoita |

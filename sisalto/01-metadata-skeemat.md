@@ -182,7 +182,7 @@ Yhtenäistetty lista sisältötyypeittäin — mukailee tapahtumakalenterin `glo
 
 - **Näe & koe**: nähtävyydet, museot, kulttuuriperintö, kirkot, näyttelyt, näköalapaikat
 - **Luonto**: geokohteet, luontokohteet, retkeilyreitit, uimarannat, vesistöt
-- **Tekemistä**: aktiviteetit, liikunta ja hyvinvointi, vesiaktiviteetit, talviaktiviteetit, opastukset ja retket
+- **Aktiviteetit**: talvi, vesillä, elämykset, pelit ja pallolajit, liikuntapaikat, hevoset ja moottoriurheilu, senioriystävällinen
 - **Majoitus**: hotellit, mökit ja lomahuoneistot, leirintä ja caravan, muu majoitus
 - **Syö & juo**: ravintolat, kahvilat, kesäpalvelut, lähiruoka
 - **Tapahtumat**: festivaalit, markkinat, musiikki, teatteri ja tanssi, urheilutapahtumat, kyläjuhlat, näyttelyt, seminaarit

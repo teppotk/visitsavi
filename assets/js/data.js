@@ -29,11 +29,11 @@ window.SAVITAIPALE = (function () {
       johdanto:
         "Kaksi järveä, jyrkät harjut ja kalliot, jotka vievät ajassa lähes kaksi miljardia vuotta taaksepäin. Reitit vievät jyrkänteille, muinaisrannoille ja koskien äärelle."
     },
-    tekemista: {
-      nimi: "Tekemistä",
-      alaotsikko: "Aktiviteetit ympäri vuoden",
+    aktiviteetit: {
+      nimi: "Aktiviteetit",
+      alaotsikko: "Tekemistä ja liikuntapaikat ympäri vuoden",
       johdanto:
-        "Kesällä melontaa, kalastusta ja kartanon elämyksiä. Talvella Savitaipaleen erikoisuus: retkiluistelu kirkasvetisen Kuolimon jäällä ja valaistut ladut."
+        "Kesällä melontaa, kalastusta ja kartanon elämyksiä. Talvella Savitaipaleen erikoisuus: retkiluistelu kirkasvetisen Kuolimon jäällä ja valaistut ladut. Lisäksi pitäjässä on kokoonsa nähden poikkeuksellisen monipuoliset liikuntapaikat: jäähalli, uimahalli, tennishalli, kuntosali, frisbeegolfrata ja koulukeskuksen liikunta-alue senioriliikuntapaikkoineen."
     },
     majoitus: {
       nimi: "Majoitus & ruoka",
@@ -389,7 +389,7 @@ window.SAVITAIPALE = (function () {
     /* ---------------- TEKEMISTÄ ---------------- */
     {
       id: "retkiluistelu",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Talviaktiviteetti",
       nimi: "Retkiluistelu Kuolimolla",
       teema: "talvi",
@@ -401,13 +401,13 @@ window.SAVITAIPALE = (function () {
         "Kuolimo on poikkeuksellisen kirkasvetinen järvi, ja sen jää tarjoaa talvella ainutlaatuisen retkiluistelukokemuksen. Parhaimmillaan jään läpi näkee syvälle veteen.",
         "Helmikuussa järjestetään vuosittainen luisteluretkitapahtuma. Jäälle lähdettäessä on aina varmistettava jään kantavuus ja turvallisuus."
       ],
-      kategoriat: ["Talviaktiviteetit"],
+      kategoriat: ["Talvi"],
       vuodenajat: ["talvi"],
       tiedot: [{ label: "Kausi", arvo: "Talvi, jääolosuhteiden mukaan" }]
     },
     {
       id: "kuolimon-luistelurata",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Talviaktiviteetti",
       nimi: "Kuolimon luistelurata",
       teema: "talvi",
@@ -418,7 +418,7 @@ window.SAVITAIPALE = (function () {
         "Pappilanlahden luistelurata on vapaassa käytössä luisteluun, potkukelkkailuun ja kävelyyn. Lenkin pituus on noin 2,5 kilometriä, ja rata jatkuu 3,5 kilometrin päähän Lepänkantoon, missä on nuotiopaikka.",
         "Välinevuokrausta ja huoltoa saa Savitaipaleen Urheilijoilta."
       ],
-      kategoriat: ["Talviaktiviteetit"],
+      kategoriat: ["Talvi"],
       vuodenajat: ["talvi"],
       tiedot: [
         { label: "Pituus", arvo: "2,5 km lenkki / 3,5 km Lepänkantoon" },
@@ -427,7 +427,7 @@ window.SAVITAIPALE = (function () {
     },
     {
       id: "hiihtoladut",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Talviaktiviteetti",
       nimi: "Valaistut hiihtoladut",
       teema: "talvi",
@@ -437,13 +437,13 @@ window.SAVITAIPALE = (function () {
       kuvaus: [
         "Kirkonkylässä on noin kolmen kilometrin valaistu latu. Talvikaudella hoidetaan lisäksi murske- ja latureittejä hiihtoon ja talviretkeilyyn."
       ],
-      kategoriat: ["Talviaktiviteetit"],
+      kategoriat: ["Talvi"],
       vuodenajat: ["talvi"],
       tiedot: [{ label: "Valaistu latu", arvo: "n. 3 km" }]
     },
     {
       id: "melonta-sup",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Vesiaktiviteetti",
       nimi: "Melonta ja SUP",
       teema: "jarvi",
@@ -454,13 +454,13 @@ window.SAVITAIPALE = (function () {
         "Saimaa ja Kuolimo tarjoavat suojaisia melontareittejä salmineen ja saarineen. Suomensalon kaltaiset kohteet ovat parhaiten saavutettavissa juuri kanootilla tai kajakilla.",
         "Kanootteja, SUP-lautoja ja veneitä voi vuokrata mm. Olkkolan Hovilta ja Saimaan Paljulta."
       ],
-      kategoriat: ["Vesiaktiviteetit"],
+      kategoriat: ["Vesillä"],
       vuodenajat: ["kesä"],
       tiedot: [{ label: "Vuokraus", arvo: "Olkkolan Hovi, Saimaan Palju" }]
     },
     {
       id: "kalastus",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Aktiviteetti",
       nimi: "Kalastus",
       teema: "jarvi",
@@ -471,13 +471,13 @@ window.SAVITAIPALE = (function () {
         "Savitaipaleen alueella on 167 järveä, ja kunnan vaakunakala on nieriä. Kuolimossa elää jääkauden reliktilaji isonieriä, ja Partakoski on järvitaimenen kutupaikka.",
         "Muista kalastuksen luvat ja rauhoitusalueet ennen vesille lähtöä."
       ],
-      kategoriat: ["Aktiviteetit"],
+      kategoriat: ["Vesillä"],
       vuodenajat: ["kesä", "talvi"],
       tiedot: [{ label: "Vesistöt", arvo: "Saimaa, Kuolimo ym." }]
     },
     {
       id: "escape-room",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Elämys",
       nimi: "Pakohuoneet (Olkkolan Hovi)",
       teema: "kyla",
@@ -488,7 +488,7 @@ window.SAVITAIPALE = (function () {
         "Olkkolan Hovin kaksi pakohuonetta sopivat 2–6 hengen ryhmille. Peliaika on 60 minuuttia, ja alkuun kuuluu 15 minuutin briiffaus.",
         "Pakohuoneet toimivat hyvin ryhmien tyky- ja juhlaohjelmana."
       ],
-      kategoriat: ["Aktiviteetit"],
+      kategoriat: ["Elämykset"],
       vuodenajat: ["ympärivuotinen"],
       tiedot: [
         { label: "Ryhmä", arvo: "2–6 hlö" },
@@ -497,7 +497,7 @@ window.SAVITAIPALE = (function () {
     },
     {
       id: "padel",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Aktiviteetti",
       nimi: "Padel ja minigolf",
       teema: "kyla",
@@ -508,7 +508,7 @@ window.SAVITAIPALE = (function () {
         "Olkkolan Hovilla on ulkopadel-kenttä sekä 12-väyläinen minigolf. Padelin hinta on 6–8 €/hlö kellonajasta riippuen ja minigolf 5 €/hlö.",
         "Samasta pihapiiristä löytyy myös ammunta- ja metsästyssimulaattori sekä vesivälineiden vuokraus."
       ],
-      kategoriat: ["Aktiviteetit"],
+      kategoriat: ["Pelit ja pallolajit"],
       vuodenajat: ["kesä"],
       tiedot: [
         { label: "Padel", arvo: "6–8 €/hlö" },
@@ -517,7 +517,7 @@ window.SAVITAIPALE = (function () {
     },
     {
       id: "ammuntasimulaattori",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Elämys",
       nimi: "Ammuntasimulaattori",
       teema: "kyla",
@@ -527,13 +527,13 @@ window.SAVITAIPALE = (function () {
       kuvaus: [
         "Ammunta- ja metsästyssimulaattori sopii ryhmien ohjelmaksi. Hinta on 20–35 €/hlö ryhmän koon mukaan, ja ryhmäopastus on saatavilla."
       ],
-      kategoriat: ["Aktiviteetit"],
+      kategoriat: ["Elämykset"],
       vuodenajat: ["ympärivuotinen"],
       tiedot: [{ label: "Hinta", arvo: "20–35 €/hlö" }]
     },
     {
       id: "saimaan-palju",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Ohjelmapalvelu",
       nimi: "Saimaan Palju",
       teema: "jarvi",
@@ -544,7 +544,7 @@ window.SAVITAIPALE = (function () {
         "Saimaan Palju on ohjelmapalvelu- ja välinevuokrausyritys, jonka noutopiste sijaitsee Savitaipaleella Olkkolan Hovilla. Tarjolla on siirrettäviä paljuja, saunalautta- ja paljuristeilyjä sekä ryhmäohjelmia.",
         "Vuokrattavana on myös sähköfatbikeja, lumikenkiä, puutelttoja, veneitä ja pyöriä. Yritys järjestää lisäksi opastettuja melonta- ja pyöräsafareita."
       ],
-      kategoriat: ["Aktiviteetit", "Vesiaktiviteetit"],
+      kategoriat: ["Elämykset", "Vesillä"],
       vuodenajat: ["kesä", "talvi"],
       tiedot: [
         { label: "Noutopiste", arvo: "Olkkolan Hovi, Savitaipale" },
@@ -554,7 +554,7 @@ window.SAVITAIPALE = (function () {
     },
     {
       id: "fatbike-safari",
-      osio: "tekemista",
+      osio: "aktiviteetit",
       tyyppi: "Elämys",
       nimi: "Sähköfatbike-safari",
       teema: "metsa",
@@ -564,9 +564,193 @@ window.SAVITAIPALE = (function () {
       kuvaus: [
         "Sähköfatbike-safari vie harjujen ja metsäpolkujen maisemiin sähköavusteisilla maastopyörillä. Safari toteutetaan Olkkolan Hovin ja Saimaan Paljun yhteistyönä."
       ],
-      kategoriat: ["Aktiviteetit"],
+      kategoriat: ["Elämykset"],
       vuodenajat: ["kesä", "syksy"],
       tiedot: [{ label: "Varaus", arvo: "Saimaan Palju / Olkkolan Hovi" }]
+    },
+
+    /* ---------------- LIIKUNTA ---------------- */
+    {
+      id: "uimahalli",
+      osio: "aktiviteetit",
+      tyyppi: "Liikuntapaikka",
+      nimi: "Uimahalli",
+      teema: "kyla",
+      kyla: "kirkonkylä",
+      seloste:
+        "Kirkonkylän uimahalli on auki uimakauden ulkopuolella, noin syyskuusta kesäkuuhun.",
+      kuvaus: [
+        "Savitaipaleen uimahalli palvelee talvikaudella, kun järvet ovat jäässä. Kausi on tyypillisesti noin 1.9.–14.6.",
+        "Tarkista aukioloajat ja hinnat kunnan sivuilta ennen käyntiä."
+      ],
+      kategoriat: ["Liikuntapaikat", "Vesillä"],
+      vuodenajat: ["talvi"],
+      tiedot: [{ label: "Kausi", arvo: "noin 1.9.–14.6." }]
+    },
+    {
+      id: "jaahalli",
+      osio: "aktiviteetit",
+      tyyppi: "Liikuntapaikka",
+      nimi: "Jäähalli",
+      teema: "talvi",
+      kyla: "kirkonkylä",
+      seloste:
+        "Pitäjän oma jäähalli luistelulle ja jääurheilulle.",
+      kuvaus: [
+        "Savitaipaleella on kokoonsa nähden harvinainen etu: oma jäähalli. Vuoroja ja tapahtumia kannattaa kysyä kunnan liikuntatoimelta tai Savitaipaleen Urheilijoilta."
+      ],
+      kategoriat: ["Liikuntapaikat", "Talvi"],
+      vuodenajat: ["talvi"],
+      tiedot: []
+    },
+    {
+      id: "tennis",
+      osio: "aktiviteetit",
+      tyyppi: "Liikuntapaikka",
+      nimi: "Tennishalli ja tenniskentät",
+      teema: "kyla",
+      kyla: "kirkonkylä",
+      seloste:
+        "Tennishalli ja neljä ulkokenttää — pitäjässä pelataan myös kansainvälistä turnausta.",
+      kuvaus: [
+        "Savitaipaleella on tennishalli ja neljä tenniskenttää. Kesäkaudella pitäjässä järjestetään kansainvälinen tennisturnaus.",
+        "Vuorot ja varaukset hoituvat paikallisen tennisseuran kautta."
+      ],
+      kategoriat: ["Liikuntapaikat", "Pelit ja pallolajit"],
+      vuodenajat: ["ympärivuotinen"],
+      tiedot: [{ label: "Kentät", arvo: "Halli + 4 ulkokenttää" }]
+    },
+    {
+      id: "kuntosali",
+      osio: "aktiviteetit",
+      tyyppi: "Liikuntapaikka",
+      nimi: "Kuntosali ja liikuntasalit",
+      teema: "kyla",
+      kyla: "kirkonkylä",
+      seloste:
+        "Kuntosali ja liikuntasalit omatoimiseen ja ohjattuun harjoitteluun.",
+      kuvaus: [
+        "Kirkonkylässä on kuntosali sekä liikuntasaleja, joissa järjestetään myös ohjattua ryhmäliikuntaa. Käyttövuorot ja hinnat kannattaa tarkistaa kunnalta."
+      ],
+      kategoriat: ["Liikuntapaikat"],
+      vuodenajat: ["ympärivuotinen"],
+      tiedot: []
+    },
+    {
+      id: "frisbeegolf",
+      osio: "aktiviteetit",
+      tyyppi: "Ulkoliikuntapaikka",
+      nimi: "Frisbeegolfrata",
+      teema: "metsa",
+      kyla: "kirkonkylä",
+      seloste:
+        "12 väylän metsärata, joka sopii sekä aloittelijalle että kokeneemmalle.",
+      kuvaus: [
+        "Savitaipaleen frisbeegolfrata kulkee metsämaastossa ja siinä on 12 väylää. Rata on maksuton ja vapaassa käytössä.",
+        "Metsärata on maastoltaan vaihteleva — jalkaan kannattaa laittaa kunnon kengät."
+      ],
+      kategoriat: ["Pelit ja pallolajit"],
+      vuodenajat: ["kesä"],
+      tiedot: [{ label: "Väylät", arvo: "12, metsärata" }]
+    },
+    {
+      id: "koulukeskuksen-liikunta-alue",
+      osio: "aktiviteetit",
+      tyyppi: "Ulkoliikuntapaikka",
+      nimi: "Koulukeskuksen liikunta-alue",
+      teema: "kyla",
+      kyla: "kirkonkylä",
+      seloste:
+        "Tekonurmi, yleisurheilupaikat, beach volley, parkour ja erillinen senioriliikuntapaikka.",
+      kuvaus: [
+        "Koulukeskuksen liikunta-alue kokoaa yhteen kentät ja monitoimikentän, tekonurmikentän ja yleisurheilupaikat, beach volley -kentän sekä parkour-alueen.",
+        "Alueella on myös Lappset Seniorsport -senioriliikuntapaikka, jonka laitteet on suunniteltu kevyeen ja turvalliseen kuntoiluun.",
+        "Alue on vapaassa käytössä silloin, kun siellä ei ole koulun tai seurojen vuoroja."
+      ],
+      kategoriat: ["Liikuntapaikat", "Senioriystävällinen"],
+      vuodenajat: ["kesä"],
+      tiedot: [{ label: "Senioriliikunta", arvo: "Lappset Seniorsport -laitteet" }]
+    },
+    {
+      id: "uimarannat",
+      osio: "aktiviteetit",
+      tyyppi: "Uimaranta",
+      nimi: "Uimarannat",
+      teema: "jarvi",
+      kyla: "kirkonkylä",
+      seloste:
+        "Olkkolan matala hiekkaranta, Salmensilta Heituinlahdessa ja Lepänkannon ranta Kuolimolla.",
+      kuvaus: [
+        "Olkkolan uimaranta on turvallinen ja matala, ja siellä on iso laituri, nurmialueet ja pukukopit. Lähistöllä on myös beach volley -kenttä.",
+        "Muita rantoja ovat Salmensillan ranta Heituinlahdessa ja Lepänkannon hiekkaranta kirkasvetisen Kuolimon rannalla."
+      ],
+      kategoriat: ["Vesillä"],
+      vuodenajat: ["kesä"],
+      tiedot: [{ label: "Olkkola", arvo: "Laituri, nurmialue, pukukopit" }]
+    },
+    {
+      id: "skeittipuisto",
+      osio: "aktiviteetit",
+      tyyppi: "Ulkoliikuntapaikka",
+      nimi: "Skeittipuisto ja Backyard Park",
+      teema: "kyla",
+      kyla: "kirkonkylä",
+      seloste:
+        "Kesällä skeittipuisto, talvella lumilautailun ja freestylen Backyard Park.",
+      kuvaus: [
+        "Skeittipuisto palvelee kesäkaudella rullalautailijoita ja skuuttaajia. Talvella Backyard Park tarjoaa paikan lumilautailuun ja freestyleen."
+      ],
+      kategoriat: ["Liikuntapaikat", "Talvi"],
+      vuodenajat: ["ympärivuotinen"],
+      tiedot: []
+    },
+    {
+      id: "ravirata",
+      osio: "aktiviteetit",
+      tyyppi: "Urheilupaikka",
+      nimi: "Ravirata",
+      teema: "kyla",
+      kyla: "kirkonkylä",
+      seloste:
+        "Savitaipaleen ravirata, jolla ajetaan kesäkauden raveja.",
+      kuvaus: [
+        "Ravit ovat osa Savitaipaleen kesää. Kilpailupäivät näkyvät tapahtumakalenterissa."
+      ],
+      kategoriat: ["Hevoset ja moottoriurheilu"],
+      vuodenajat: ["kesä"],
+      tiedot: []
+    },
+    {
+      id: "ratsastus",
+      osio: "aktiviteetit",
+      tyyppi: "Aktiviteetti",
+      nimi: "Ratsastus ja hevoset",
+      teema: "kyla",
+      kyla: "maaseutu",
+      seloste:
+        "Savitaipale on hevospitäjä — talleja ja ratsastusmahdollisuuksia.",
+      kuvaus: [
+        "Savitaipaletta kutsutaan hevospitäjäksi: kunnassa on talleja ja ratsastustoimintaa. Palveluista ja ajankohdista kannattaa kysyä suoraan talleilta."
+      ],
+      kategoriat: ["Hevoset ja moottoriurheilu"],
+      vuodenajat: ["ympärivuotinen"],
+      tiedot: []
+    },
+    {
+      id: "motocross-rata",
+      osio: "aktiviteetit",
+      tyyppi: "Urheilupaikka",
+      nimi: "Motocross-rata",
+      teema: "metsa",
+      kyla: "maaseutu",
+      seloste:
+        "Moottoriurheilulle oma ratansa Savitaipaleella.",
+      kuvaus: [
+        "Savitaipaleella on motocross-rata. Käyttövuorot ja tapahtumat hoituvat radan ylläpitäjän kautta."
+      ],
+      kategoriat: ["Hevoset ja moottoriurheilu"],
+      vuodenajat: ["kesä"],
+      tiedot: []
     },
 
     /* ---------------- MAJOITUS & RUOKA ---------------- */
@@ -1063,6 +1247,7 @@ window.SAVITAIPALE = (function () {
     { avain: "elamykset",    nimi: "Ohjelmapalvelut & elämykset",  kuvaus: "Vuokrausta, ohjattuja elämyksiä ja pelejä." },
     { avain: "kasityo",      nimi: "Käsityö & lahjat",             kuvaus: "Paikallista kädentaitoa ja tuliaisia." },
     { avain: "kaupat",       nimi: "Kaupat & päivittäispalvelut",  kuvaus: "Ruokakaupat, apteekki, tarvikkeet ja polttoaine." },
+    { avain: "asiointi",     nimi: "Asiointi & arjen palvelut",     kuvaus: "Pankki, apteekki ja Alko — perusasiat hoituvat kirkonkylässä." },
     { avain: "hyvinvointi",  nimi: "Hyvinvointi & kauneus",        kuvaus: "Kuntosali, hoidot ja kampaamopalvelut." },
     { avain: "rakentaminen", nimi: "Rakentaminen & kiinteistö",    kuvaus: "Mökin ja talon rakentaminen, remontit ja maanrakennus." },
     { avain: "kuljetus",     nimi: "Kuljetus & liikenne",          kuvaus: "Tilausajot ja kuljetuspalvelut." },
@@ -1181,12 +1366,6 @@ window.SAVITAIPALE = (function () {
       lahde: "k-ruoka.fi"
     },
     {
-      id: "y-apteekki", nimi: "Savitaipaleen apteekki", kategoria: "kaupat", kyla: "kirkonkylä",
-      kuvaus: "Apteekkipalvelut Savitaipaleella; sivuapteekki Lemillä.",
-      tuotteet: ["Apteekki", "Lääkkeet", "Terveystuotteet"],
-      verkkosivu: "https://www.savitaipaleenapteekki.fi", lahde: "savitaipaleenapteekki.fi"
-    },
-    {
       id: "y-hankkija", nimi: "Hankkija Savitaipale", kategoria: "kaupat", kyla: "kirkonkylä",
       kuvaus: "Maatalouden, pihan ja puutarhan tarvikkeita.",
       tuotteet: ["Maataloustarvikkeet", "Pihatarvikkeet", "Puutarha", "Rautakauppa"],
@@ -1197,6 +1376,26 @@ window.SAVITAIPALE = (function () {
       kuvaus: "Torin seudun vaateliike — yksi kolmesta naisyrittäjän liikkeestä torin kulmalla.",
       tuotteet: ["Vaatteet", "Vaatekauppa", "Erikoiskauppa"],
       lahde: "savitaipale.fi — Yritystarinoita"
+    },
+
+    /* ---- Asiointi & arjen palvelut ---- */
+    {
+      id: "y-apteekki", nimi: "Savitaipaleen apteekki", kategoria: "asiointi", kyla: "kirkonkylä",
+      kuvaus: "Apteekkipalvelut Savitaipaleella; sivuapteekki Lemillä.",
+      tuotteet: ["Apteekki", "Lääkkeet", "Terveystuotteet", "Reseptit"],
+      verkkosivu: "https://www.savitaipaleenapteekki.fi", lahde: "savitaipaleenapteekki.fi"
+    },
+    {
+      id: "y-op-salpa", nimi: "OP Salpa", kategoria: "asiointi", kyla: "kirkonkylä",
+      kuvaus: "Osuuspankin pankki- ja vakuutuspalvelut. OP Salpa näkyy myös pitäjän tapahtumissa kesän tennisturnauksen yhteistyökumppanina.",
+      tuotteet: ["Pankkipalvelut", "Vakuutukset", "Käteisautomaatti"],
+      verkkosivu: "https://www.op.fi", lahde: "lisätty toimeksiannosta — palvelut ja aukiolot varmistettava"
+    },
+    {
+      id: "y-alko", nimi: "Alko Savitaipale", kategoria: "asiointi", kyla: "kirkonkylä",
+      kuvaus: "Alkon myymälä kirkonkylässä.",
+      tuotteet: ["Alkoholijuomat", "Viinit", "Oluet"],
+      verkkosivu: "https://www.alko.fi", lahde: "lisätty toimeksiannosta — aukiolot varmistettava"
     },
 
     /* ---- Hyvinvointi & kauneus ---- */

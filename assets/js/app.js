@@ -12,7 +12,7 @@
     { id: "index",      href: "index.html",             teksti: "Etusivu" },
     { id: "nae-ja-koe", href: "nae-ja-koe.html",         teksti: "Näe & koe" },
     { id: "luonto",     href: "luonto-ja-retkeily.html", teksti: "Luonto & retkeily" },
-    { id: "tekemista",  href: "tekemista.html",          teksti: "Tekemistä" },
+    { id: "aktiviteetit", href: "aktiviteetit.html",     teksti: "Aktiviteetit" },
     { id: "majoitus",   href: "majoitus.html",           teksti: "Majoitus & ruoka" },
     { id: "yritykset",  href: "tuotteet-ja-yritykset.html", teksti: "Tuotteet & yritykset" },
     { id: "tapahtumat", href: "tapahtumat.html",         teksti: "Tapahtumat" },
@@ -55,20 +55,36 @@
   }
 
   /* ---------------- Header ---------------- */
+  /* Kaksi riviä: ylärivillä logo + Suunnittele-CTA, alarivillä päävalikko omalla
+     rivillään (isompi fontti, kun leveys ei enää rajoita). Kapealla näytöllä
+     alarivi muuttuu pudotusvalikoksi ja CTA siirtyy sen viimeiseksi kohdaksi. */
   function buildHeader(active) {
-    var links = NAV.map(function (n) {
+    var ctaItem = NAV.filter(function (n) { return n.id === "suunnittele"; })[0];
+    var badge = ' <span class="nav__count" data-plan-count aria-label="kohdetta suunnitelmassa"></span>';
+
+    function ctaLink(extraCls) {
+      var cur = ctaItem.id === active ? ' aria-current="page"' : "";
+      return '<a href="' + ctaItem.href + '" class="nav__cta ' + extraCls + '"' + cur + '>' +
+        esc(ctaItem.teksti) + badge + "</a>";
+    }
+
+    var links = NAV.filter(function (n) { return n.id !== "suunnittele"; }).map(function (n) {
       var cur = n.id === active ? ' aria-current="page"' : "";
-      var cls = n.id === "suunnittele" ? ' class="nav__cta"' : "";
-      var badge = n.id === "suunnittele" ? ' <span class="nav__count" data-plan-count aria-label="kohdetta suunnitelmassa"></span>' : "";
-      return '<a href="' + n.href + '"' + cls + cur + '>' + esc(n.teksti) + badge + "</a>";
+      return '<a href="' + n.href + '"' + cur + ">" + esc(n.teksti) + "</a>";
     }).join("");
+
     return el(
-      '<header class="site-header"><div class="wrap site-header__inner">' +
+      '<header class="site-header">' +
+      '<div class="wrap site-header__top">' +
       '<a class="brand" href="index.html">' + logoMark +
       '<span class="brand__name">Visit Savitaipale<small>Kahden veden maa</small></span></a>' +
+      ctaLink("nav__cta--top") +
       '<button class="nav-toggle" aria-label="Valikko" aria-expanded="false"><span></span></button>' +
-      '<nav class="nav" aria-label="Päävalikko">' + links + "</nav>" +
-      "</div></header>"
+      "</div>" +
+      '<div class="site-header__navrow"><div class="wrap">' +
+      '<nav class="nav" aria-label="Päävalikko">' + links + ctaLink("nav__cta--menu") + "</nav>" +
+      "</div></div>" +
+      "</header>"
     );
   }
 
@@ -78,7 +94,7 @@
       return '<div><h4>' + title + '</h4><ul>' +
         items.map(function (i) { return "<li>" + i + "</li>"; }).join("") + "</ul></div>";
     }
-    var nav1 = ['<a href="nae-ja-koe.html">Näe &amp; koe</a>','<a href="luonto-ja-retkeily.html">Luonto &amp; retkeily</a>','<a href="tekemista.html">Tekemistä</a>'];
+    var nav1 = ['<a href="nae-ja-koe.html">Näe &amp; koe</a>','<a href="luonto-ja-retkeily.html">Luonto &amp; retkeily</a>','<a href="aktiviteetit.html">Aktiviteetit</a>'];
     var nav2 = ['<a href="majoitus.html">Majoitus &amp; ruoka</a>','<a href="tuotteet-ja-yritykset.html">Tuotteet &amp; yritykset</a>','<a href="tapahtumat.html">Tapahtumat</a>','<a href="tarinat.html">Tarinat</a>','<a href="suunnittele.html">Suunnittele matkasi</a>'];
     var yht = ['Savitaipaleen kunta','Peltoinlahdentie 3 a, 54800','kunta@savitaipale.fi','Matkailuneuvonta: gosaimaa.com'];
     return el(
@@ -512,6 +528,9 @@
     var pts = D.kohteet.filter(function (k) { return k.koord && (!osio || k.osio === osio); });
     // varmista että fokusoitu kohde on mukana, vaikka osio-suodatus rajaisi (kohdesivut)
     if (focusK && focusK.koord && pts.indexOf(focusK) < 0) pts = pts.concat([focusK]);
+    // Ei yhtään koordinaattia (esim. osio, jonka kohteita ei ole vielä paikannettu):
+    // tyhjä LatLngBounds zoomaisi kartan maailmanlaajuiseksi → näytetään SVG-yleiskartta.
+    if (!pts.length) { renderMap(container); return; }
     var note = osio ? "◎ Tämän sivun kohteet kartalla · klikkaa pistettä" : "◎ Klikkaa pistettä nähdäksesi kohteen tiedot · oranssit pisteet ovat Saimaa Geoparkin geokohteita";
     container.innerHTML =
       '<div class="gmapfull"><div class="gmapfull__map"></div>' +
@@ -641,7 +660,7 @@
   function interestOf(k) {
     if (k.osio === "nae-ja-koe") return "kulttuuri";
     if (k.osio === "luonto") return "luonto";
-    if (k.osio === "tekemista") return "aktiviteetit";
+    if (k.osio === "aktiviteetit") return "aktiviteetit";
     if (k.osio === "majoitus") return /(Ravintola|Kahvila)/.test(k.tyyppi) ? "ruoka" : "majoitus";
     return "kulttuuri";
   }
@@ -1123,8 +1142,8 @@
     // mobile nav
     var toggle = document.querySelector(".nav-toggle");
     if (toggle) toggle.addEventListener("click", function () {
-      var nav = document.querySelector(".nav");
-      var open = nav.classList.toggle("is-open");
+      var row = document.querySelector(".site-header__navrow");
+      var open = row.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
     });
 

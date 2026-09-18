@@ -1,6 +1,6 @@
 # Luonto ja ulkoilu
 
-Osiot "Luonto & retkeily" ja "Tekemistä". Sisältötyypit `reitti`, `kohde` (luontokohde), `aktiviteetti`. Geokohteiden kuvaukset: ks. [`11-nahtavyydet-ja-kohteet.md`](11-nahtavyydet-ja-kohteet.md).
+Osiot "Luonto & retkeily" ja "Aktiviteetit" (tekeminen + liikuntapaikat). Sisältötyypit `reitti`, `kohde` (luontokohde), `aktiviteetti`. Geokohteiden kuvaukset: ks. [`11-nahtavyydet-ja-kohteet.md`](11-nahtavyydet-ja-kohteet.md).
 
 ## Saimaa UNESCO Global Geopark — konteksti
 

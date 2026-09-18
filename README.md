@@ -20,7 +20,7 @@ python3 -m http.server 8000
 index.html                  Etusivu (hero, kohokohdat, tapahtumat, kartta)
 nae-ja-koe.html             Nähtävyydet & kulttuuri
 luonto-ja-retkeily.html     Reitit & Geoparkin geokohteet
-tekemista.html              Aktiviteetit
+aktiviteetit.html           Aktiviteetit (tekemistä + liikuntapaikat)
 majoitus.html               Majoitus & ruoka
 tuotteet-ja-yritykset.html  Yritykset ja tuotteet kategorioittain + haku
 tapahtumat.html             Tapahtumakalenteri

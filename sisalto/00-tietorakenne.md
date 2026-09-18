@@ -20,7 +20,7 @@ Koska Savitaipale on **yksi kunta**, maantieteen akseli ei ole ensisijainen navi
 Etusivu
 ├─ Näe & koe            (nähtävyydet, museot, geokohteet, kulttuuriperintö)
 ├─ Luonto & retkeily    (reitit, vesistöt, uimarannat, luontokohteet, Geopark)
-├─ Tekemistä            (aktiviteetit, ohjelmapalvelut, liikuntapaikat, talvi)
+├─ Aktiviteetit         (tekeminen ja liikunta: ohjelmapalvelut, talvi, liikuntapaikat, kentät, uimarannat)
 ├─ Majoitus             (hotelli, mökit, caravan, edullinen majoitus)
 ├─ Tuotteet & yritykset (paikalliset yritykset ja niiden tuotteet, haku)
 ├─ Syö & juo            (ravintolat, kahvilat, lähiruoka)
@@ -40,7 +40,7 @@ Lisäksi läpi sivuston kulkevat:
 |---|---|---|
 | **Näe & koe** | `kohde` (nähtävyys), `kohde` (museo) | Kärnäkosken linnoitus, Savitaipaleen kirkko, Rahikkalan tuulimylly, Hakamäen museoalue, Europaeus-museo, Kirkonrakentajien museo |
 | **Luonto & retkeily** | `reitti`, `kohde` (luontokohde) | Orrainpolku, MTB-reitit, Saimaan saaristoreitti, Geopark-geokohteet, uimarannat, Kuolimo & Saimaa |
-| **Tekemistä** | `aktiviteetti`, `palveluntarjoaja` | Retkiluistelu, kalastus, melonta, escape room, padel, minigolf, paljut, liikuntapaikat |
+| **Aktiviteetit** | `aktiviteetti`, `palveluntarjoaja`, `kohde` (liikuntapaikka) | Retkiluistelu, kalastus, melonta, escape room, padel, paljut **sekä** liikuntapaikat: jäähalli, uimahalli, tennis, kuntosali, frisbeegolf, koulukeskuksen liikunta-alue (senioriliikunta), uimarannat, skeittipuisto, ravirata, motocross-rata, ratsastus. Yksi osio, koska "Tekemistä" ja "Liikunta" erillisinä eivät erottuneet toisistaan valikossa. Lähde: [`12-luonto-ja-ulkoilu.md`](12-luonto-ja-ulkoilu.md) |
 | **Majoitus** | `majoitus` | Olkkolan Hovi, mökit, caravan-alue, Wanha Havon koulu |
 | **Syö & juo** | `ravintola` | Olkkolan Hovin ravintola, kesäkahvilat, Partakosken kesäpalvelut |
 | **Tuotteet & yritykset** | `palveluntarjoaja`, `tuote` | Paikalliset yritykset tuotteineen: lähiruoka, käsityö, kaupat, ohjelmapalvelut, rakentaminen. Kooste kategorioittain + haku. Ks. [`16-yritykset-ja-tuotteet.md`](16-yritykset-ja-tuotteet.md) |

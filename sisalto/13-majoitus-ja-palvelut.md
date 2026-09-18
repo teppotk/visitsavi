@@ -1,6 +1,6 @@
 # Majoitus, ravintolat ja ohjelmapalvelut
 
-Osiot "Majoitus", "Syö & juo" ja osa osiosta "Tekemistä". Sisältötyypit `majoitus`, `ravintola`, `aktiviteetti`, `palveluntarjoaja`.
+Osiot "Majoitus", "Syö & juo" ja osa osiosta "Aktiviteetit". Sisältötyypit `majoitus`, `ravintola`, `aktiviteetti`, `palveluntarjoaja`.
 
 > **Huom. hinnat ja aukioloajat:** Lähdesivustot eivät ylläpidä näitä rakenteisena datana. Alla olevat hinnat on poimittu kolmansien osapuolten palveluista (esim. Venuu.fi) ja ovat suuntaa-antavia — **tarkista tarjoajalta ennen julkaisua**.
 

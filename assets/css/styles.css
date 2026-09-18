@@ -106,33 +106,38 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
    ========================================================================= */
 .site-header {
   position: sticky; top: 0; z-index: 100;
-  background: rgba(242,246,246,.85);
+  background: rgba(242,246,246,.92);
   backdrop-filter: saturate(1.4) blur(10px);
   border-bottom: 1px solid var(--viiva);
 }
-.site-header__inner { display: flex; align-items: center; gap: 1.4rem; min-height: 68px; }
+/* Ylärivi: logo vasemmalla, Suunnittele-CTA oikealla (kapealla myös valikkonappi). */
+.site-header__top { display: flex; align-items: center; gap: 1rem; min-height: 72px; }
 .brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--muste); margin-right: auto; }
-.brand__mark { width: 34px; height: 34px; flex: none; }
-.brand__name { font-family: var(--serif); font-weight: 600; font-size: 1.18rem; letter-spacing: -.01em; }
-.brand__name small { display: block; font-family: var(--mono); font-size: .58rem; letter-spacing: .22em; text-transform: uppercase; color: var(--kuolimo-tumma); font-weight: 400; }
-.nav { display: flex; gap: .2rem; flex-wrap: wrap; }
+.brand__mark { width: 38px; height: 38px; flex: none; }
+.brand__name { font-family: var(--serif); font-weight: 600; font-size: 1.28rem; letter-spacing: -.01em; }
+.brand__name small { display: block; font-family: var(--mono); font-size: .6rem; letter-spacing: .2em; text-transform: uppercase; color: var(--kuolimo-tumma); font-weight: 400; }
+
+/* Alarivi: päävalikko omalla rivillään. Kun leveys ei enää rajoita, fontti on
+   reilusti isompi (luettavuus myös ikääntyville kävijöille). Linkit saavat
+   kiertää kahdelle riville — oma rivi kestää sen rikkomatta layoutia. */
+.site-header__navrow { border-top: 1px solid var(--viiva); }
+.nav { display: flex; flex-wrap: wrap; gap: 0; margin-inline: -.75rem; }
 .nav a {
-  font-size: .93rem; font-weight: 500; color: var(--muste-2);
-  text-decoration: none; padding: .5rem .7rem; border-radius: var(--radius-s);
+  font-size: 1.06rem; font-weight: 500; color: var(--muste-2);
+  text-decoration: none; padding: .72rem .75rem; border-radius: var(--radius-s);
   transition: color .15s, background .15s;
 }
 .nav a:hover { color: var(--muste); background: var(--paperi-2); }
-/* Yhdeksän navikohtaa + CTA mahtuu yhdelle riville vain kaventamalla. Header on
-   .wrapin takia yhtä ahdas kaikilla leveyksillä (max-width 1200), joten tiivistys
-   ei ole media query -kohtainen. Alle 1200 px siirrytään valikkopainikkeeseen. */
-.site-header__inner { gap: .9rem; padding-inline: 1.5rem; }
-.site-header .nav a { font-size: .87rem; padding: .5rem .5rem; }
-.brand__name { font-size: 1.08rem; }
-.brand__name small { letter-spacing: .13em; font-size: .55rem; }
-.nav a[aria-current="page"] { color: var(--syvavesi); background: var(--jaa); }
-.nav a.nav__cta { position: relative; color: #fff; background: var(--nuotio); font-weight: 600; }
-.nav a.nav__cta:hover { color: #fff; background: var(--nuotio-tumma); }
-.nav a.nav__cta[aria-current="page"] { color: #fff; background: var(--nuotio-tumma); }
+.nav a[aria-current="page"] { color: var(--syvavesi); background: var(--jaa); font-weight: 600; }
+
+/* CTA: ylärivillä oma nappinsa, kapealla näytöllä pudotusvalikon viimeinen kohta. */
+.nav__cta { position: relative; display: inline-block; text-decoration: none; color: #fff; background: var(--nuotio);
+  font-weight: 600; font-size: 1.02rem; padding: .7rem 1.15rem; border-radius: var(--radius-s);
+  transition: background .15s; }
+.nav__cta:hover { color: #fff; background: var(--nuotio-tumma); }
+.nav__cta[aria-current="page"] { color: #fff; background: var(--nuotio-tumma); }
+.nav__cta--top { flex: none; white-space: nowrap; }
+.nav__cta--menu { display: none; }
 .iw a.iw-plan { display: inline-block; margin-top: .35rem; color: var(--nuotio); font-weight: 700; }
 .nav__count { position: absolute; top: -7px; right: -7px; display: inline-flex; align-items: center; justify-content: center; min-width: 1.25rem; height: 1.25rem; padding: 0 .3rem; border-radius: 999px; background: var(--syvavesi); color: #fff; border: 2px solid var(--paperi); font-family: var(--mono); font-size: .66rem; font-weight: 700; line-height: 1; box-shadow: var(--shadow); }
 
@@ -144,25 +149,33 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 @media (prefers-reduced-motion: reduce) { .toast { transition: opacity .2s; transform: translateX(-50%); } }
 .nav-toggle { display: none; }
 
-@media (max-width: 1199px) {
+/* Alle 1024 px valikkorivi ei enää mahdu yhdelle riville → pudotusvalikko. */
+@media (max-width: 1023px) {
   .nav-toggle {
     display: inline-flex; align-items: center; justify-content: center;
-    width: 44px; height: 44px; border: 1px solid var(--viiva);
-    border-radius: var(--radius-s); background: var(--pinta); cursor: pointer;
+    width: 48px; height: 48px; border: 1px solid var(--viiva);
+    border-radius: var(--radius-s); background: var(--pinta); cursor: pointer; flex: none;
   }
   .nav-toggle span, .nav-toggle span::before, .nav-toggle span::after {
-    content: ""; display: block; width: 20px; height: 2px; background: var(--muste); position: relative;
+    content: ""; display: block; width: 22px; height: 2px; background: var(--muste); position: relative;
   }
-  .nav-toggle span::before { position: absolute; top: -6px; }
-  .nav-toggle span::after { position: absolute; top: 6px; }
-  .nav {
+  .nav-toggle span::before { position: absolute; top: -7px; }
+  .nav-toggle span::after { position: absolute; top: 7px; }
+  .site-header__navrow {
     position: absolute; left: 0; right: 0; top: 100%;
-    flex-direction: column; gap: 0; background: var(--pinta);
-    border-bottom: 1px solid var(--viiva); padding: .5rem;
-    box-shadow: var(--shadow); display: none;
+    background: var(--pinta); border-top: 0; border-bottom: 1px solid var(--viiva);
+    box-shadow: var(--shadow); display: none; padding-block: .4rem;
+    max-height: calc(100vh - 72px); overflow-y: auto;
   }
-  .nav.is-open { display: flex; }
-  .site-header .nav a { padding: .8rem .7rem; font-size: .95rem; }
+  .site-header__navrow.is-open { display: block; }
+  .nav { flex-direction: column; gap: 0; margin-inline: 0; }
+  .nav a { font-size: 1.18rem; padding: .95rem .6rem; border-radius: var(--radius-s); }
+  .nav__cta--menu { display: block; margin-top: .5rem; text-align: center; font-size: 1.18rem; padding: .95rem 1rem; }
+  .nav__cta--menu .nav__count { top: -6px; right: auto; margin-left: .45rem; position: static; }
+}
+@media (max-width: 719px) {
+  .nav__cta--top { display: none; }
+  .brand__name { font-size: 1.12rem; }
 }
 
 /* =========================================================================

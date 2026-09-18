@@ -22,7 +22,7 @@ Staattinen **HTML + CSS + vanilla JS ilman build-työkaluja tai frameworkia**. A
 
 - **`/material`** — alkuperäinen lähdemateriaali (`source-material-links.md`: 8 lähdesivustoa, vain linkit).
 - **`/sisalto`** — lähdemateriaalista jäsennelty sisältö- ja tietorakenne (suomeksi): `00-tietorakenne`, `01-metadata-skeemat`, `10`–`16` (sisältöinventaario), `90-lahteet-ja-tietoaukot`. Suunnittelun/faktojen lähde. Kun lisäät sisältöä, päivitä oikea `/sisalto`-tiedosto.
-- **Sivut (juuressa):** index, nae-ja-koe, luonto-ja-retkeily, tekemista, majoitus, tuotteet-ja-yritykset, tapahtumat, tarinat, suunnittele, kohde (detail `?id=`).
+- **Sivut (juuressa):** index, nae-ja-koe, luonto-ja-retkeily, aktiviteetit, majoitus, tuotteet-ja-yritykset, tapahtumat, tarinat, suunnittele, kohde (detail `?id=`).
 - **`assets/`:**
   - `js/config.js` — Google Maps API -avain (`window.SAVITAIPALE_MAPS_KEY`, julkinen selainavain).
   - `js/data.js` — sisältö: `kohteet[]` (kentät osio/tyyppi/koord/kuva ym.), `tapahtumat[]`, `tarinat[]`, `reittisuositukset[]`, `yritykset[]`+`yritysKategoriat[]` (yritys voi periä nimen/selosteen kohteelta `kohde`-viittauksella), `KOORD`, `KUVAT`+`KUVA_MAP`, `TAP_LAHTEET`. Apit `byId`, `byOsio`.
