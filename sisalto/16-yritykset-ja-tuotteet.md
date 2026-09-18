@@ -72,8 +72,8 @@ Käsityö: Savitaipaleen Käsityöasema.
 | Savitaipaleen apteekki | Asiointi | savitaipaleenapteekki.fi |
 | Hankkija Savitaipale | Kaupat | hankkija.fi |
 | Savis Soppi | Kaupat | savitaipale.fi — Yritystarinoita |
-| OP Salpa | Asiointi | lisätty toimeksiannosta — palvelut ja aukiolot varmistettava |
-| Alko Savitaipale | Asiointi | lisätty toimeksiannosta — aukiolot varmistettava |
+| OP Salpa — Savitaipaleen konttori | Asiointi | op.fi — OP Salpa, Savitaipaleen konttori |
+| Alko Savitaipale | Asiointi | alko.fi — myymälä 2797 |
 | Savikunto | Hyvinvointi | savitaipale.fi — Yritystarinoita |
 | Chic Hair | Hyvinvointi | savitaipale.fi — Yritystarinoita |
 | Kaunis Zaida | Hyvinvointi | savitaipale.fi — Yritystarinoita |

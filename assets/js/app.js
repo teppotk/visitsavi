@@ -959,7 +959,8 @@
       linkit += '<a class="ycard__link" href="kohde.html?id=' + encodeURIComponent(y.kohde) + '">Lue lisää <span aria-hidden="true">→</span></a>';
     }
     if (y.verkkosivu) {
-      var host = y.verkkosivu.replace(/^https?:\/\//, "").replace(/^www\./, "").replace(/\/$/, "");
+      // Näytä vain verkkotunnus — osa linkeistä osoittaa syvälle sivustolle (esim. konttorisivu)
+      var host = y.verkkosivu.replace(/^https?:\/\//, "").replace(/^www\./, "").split("/")[0];
       linkit += '<a class="ycard__link ycard__link--ext" href="' + esc(y.verkkosivu) + '" target="_blank" rel="noopener">' +
         esc(host) + ' <span aria-hidden="true">↗</span></a>';
     }

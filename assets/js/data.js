@@ -1381,21 +1381,22 @@ window.SAVITAIPALE = (function () {
     /* ---- Asiointi & arjen palvelut ---- */
     {
       id: "y-apteekki", nimi: "Savitaipaleen apteekki", kategoria: "asiointi", kyla: "kirkonkylä",
-      kuvaus: "Apteekkipalvelut Savitaipaleella; sivuapteekki Lemillä.",
+      kuvaus: "Apteekki Kievarintiellä; sivuapteekki Lemillä. Lääkeneuvontaa, itsehoitotuotteita ja apteekkikosmetiikkaa.",
       tuotteet: ["Apteekki", "Lääkkeet", "Terveystuotteet", "Reseptit"],
       verkkosivu: "https://www.savitaipaleenapteekki.fi", lahde: "savitaipaleenapteekki.fi"
     },
     {
-      id: "y-op-salpa", nimi: "OP Salpa", kategoria: "asiointi", kyla: "kirkonkylä",
-      kuvaus: "Osuuspankin pankki- ja vakuutuspalvelut. OP Salpa näkyy myös pitäjän tapahtumissa kesän tennisturnauksen yhteistyökumppanina.",
-      tuotteet: ["Pankkipalvelut", "Vakuutukset", "Käteisautomaatti"],
-      verkkosivu: "https://www.op.fi", lahde: "lisätty toimeksiannosta — palvelut ja aukiolot varmistettava"
+      id: "y-op-salpa", nimi: "OP Salpa — Savitaipaleen konttori", kategoria: "asiointi", kyla: "kirkonkylä",
+      kuvaus: "Osuuspankin konttori Torikadulla: infopalvelut ja käteisasiointi ilman ajanvarausta, asiantuntijatapaamiset ajanvarauksella. Esteetön sisäänkäynti ja maksuton pysäköinti.",
+      tuotteet: ["Pankkipalvelut", "Käteispalvelut", "Vakuutukset"],
+      verkkosivu: "https://www.op.fi/osuuspankit/op-salpa/konttorit/savitaipaleen-konttori/",
+      lahde: "op.fi — OP Salpa, Savitaipaleen konttori"
     },
     {
       id: "y-alko", nimi: "Alko Savitaipale", kategoria: "asiointi", kyla: "kirkonkylä",
-      kuvaus: "Alkon myymälä kirkonkylässä.",
+      kuvaus: "Alkon myymälä torin laidalla Torikadulla. Tarkista aukioloajat Alkon myymäläsivulta — ne ovat muuttuneet.",
       tuotteet: ["Alkoholijuomat", "Viinit", "Oluet"],
-      verkkosivu: "https://www.alko.fi", lahde: "lisätty toimeksiannosta — aukiolot varmistettava"
+      verkkosivu: "https://www.alko.fi/fi/myymalat-palvelut/2797", lahde: "alko.fi — myymälä 2797"
     },
 
     /* ---- Hyvinvointi & kauneus ---- */
