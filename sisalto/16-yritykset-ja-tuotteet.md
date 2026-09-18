@@ -24,17 +24,19 @@ Yritykset ovat `data.js`:n taulussa `yritykset[]`. Kentät:
 
 ## Kategoriat
 
+Taulukon järjestys on sama kuin sivulla: ryhmät ja suodatinpainikkeet renderöidään `yritysKategoriat`-taulun järjestyksessä. Asiointipalvelut ovat ensimmäisenä, koska ne ovat matkailijalle käytännön kannalta tärkeimmät.
+
 Kategoriat on järjestetty matkailijan tarpeen mukaan: ensin mitä matkalla tarvitaan, sitten mökkiläisen ja paikallisen tarpeet.
 
 | Avain | Kategoria | Sisältö |
 |---|---|---|
+| `asiointi` | Asiointi & arjen palvelut | Pankki, apteekki, Alko |
 | `majoitus` | Majoitus | Kartano, mökit, ryhmämajoitus, caravan |
 | `ruoka` | Ravintolat & kahvilat | Lounas, à la carte, kesäkahvilat, jakeluaseman kahvio |
 | `lahiruoka` | Lähiruoka & tilatuotteet | Tilamyymälät ja tuottajat |
 | `elamykset` | Ohjelmapalvelut & elämykset | Vuokraus, ohjatut elämykset, pelit |
 | `kasityo` | Käsityö & lahjat | Kädentaito ja tuliaiset |
 | `kaupat` | Kaupat & päivittäispalvelut | Ruokakaupat, tarvikkeet, erikoiskauppa, polttoaine |
-| `asiointi` | Asiointi & arjen palvelut | Pankki, apteekki, Alko |
 | `hyvinvointi` | Hyvinvointi & kauneus | Kuntosali, hoidot, kampaamo |
 | `rakentaminen` | Rakentaminen & kiinteistö | Rakentaminen, remontit, maanrakennus |
 | `kuljetus` | Kuljetus & liikenne | Tilausajot ja kuljetukset |

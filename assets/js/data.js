@@ -1241,13 +1241,13 @@ window.SAVITAIPALE = (function () {
    * tiedostossa sisalto/90-lahteet-ja-tietoaukot.md.
    */
   const yritysKategoriat = [
+    { avain: "asiointi",     nimi: "Asiointi & arjen palvelut",     kuvaus: "Pankki, apteekki ja Alko — perusasiat hoituvat kirkonkylässä." },
     { avain: "majoitus",     nimi: "Majoitus",                     kuvaus: "Kartano, mökit, ryhmämajoitus ja caravan-alue." },
     { avain: "ruoka",        nimi: "Ravintolat & kahvilat",        kuvaus: "Lounasta, à la cartea ja kesäkahviloita." },
     { avain: "lahiruoka",    nimi: "Lähiruoka & tilatuotteet",     kuvaus: "Tilamyymälät ja paikalliset tuottajat." },
     { avain: "elamykset",    nimi: "Ohjelmapalvelut & elämykset",  kuvaus: "Vuokrausta, ohjattuja elämyksiä ja pelejä." },
     { avain: "kasityo",      nimi: "Käsityö & lahjat",             kuvaus: "Paikallista kädentaitoa ja tuliaisia." },
     { avain: "kaupat",       nimi: "Kaupat & päivittäispalvelut",  kuvaus: "Ruokakaupat, apteekki, tarvikkeet ja polttoaine." },
-    { avain: "asiointi",     nimi: "Asiointi & arjen palvelut",     kuvaus: "Pankki, apteekki ja Alko — perusasiat hoituvat kirkonkylässä." },
     { avain: "hyvinvointi",  nimi: "Hyvinvointi & kauneus",        kuvaus: "Kuntosali, hoidot ja kampaamopalvelut." },
     { avain: "rakentaminen", nimi: "Rakentaminen & kiinteistö",    kuvaus: "Mökin ja talon rakentaminen, remontit ja maanrakennus." },
     { avain: "kuljetus",     nimi: "Kuljetus & liikenne",          kuvaus: "Tilausajot ja kuljetuspalvelut." },
