@@ -1383,19 +1383,25 @@ window.SAVITAIPALE = (function () {
       id: "y-apteekki", nimi: "Savitaipaleen apteekki", kategoria: "asiointi", kyla: "kirkonkylä",
       kuvaus: "Apteekki Kievarintiellä; sivuapteekki Lemillä. Lääkeneuvontaa, itsehoitotuotteita ja apteekkikosmetiikkaa.",
       tuotteet: ["Apteekki", "Lääkkeet", "Terveystuotteet", "Reseptit"],
+      aukiolo: "Savitaipale ma–pe 9–17, la 9–13, su suljettu · Lemin sivuapteekki ma–ti 9–16, ke 9–17, to 9–16, pe 9–17",
+      aukioloTarkistettu: "18.9.2026",
       verkkosivu: "https://www.savitaipaleenapteekki.fi", lahde: "savitaipaleenapteekki.fi"
     },
     {
       id: "y-op-salpa", nimi: "OP Salpa — Savitaipaleen konttori", kategoria: "asiointi", kyla: "kirkonkylä",
       kuvaus: "Osuuspankin konttori Torikadulla: infopalvelut ja käteisasiointi ilman ajanvarausta, asiantuntijatapaamiset ajanvarauksella. Esteetön sisäänkäynti ja maksuton pysäköinti.",
       tuotteet: ["Pankkipalvelut", "Käteispalvelut", "Vakuutukset"],
+      aukiolo: "Infopalvelut ma–pe 10–16.30 · kassa- ja käteispalvelut ti ja pe 10–12",
+      aukioloTarkistettu: "18.9.2026",
       verkkosivu: "https://www.op.fi/osuuspankit/op-salpa/konttorit/savitaipaleen-konttori/",
       lahde: "op.fi — OP Salpa, Savitaipaleen konttori"
     },
     {
       id: "y-alko", nimi: "Alko Savitaipale", kategoria: "asiointi", kyla: "kirkonkylä",
-      kuvaus: "Alkon myymälä torin laidalla Torikadulla. Tarkista aukioloajat Alkon myymäläsivulta — ne ovat muuttuneet.",
+      kuvaus: "Alkon myymälä torin laidalla Torikadulla.",
       tuotteet: ["Alkoholijuomat", "Viinit", "Oluet"],
+      aukiolo: "Ti ja to 11–17, pe 10–18, la 10–16 · su, ma ja ke suljettu",
+      aukioloTarkistettu: "18.9.2026",
       verkkosivu: "https://www.alko.fi/fi/myymalat-palvelut/2797", lahde: "alko.fi — myymälä 2797"
     },
 

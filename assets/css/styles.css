@@ -597,6 +597,11 @@ h1, h2, h3, h4 { font-family: var(--serif); font-weight: 600; line-height: 1.1; 
 .ycard__kyla { font-family: var(--mono); font-size: .66rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muste-2); }
 .ycard__title { font-size: 1.16rem; margin: .35rem 0 .45rem; }
 .ycard__desc { color: var(--muste-2); font-size: .93rem; margin: 0 0 .8rem; }
+.ycard__hours { font-size: .88rem; color: var(--muste-2); margin: 0 0 .8rem; padding: .55rem .7rem;
+  background: var(--jaa-vaalea, var(--paperi-2)); border-radius: var(--radius-s); border: 1px solid var(--viiva); }
+.ycard__hours b { display: block; font-family: var(--mono); font-size: .66rem; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--kuolimo-tumma); margin-bottom: .2rem; }
+.ycard__hours small { display: block; margin-top: .35rem; font-size: .74rem; color: var(--muste-2); opacity: .8; }
 .taglist--tight { margin: 0 0 .9rem; gap: .35rem; }
 .ycard__foot { margin-top: auto; display: flex; flex-wrap: wrap; gap: .4rem 1rem; padding-top: .7rem; border-top: 1px solid var(--viiva); }
 .ycard__link { font-family: var(--mono); font-size: .72rem; letter-spacing: .05em; text-decoration: none; color: var(--kuolimo-tumma); }

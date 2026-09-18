@@ -948,6 +948,8 @@
       kategoria: y.kategoria,
       kohde: y.kohde || null,
       verkkosivu: y.verkkosivu || null,
+      aukiolo: y.aukiolo || "",
+      aukioloTarkistettu: y.aukioloTarkistettu || "",
       lahde: y.lahde || ""
     };
   }
@@ -971,6 +973,10 @@
       "</div>" +
       '<h3 class="ycard__title">' + esc(y.nimi) + "</h3>" +
       (y.kuvaus ? '<p class="ycard__desc">' + esc(y.kuvaus) + "</p>" : "") +
+      // Aukioloajat vanhenevat — näytetään tarkistuspäivä ja linkki hoitaa ajantasaisuuden
+      (y.aukiolo ? '<p class="ycard__hours"><b>Aukioloajat</b>' + esc(y.aukiolo) +
+        (y.aukioloTarkistettu ? '<small>Tarkistettu ' + esc(y.aukioloTarkistettu) + " — varmista ajantasaisuus toimijan sivulta</small>" : "") +
+        "</p>" : "") +
       (tags ? '<div class="taglist taglist--tight">' + tags + "</div>" : "") +
       (linkit ? '<div class="ycard__foot">' + linkit + "</div>" : "") +
       "</article>";

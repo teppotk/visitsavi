@@ -52,7 +52,7 @@
 18. **Uimahallin kausi** — lähteessä "noin 1.9.–14.6."; varmistettava kunnalta vuosittain
 19. **Tenniskenttien varauskäytäntö ja tennisseuran yhteystiedot** — ei varmistettu
 20. **Ratsastustallien nimet ja palvelut** — "hevospitäjä" mainittu lähteissä, yksittäisiä talleja ei varmistettu
-21. **Asiointipalvelujen aukioloajat** — Alkon ja OP Salpan olemassaolo, sijainti (molemmat Torikadulla) ja palvelut varmistettu toimijoiden omilta sivuilta 18.9.2026, ja kortit linkittävät suoraan niihin. Aukioloaikoja **ei** ole viety sivustolle, koska ne muuttuvat: Savitaipaleen Alkon aukioloja supistettiin syyskuussa 2026 ja OP Salpan konttoriaikoja muutettiin 1.5.2026. Linkit hoitavat ajantasaisuuden
+21. **Asiointipalvelujen aukioloajat** — Alkon, OP Salpan ja apteekin aukioloajat tarkistettiin toimijoiden omilta sivuilta 18.9.2026 ja ne näkyvät korteilla tarkistuspäivineen. Ne **vanhenevat**: Savitaipaleen Alkon aukioloja supistettiin syyskuussa 2026 (auki ti, to, pe ja la) ja OP Salpan konttoriaikoja muutettiin 1.5.2026. Tarkistettava vähintään kausittain; kortit linkittävät suoraan toimijan sivulle
 
 ## Tekniset mahdollisuudet (huomioitu rakenteessa)
 

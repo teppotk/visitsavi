@@ -17,7 +17,9 @@ Yritykset ovat `data.js`:n taulussa `yritykset[]`. Kentät:
 | `kuvaus` | jos ei `kohde` | Yhden lauseen kuvaus |
 | `kyla` | ei | Kylä tai kirkonkylä |
 | `tuotteet` | kyllä | **Hakusanasto.** Tuotteet ja palvelut, joilla asiakas etsii yritystä. Näkyvät kortilla tunnisteina ja ohjaavat sivun hakua |
-| `verkkosivu` | ei | Yrityksen oma sivu; näytetään kortilla ulkoisena linkkinä |
+| `verkkosivu` | ei | Yrityksen oma sivu; näytetään kortilla ulkoisena linkkinä. Linkkitekstinä pelkkä verkkotunnus, joten osoite saa osoittaa syvälle sivustolle |
+| `aukiolo` | ei | Aukioloajat tiiviisti yhdellä rivillä; näytetään kortilla omassa laatikossaan |
+| `aukioloTarkistettu` | jos `aukiolo` | Päivä, jolloin aukiolot tarkistettiin toimijan omalta sivulta. Näkyy kortilla, koska aukiolot vanhenevat |
 | `lahde` | kyllä | Mistä tieto on peräisin (ylläpitoa varten) |
 
 `tuotteet`-kenttä on osion tärkein suunnitteluratkaisu: haku ei etsi vain nimestä vaan tuotteesta. Haulla *makkara* löytyy Reiposen tila, haulla *palju* Saimaan Palju ja haulla *mökki* sekä mökkivuokraajat että mökkiremontteja tekevä KKL Jurvanen.
